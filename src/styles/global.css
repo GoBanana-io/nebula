@@ -176,10 +176,10 @@ main {
   gap: var(--space-4);
   flex-wrap: wrap;
   min-height: 72px;
-  background-color: var(--color-amber-200);
+  background-color: var(--border-dark);
   border: 3px solid var(--border-dark);
   border-radius: 9999px;
-  box-shadow: 6px 6px 0 var(--border-dark);
+  box-shadow: 6px 6px 0 var(--color-amber-500);
 }
 
 .brand-group {
@@ -199,9 +199,9 @@ main {
   color: var(--surface-3);
   font-size: 1.35rem;
   font-weight: 900;
-  border: 2.5px solid var(--border-dark);
+  border: 2.5px solid var(--surface-3);
   border-radius: var(--shape-leaf);
-  box-shadow: var(--elevation-1);
+  box-shadow: 2px 2px 0 var(--color-amber-500);
   transition: transform 300ms var(--ease-spring-bouncy), border-radius 300ms var(--ease-spring-bouncy), background-color 200ms ease;
 }
 
@@ -221,7 +221,7 @@ main {
   font-weight: 900;
   font-size: 1.3rem;
   letter-spacing: -0.04em;
-  color: var(--text-primary);
+  color: var(--text-inverse);
   line-height: 1;
 }
 
@@ -229,7 +229,7 @@ main {
   font-family: var(--font-arabic);
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--color-violet-600);
+  color: var(--color-amber-300);
   margin-top: 3px;
   line-height: 1.2;
 }
@@ -248,7 +248,7 @@ main {
   font-size: 0.9375rem;
   letter-spacing: -0.01em;
   text-decoration: none;
-  color: var(--text-primary);
+  color: var(--text-inverse);
   min-height: 44px;
   padding: 6px 14px;
   border-radius: var(--shape-pill);
@@ -283,6 +283,20 @@ main {
   background-color: var(--surface-3);
   border-color: var(--border-dark);
   box-shadow: var(--elevation-1);
+  color: var(--text-primary);
+}
+
+/* Active link carries its section accent */
+.nav-link--sparks.nav-link--active {
+  background-color: var(--color-coral-100);
+}
+
+.nav-link--roulette.nav-link--active {
+  background-color: var(--color-violet-100);
+}
+
+.nav-link--explore.nav-link--active {
+  background-color: var(--color-teal-100);
 }
 
 /* Language Switcher Control Box */
@@ -290,10 +304,10 @@ main {
   display: inline-flex;
   align-items: center;
   background-color: var(--surface-1);
-  border: 2.5px solid var(--border-dark);
+  border: 2.5px solid var(--surface-3);
   border-radius: var(--shape-pill);
   padding: 3px;
-  box-shadow: var(--elevation-1);
+  box-shadow: 2px 2px 0 var(--color-amber-500);
   gap: 2px;
 }
 
@@ -413,6 +427,16 @@ main {
     overflow: hidden;
   }
 
+  /* Flat scrim below the nav dock (opaque system — no blur). Taps land on
+     <body> outside #site-nav, which the chrome script uses to close. */
+  body.is-menu-open::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background-color: oklch(22% 0.025 55 / 0.45);
+  }
+
   /* Floating menu card docked under the pill — opaque, in space, not a sheet */
   body.is-menu-open .nav-links {
     display: flex;
@@ -425,7 +449,7 @@ main {
     right: 12px;
     z-index: 60;
     max-height: calc(100dvh - 92px);
-    padding: var(--space-2) var(--space-4) var(--space-6);
+    padding: var(--space-2) var(--space-4) calc(var(--space-6) + env(safe-area-inset-bottom));
     overflow-y: auto;
     background-color: var(--surface-2);
     border: 3px solid var(--border-dark);
@@ -440,6 +464,7 @@ main {
     min-height: 56px;
     padding: 12px 8px;
     align-items: center;
+    color: var(--text-primary);
     background: transparent;
     border: none;
     border-bottom: 1.5px solid var(--border-default);
@@ -466,6 +491,28 @@ main {
     border-radius: var(--shape-pill);
     box-shadow: var(--elevation-1);
     padding: 12px 18px;
+  }
+
+  /* Active row keeps its section accent, matching desktop */
+  body.is-menu-open .nav-link--sparks.nav-link--active {
+    background-color: var(--color-coral-100);
+  }
+
+  body.is-menu-open .nav-link--roulette.nav-link--active {
+    background-color: var(--color-violet-100);
+  }
+
+  body.is-menu-open .nav-link--explore.nav-link--active {
+    background-color: var(--color-teal-100);
+  }
+
+  /* Row affordance: chevron pinned right */
+  body.is-menu-open .nav-link::after {
+    content: '→';
+    margin-left: auto;
+    padding-left: var(--space-3);
+    font-weight: 800;
+    color: var(--text-muted);
   }
 
   body.is-menu-open .lang-switch-box {
@@ -495,6 +542,12 @@ main {
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.is-menu-open .nav-links {
+    animation: none;
   }
 }
 

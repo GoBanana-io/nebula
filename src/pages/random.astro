@@ -34,7 +34,7 @@ const initialSpark = sparksData[initialIndex];
         <span>🎰</span>
         <span>Instant Serendipity</span>
         <span>✦</span>
-        <span>12 Ready Sparks</span>
+        <span>{sparksData.length} Ready Sparks</span>
       </div>
       <h1 style="font-size: var(--type-display-xl); margin-bottom: var(--space-2);">
         Spark Roulette
@@ -47,6 +47,7 @@ const initialSpark = sparksData[initialIndex];
     <!-- The Slot Machine Stage -->
     <div
       id="roulette-box"
+      class="roulette-stage"
       style="
         max-width: 840px;
         margin: 0 auto;
@@ -59,16 +60,6 @@ const initialSpark = sparksData[initialIndex];
         overflow: hidden;
       "
     >
-      <!-- Slot Top Status Bar -->
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-5); flex-wrap: wrap; gap: var(--space-2);">
-        <span class="card-badge-status card-badge-status--unicorn" id="roulette-tag">
-          🎲 Ready to Roll
-        </span>
-        <span style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-muted);">
-          1 of {sparksData.length} Sparks
-        </span>
-      </div>
-
       <!-- Live Display Card Preview -->
       <div
         id="spark-display"
@@ -100,45 +91,32 @@ const initialSpark = sparksData[initialIndex];
         </h2>
 
         <!-- Bilingual Body (Content) -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-4);">
+        <div class="roulette-grid" style="display: grid; gap: var(--space-4); margin-bottom: var(--space-4);">
           <div class="lead-box-en" style="background-color: var(--surface-2); border: 1.5px solid var(--border-dark); border-radius: var(--shape-sm); padding: var(--space-4);">
-            <strong style="font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; color: var(--color-coral-700); display: block; margin-bottom: 3px;">
-              English Summary
-            </strong>
-            <p id="spark-summary" style="font-size: 1rem; color: var(--text-primary); margin: 0;">
+            <p id="spark-summary" class="roulette-lede-en" style="font-size: 1.25rem; font-weight: 600; line-height: 1.5; color: var(--text-primary); margin: 0;">
               {initialSpark.summary}
             </p>
           </div>
 
           <div class="lead-box-ar" style="background-color: oklch(95% 0.02 65); border: 1.5px solid var(--border-dark); border-radius: var(--shape-sm); padding: var(--space-4); direction: rtl;">
-            <strong style="font-family: var(--font-arabic); font-size: 0.8125rem; font-weight: 900; color: var(--color-violet-700); display: block; margin-bottom: 3px;">
-              الملخص العربي
-            </strong>
-            <p id="spark-summary-ar" style="font-family: var(--font-arabic); font-size: 1.0625rem; font-weight: 700; color: var(--text-primary); margin: 0; line-height: 1.6;">
+            <p id="spark-summary-ar" class="roulette-lede-ar" style="font-family: var(--font-arabic); font-size: 1.375rem; font-weight: 800; color: var(--text-primary); margin: 0; line-height: 1.7;">
               {initialSpark.summaryAr}
             </p>
           </div>
         </div>
 
-        {initialSpark.whyItWorked && (
-          <div class="card-pitch-hook" id="spark-hook">
-            <strong>The Move</strong>
-            <span id="spark-hook-text">{initialSpark.whyItWorked}</span>
-          </div>
-        )}
       </div>
 
-      <!-- Action Buttons -->
-      <div style="display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
+      <!-- Action Buttons: Spin leads center-stage, rest support below -->
+      <div class="roulette-actions" style="display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
         <button class="btn btn-primary btn-lg" id="btn-spin" type="button">
           🎰 Spin the Wheel
         </button>
-        <button class="btn btn-secondary btn-lg" id="btn-copy-roulette" type="button">
-          📋 Copy Spark
-        </button>
-        <a class="btn btn-violet btn-lg" id="btn-open" rel="prefetch" href={`/idea/${initialSpark.slug}`}>
-          🚀 Full Story ➔
-        </a>
+        <div class="roulette-actions-sub">
+          <a class="btn btn-secondary btn-lg" id="btn-open" rel="prefetch" href={`/idea/${initialSpark.slug}`}>
+            Full Story ➔
+          </a>
+        </div>
       </div>
     </div>
 
@@ -149,6 +127,76 @@ const initialSpark = sparksData[initialIndex];
       </a>
     </div>
   </section>
+
+<style>
+  .roulette-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .roulette-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #btn-spin {
+    min-height: 60px;
+    padding: 14px 44px;
+    font-size: 1.125rem;
+  }
+
+  .roulette-actions-sub {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  @media (max-width: 640px) {
+    /* Tighter stage, thumb-sized stacked actions, single-column body */
+    .roulette-stage {
+      padding: var(--space-5) var(--space-4);
+    }
+
+    .roulette-lede-en {
+      font-size: 1.125rem;
+    }
+
+    .roulette-lede-ar {
+      font-size: 1.1875rem;
+    }
+
+    .roulette-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .roulette-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    #btn-spin {
+      width: 100%;
+    }
+
+    .roulette-actions-sub {
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    .roulette-actions .btn {
+      width: 100%;
+      min-height: 52px;
+      justify-content: center;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #spark-display {
+      transition: none;
+    }
+  }
+</style>
 
   <!-- Interactive Slot Script -->
   <script define:vars={{ sparksData, initialIndex }}>
@@ -162,16 +210,12 @@ const initialSpark = sparksData[initialIndex];
 
     const btnSpin = document.getElementById('btn-spin');
     const btnOpen = document.getElementById('btn-open');
-    const btnCopy = document.getElementById('btn-copy-roulette');
     const displayCard = document.getElementById('spark-display');
     const titleEl = document.getElementById('spark-title');
     const summaryEl = document.getElementById('spark-summary');
     const summaryArEl = document.getElementById('spark-summary-ar');
     const sectorEl = document.getElementById('spark-sector');
     const kpiEl = document.getElementById('spark-kpi');
-    const hookBox = document.getElementById('spark-hook');
-    const hookText = document.getElementById('spark-hook-text');
-    const tagEl = document.getElementById('roulette-tag');
 
     let isSpinning = false;
 
@@ -180,7 +224,12 @@ const initialSpark = sparksData[initialIndex];
       isSpinning = true;
       btnSpin.disabled = true;
       btnSpin.textContent = '🎲 Rolling...';
-      tagEl.textContent = '⚡️ SPINNING...';
+
+      // Freeze the stage window so rolling text can't resize the card.
+      const lockedH = displayCard.offsetHeight;
+      displayCard.style.minHeight = `${lockedH}px`;
+      displayCard.style.maxHeight = `${lockedH}px`;
+      displayCard.style.overflow = 'hidden';
 
       let rolls = 0;
       const totalRolls = 16;
@@ -203,15 +252,6 @@ const initialSpark = sparksData[initialIndex];
             ? `Raised: ${item.amountRaised}`
             : 'Active Spark';
 
-        if (hookBox && hookText) {
-          if (item.whyItWorked) {
-            hookBox.style.display = 'block';
-            hookText.textContent = item.whyItWorked;
-          } else {
-            hookBox.style.display = 'none';
-          }
-        }
-
         btnOpen.setAttribute('href', `/idea/${item.slug}`);
 
         rolls++;
@@ -219,12 +259,15 @@ const initialSpark = sparksData[initialIndex];
           intervalSpeed += 14;
           setTimeout(step, intervalSpeed);
         } else {
+          // Release the window onto the locked spark, then settle.
+          displayCard.style.minHeight = '';
+          displayCard.style.maxHeight = '';
+          displayCard.style.overflow = '';
           displayCard.style.transform = 'scale(1.02) rotate(0deg)';
           setTimeout(() => {
             displayCard.style.transform = 'scale(1) rotate(0deg)';
           }, 180);
 
-          tagEl.textContent = '🎯 SPARK LOCKED';
           btnSpin.textContent = '🎰 Spin Again';
           btnSpin.disabled = false;
           isSpinning = false;
@@ -234,15 +277,6 @@ const initialSpark = sparksData[initialIndex];
       step();
     });
 
-    btnCopy?.addEventListener('click', () => {
-      const item = allSparks[currentIndex];
-      const text = `${item.title}\n\nSummary: ${item.summary}\n\nعربي: ${item.summaryAr}\n\nThe Move: ${item.whyItWorked}`;
-      navigator.clipboard.writeText(text).then(() => {
-        if (window.showSparkToast) {
-          window.showSparkToast('Playbook copied! Go build.');
-        }
-      });
-    });
     }
 
     // First paint plus every client-side navigation (View Transitions).

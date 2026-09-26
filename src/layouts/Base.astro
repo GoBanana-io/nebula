@@ -86,7 +86,7 @@ const {
         <!-- Navigation Links: inline on desktop, full-page overlay on mobile -->
         <nav class="nav-links" id="primary-nav" aria-label="Primary Navigation">
           <a
-            class={`nav-link ${activePath === '/' ? 'nav-link--active' : ''}`}
+            class={`nav-link nav-link--sparks ${activePath === '/' ? 'nav-link--active' : ''}`}
             href="/#sparks"
             rel="prefetch"
             aria-current={activePath === '/' ? 'page' : undefined}
@@ -94,7 +94,7 @@ const {
             🔥 Sparks
           </a>
           <a
-            class={`nav-link ${activePath === '/random' ? 'nav-link--active' : ''}`}
+            class={`nav-link nav-link--roulette ${activePath === '/random' ? 'nav-link--active' : ''}`}
             href="/random"
             rel="prefetch"
             aria-current={activePath === '/random' ? 'page' : undefined}
@@ -102,12 +102,12 @@ const {
             🎲 Roulette
           </a>
           <a
-            class={`nav-link ${activePath.startsWith('/tags') ? 'nav-link--active' : ''}`}
+            class={`nav-link nav-link--explore ${activePath.startsWith('/tags') ? 'nav-link--active' : ''}`}
             href="/tags"
             rel="prefetch"
             aria-current={activePath.startsWith('/tags') ? 'page' : undefined}
           >
-            🏷 Sectors
+            🧭 Explore
           </a>
 
           <!-- Interactive Language Switcher: Dual & English only -->
@@ -147,7 +147,7 @@ const {
           <ul class="footer-link-list">
             <li><a class="footer-link" href="/#sparks" rel="prefetch">🔥 All Sparks</a></li>
             <li><a class="footer-link" href="/random" rel="prefetch">🎲 Roulette</a></li>
-            <li><a class="footer-link" href="/tags" rel="prefetch">🏷 Sectors</a></li>
+            <li><a class="footer-link" href="/tags" rel="prefetch">🧭 Explore</a></li>
           </ul>
         </nav>
 
@@ -221,10 +221,17 @@ const {
             document.addEventListener('click', function (e) {
               var target = e.target;
               var btn = target && target.closest ? target.closest('.lang-btn') : null;
-              if (!btn) return;
-              e.preventDefault();
-              var mode = btn.getAttribute('data-lang') || (btn.id ? btn.id.replace('lang-', '') : 'dual');
-              applyLang(mode);
+              if (btn) {
+                e.preventDefault();
+                var mode = btn.getAttribute('data-lang') || (btn.id ? btn.id.replace('lang-', '') : 'dual');
+                applyLang(mode);
+                return;
+              }
+              // Scrim tap: close the mobile menu when tapping outside the nav dock.
+              if (document.body.classList.contains('is-menu-open')) {
+                var nav = document.getElementById('site-nav');
+                if (nav && target && !nav.contains(target)) setMenuState(false);
+              }
             });
 
             document.addEventListener('keydown', function (e) {
