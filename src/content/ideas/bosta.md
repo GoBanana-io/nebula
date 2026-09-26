@@ -1,6 +1,6 @@
 ---
 title: "Bosta delivers e-commerce parcels — and heads for the EGX"
-summary: "Egypt's leading tech-enabled last-mile delivery platform, handling tens of millions of shipments and working toward a $170M EGX listing."
+summary: "Tech-enabled last-mile delivery platform moving e-commerce parcels across Egypt and Saudi Arabia, with live tracking and cash collection."
 tags: ["logistics", "egypt", "ecommerce"]
 featured: false
 publishedAt: 2026-09-26
@@ -24,7 +24,7 @@ sources:
     url: "https://weetracker.com/2026/05/12/egyptian-startup-cash-exit/"
   - title: "Egyptian Logistics Startup Bosta Eyes $170M IPO on Local Exchange"
     url: "https://launchbaseafrica.com/2026/02/02/egyptian-logistics-startup-bosta-eyes-170m-ipo-on-local-exchange/"
-summaryAr: "شركة «بوسطة» اللوجستية تقدم خدمات التوصيل للتجارة الإلكترونية في مصر والسعودية وتستعد للطرح في البورصة المصرية."
+summaryAr: "شركة «بوسطة» اللوجستية توصّل طرود التجارة الإلكترونية في مصر والسعودية مع التتبع المباشر وتحصيل النقد."
 ---
 
 ## The problem

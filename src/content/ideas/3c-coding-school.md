@@ -1,6 +1,6 @@
 ---
 title: "3C Coding School teaches kids coding and AI — then exports it to Saudi Arabia"
-summary: "Cairo-based edtech teaching coding and AI to 120,000+ children, raising a $3M seed round to expand into Saudi Arabia."
+summary: "Cairo-based edtech teaching coding and AI to 120,000+ children through schools, camps and online programs."
 tags: ["edtech", "egypt", "ai"]
 featured: false
 publishedAt: 2026-09-26
@@ -22,7 +22,7 @@ sources:
     url: "https://weetracker.com/2026/09/02/3c-coding-school-raises-3m-saudi-arabia/"
   - title: "Egyptian ed-tech startup 3C Coding School raises $3m seed round to fuel regional expansion"
     url: "https://disruptafrica.com/2026/09/03/egyptian-ed-tech-startup-3c-coding-school-raises-3m-seed-round-to-fuel-regional-expansion/"
-summaryAr: "منصة «3C» المصرية لتعليم البرمجة والذكاء الاصطناعي للأطفال جمعت ٣ ملايين دولار للتوسع في السعودية."
+summaryAr: "منصة «3C» المصرية تُعلّم البرمجة والذكاء الاصطناعي لأكثر من ١٢٠ ألف طفل عبر المدارس والمعسكرات والإنترنت."
 ---
 
 ## The problem

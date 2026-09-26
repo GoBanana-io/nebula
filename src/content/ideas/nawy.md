@@ -1,6 +1,6 @@
 ---
 title: "Nawy brings transparency to Egyptian real estate"
-summary: "Africa's largest proptech: listings plus brokerage plus mortgages, with a $52M Series A to take on MENA."
+summary: "A proptech platform combining verified listings, in-house brokerage and mortgage financing for Egyptian real estate."
 tags: ["proptech", "egypt", "marketplace"]
 featured: false
 publishedAt: 2026-08-13

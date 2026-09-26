@@ -1,6 +1,6 @@
 ---
 title: "Synapse Analytics gives banks an AI risk brain"
-summary: "An agentic AI decisioning platform for lenders — credit, fraud, AML in one stack — fresh off a $13M Series A."
+summary: "An agentic AI decisioning platform giving lenders credit scoring, fraud detection and AML in one stack they own outright."
 tags: ["ai", "egypt", "fintech"]
 featured: true
 publishedAt: 2026-09-15
@@ -20,7 +20,7 @@ challenges: "Long bank sales cycles, GCC expansion burn, and competing with glob
 sources:
   - title: "Egyptian AI startup Synapse Analytics raises $13m Series A funding round"
     url: "https://disruptafrica.com/2026/09/15/egyptian-ai-startup-synapse-analytics-raises-13m-series-a-funding-round/"
-summaryAr: "شركة «سينابس أناليتكس» تقدم منصة ذكاء اصطناعي للبنوك لاتخاذ قرارات الائتمان وكشف الاحتيال وجمعت ١٣ مليون دولار."
+summaryAr: "شركة «سينابس أناليتكس» تقدم منصة ذكاء اصطناعي للبنوك لقرارات الائتمان وكشف الاحتيال ومكافحة غسل الأموال."
 ---
 
 ## The problem

@@ -1,6 +1,6 @@
 ---
 title: "Swvl took the Cairo bus all the way to Nasdaq"
-summary: "App-based mass transit from Cairo to a 2022 Nasdaq listing — Africa's largest tech debut on a US exchange."
+summary: "An app-based mass-transit platform selling seats on fixed-route buses, plus corporate and intercity shuttles, born in Cairo."
 tags: ["mobility", "egypt", "saas"]
 featured: false
 publishedAt: 2026-09-08
@@ -24,7 +24,7 @@ sources:
     url: "https://entarabi.com/en/2026/08/swvl-raises-strategic-investment-round-to-14-5-million-with-sovico-investment/"
   - title: "Swvl Doubles HSBC Working Capital Facility and Adopts Global Payment Solutions After Egypt Growth"
     url: "https://www.tipranks.com/news/company-announcements/swvl-doubles-hsbc-working-capital-facility-and-adopts-global-payment-solutions-after-egypt-growth"
-summaryAr: "شركة «سويفل» للنقل الجماعي الذكي انطلقت من القاهرة ووصلت إلى بورصة ناسداك الأمريكية."
+summaryAr: "شركة «سويفل» للنقل الجماعي الذكي انطلقت من القاهرة وتتيح حجز مقاعد في حافلات بخطوط ثابتة وخدمات للشركات والمدن."
 ---
 
 ## The problem

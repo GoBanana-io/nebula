@@ -1,6 +1,6 @@
 ---
 title: "Reme-D makes molecular diagnostics Egypt can manufacture"
-summary: "Cairo-born diagnostics maker producing affordable, temperature-resilient molecular tests for TB, HIV and hepatitis — fresh off a $1.45M pre-Series A."
+summary: "A Cairo-born diagnostics maker producing affordable, temperature-resilient molecular tests for TB, HIV and hepatitis."
 tags: ["healthtech", "egypt", "diagnostics"]
 featured: false
 publishedAt: 2026-09-26
@@ -22,7 +22,7 @@ sources:
     url: "https://disruptafrica.com/2026/07/24/egyptian-e-health-startup-reme-d-raises-1-45m-pre-series-a-funding/"
   - title: "Anara Backs Egyptian Healthtech Startup Reme-D in $1.45 Million Funding Round"
     url: "https://techmoran.com/2026/07/20/anara-backs-egyptian-healthtech-startup-reme-d-in-1-45-million-funding-round/"
-summaryAr: "شركة «ريمي-دي» المصرية تطور وتصنع اختبارات التشخيص الجزيئي لأمراض مثل السل والإيدز بأسعار مناسبة للأسواق الأفريقية وجمعت ١٫٤٥ مليون دولار."
+summaryAr: "شركة «ريمي-دي» المصرية تطوّر وتصنع اختبارات التشخيص الجزيئي لأمراض مثل السل والإيدز بأسعار مناسبة للأسواق الأفريقية."
 ---
 
 ## The problem

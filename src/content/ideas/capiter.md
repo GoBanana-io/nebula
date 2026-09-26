@@ -1,6 +1,6 @@
 ---
 title: "Capiter: the $33M cautionary tale"
-summary: "A B2B e-commerce rocket that raised $33M — then collapsed in a founder–board dispute. Our designated failure case."
+summary: "A B2B e-commerce marketplace that connected small merchants to FMCG wholesalers with delivery and embedded credit."
 tags: ["marketplace", "egypt", "failure"]
 featured: false
 publishedAt: 2026-09-22
@@ -22,7 +22,7 @@ sources:
     url: "https://techbuild.africa/egyptian-startup-capiter-closes-33m-funding/"
   - title: "Egyptian B2B buying platform Capiter has collapsed"
     url: "https://trendtype.com/news/egyptian-b2b-buying-platform-capiter-has-collapsed/"
-summaryAr: "شركة «كابتر» للتجارة بين الشركات جمعت ٣٣ مليون دولار ثم انهارت بعد خلاف بين المؤسسين والمستثمرين."
+summaryAr: "منصة «كابتر» للتجارة بين الشركات كانت تربط صغار التجار بتجار الجملة مع التوصيل والتمويل الائتماني."
 ---
 
 ## The problem

@@ -1,6 +1,6 @@
 ---
 title: "Breadfast delivers breakfast — then everything — before 8am"
-summary: "Quick-commerce grocery starting with fresh bread at dawn, scaling to a ~$400M-valued fintech-plus-fulfillment machine."
+summary: "Quick-commerce grocery app that starts with fresh bread at dawn and covers daily groceries through its own bakeries, fulfillment centers and Breadfast Pay wallets."
 tags: ["agritech", "egypt", "fintech"]
 featured: false
 publishedAt: 2026-08-20
@@ -24,7 +24,7 @@ sources:
     url: "https://dabafinance.com/en/news/breadfast-launches-restaurant-delivery-in-egypt"
   - title: "Breadfast Enters Egypt's Restaurant Delivery Market as It Expands Beyond Groceries"
     url: "https://techmoran.com/2026/09/15/breadfast-enters-egypts-restaurant-delivery-market-as-it-expands-beyond-groceries/"
-summaryAr: "تطبيق «بريكفاست» يوصّل الخبز الطازج والبقالة صباحًا ووصلت قيمته إلى نحو ٤٠٠ مليون دولار."
+summaryAr: "تطبيق «بريكفاست» يوصّل الخبز الطازج صباحًا ويغطي احتياجات البقالة اليومية عبر مخابزه ومراكز التوزيع ومحفظة بريكفاست باي."
 ---
 
 ## The problem

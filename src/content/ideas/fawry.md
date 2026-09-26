@@ -1,6 +1,6 @@
 ---
 title: "Fawry turned corner kiosks into Egypt's payment network"
-summary: "Egypt's first fintech IPO: an e-payments platform running through hundreds of thousands of retail touchpoints."
+summary: "An e-payments platform turning corner kiosks and retail shops into a nationwide bill-payment and acceptance network."
 tags: ["fintech", "egypt", "payments"]
 featured: false
 publishedAt: 2026-07-09
@@ -24,7 +24,7 @@ sources:
     url: "https://www.technotime.net/15944"
   - title: "Fawry and DMS Partner to Simplify Digital Payments Across Egypt's Healthcare Sector"
     url: "https://hakunamatatamedia.com/2026/09/14/fawry-and-dms-partner-to-simplify-digital-payments-across-egypts-healthcare-sector/"
-summaryAr: "شركة «فوري» حوّلت الأكشاك ومحلات التجزئة إلى شبكة مدفوعات إلكترونية وأصبحت أول شركة تكنولوجيا مالية مصرية تُطرح في البورصة."
+summaryAr: "شركة «فوري» حوّلت الأكشاك ومحلات التجزئة إلى شبكة وطنية لدفع الفواتير وقبول المدفوعات الإلكترونية."
 ---
 
 ## The problem

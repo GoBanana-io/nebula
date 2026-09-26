@@ -1,6 +1,6 @@
 ---
 title: "MNT-Halan brings banking to Egypt's unbanked"
-summary: "A microfinance-and-payments super-app serving millions of unbanked Egyptians, now a unicorn expanding across the region."
+summary: "A microfinance-and-payments super-app bringing lending, BNPL, wallets and e-commerce to millions of unbanked Egyptians."
 tags: ["fintech", "egypt", "unicorn"]
 featured: false
 publishedAt: 2026-07-02

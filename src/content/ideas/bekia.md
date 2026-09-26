@@ -1,6 +1,6 @@
 ---
 title: "Bekia turns household recycling into auditable carbon credits"
-summary: "Cairo climate-tech digitizing waste collection and launching Bekia Next B2B software; $765K seed led by Madica."
+summary: "Cairo climate-tech digitizing household waste collection and turning recycling into auditable carbon credits, with B2B software for businesses."
 tags: ["climate", "egypt", "energy"]
 featured: false
 publishedAt: 2026-09-26
@@ -22,7 +22,7 @@ sources:
     url: "https://www.finsmes.com/2026/09/bekia-raises-usd765k-in-seed-funding.html"
   - title: "Bekia Raises $765,000 to Digitise Egypt's Recycling Economy and Expand Across Africa"
     url: "https://techparley.com/bekia-raises-765000-to-digitise-egypts-recycling-economy-and-expand-across-africa/"
-summaryAr: "شركة «بيكيا» المصرية لتدوير المخلفات جمعت ٧٦٥ ألف دولار لإطلاق منتج للشركات والتوسع أفريقيًا."
+summaryAr: "شركة «بيكيا» المصرية تُرقمن جمع المخلفات المنزلية وتحوّل التدوير إلى أرصدة كربونية موثقة، مع برمجيات للشركات."
 ---
 
 ## The problem

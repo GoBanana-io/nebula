@@ -1,6 +1,6 @@
 ---
 title: "Fincart gives online sellers one AI dashboard for shipping and cash"
-summary: "Egyptian e-commerce operations platform unifying shipping, engagement and advances; $2.8M seed to scale across MENA and Africa."
+summary: "An e-commerce operations platform giving online sellers one AI dashboard for shipping, customer engagement and cash advances."
 tags: ["marketplace", "egypt", "b2b"]
 featured: false
 publishedAt: 2026-09-26
@@ -22,7 +22,7 @@ sources:
     url: "https://disruptafrica.com/2026/08/06/egypts-fincart-raises-2-8m-to-accelerate-regional-expansion/"
   - title: "Fincart Raises $2.8 Million Seed Round to Scale AI E-Commerce Platform Across Africa and MENA"
     url: "https://techmoran.com/2026/08/01/fincart-raises-2-8-million-seed-round-to-scale-ai-e-commerce-platform-across-africa-and-mena/"
-summaryAr: "منصة «فينكارت» المصرية تدير الشحن والمبيعات والسلف النقدية للتجار إلكترونيًا وجمعت ٢٫٨ مليون دولار للتوسع إقليميًا."
+summaryAr: "منصة «فينكارت» المصرية تدير الشحن والمبيعات والسلف النقدية للتجار عبر لوحة ذكاء اصطناعي واحدة."
 ---
 
 ## The problem
