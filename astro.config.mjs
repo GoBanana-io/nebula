@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://banana-nebula.pages.dev',
+  site: 'https://nebula.gobanana.io',
   output: 'static',
 });
