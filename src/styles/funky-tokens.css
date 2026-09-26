@@ -1,0 +1,223 @@
+/* ==========================================================================
+   BANANA NEBULA — FUNKY DESIGN TOKENS
+   Mode: Funk 🎸 (Turned up to 11) | Palette: Sunlit ☀️
+   ========================================================================== */
+
+:root {
+  /* --------------------------------------------------------------------------
+     SURFACE CANVAS — Sunlit ☀️ (Warm, inviting, never pure white or black)
+     -------------------------------------------------------------------------- */
+  --surface-base: oklch(96.5% 0.015 75);      /* Warm golden page background #FDF6EE */
+  --surface-1: oklch(94% 0.012 75);         /* Sections, grouping surfaces #F5ECE0 */
+  --surface-2: oklch(98% 0.008 75);         /* Elevated cards & modules #FEFAF6 */
+  --surface-3: oklch(99% 0.005 75);         /* Inputs, pill bases #FFFDF9 */
+  --surface-sunken: oklch(92% 0.015 75);    /* Inset track & wells */
+  --surface-overlay: oklch(92% 0.01 75 / 0.94); /* Modal backdrop - opaque */
+
+  /* Text hierarchy with warm temperature */
+  --text-primary: oklch(18% 0.02 55);       /* Deep espresso charcoal #2A2118 */
+  --text-secondary: oklch(40% 0.015 55);     /* Warm rich slate #6B5D4F */
+  --text-muted: oklch(55% 0.01 55);          /* Warm muted caption #8D8278 */
+  --text-inverse: oklch(98% 0.008 75);      /* Crisp warm white for dark pills */
+
+  /* Structural Borders */
+  --border-default: oklch(85% 0.01 75);     /* Soft divider */
+  --border-strong: oklch(70% 0.015 55);      /* Structural delimiter */
+  --border-dark: oklch(22% 0.025 55);       /* Heavy graphic outline for Funk 3D pop */
+
+  /* --------------------------------------------------------------------------
+     THE 7 VIBRANT ROLES (OKLCH PERCEPTUAL SCALE)
+     -------------------------------------------------------------------------- */
+  /* Coral 💥 — Primary action, high energy */
+  --color-coral-50:  oklch(97% 0.03 30);
+  --color-coral-100: oklch(92% 0.07 30);
+  --color-coral-200: oklch(86% 0.11 30);
+  --color-coral-300: oklch(79% 0.15 30);
+  --color-coral-400: oklch(73% 0.17 30);
+  --color-coral-500: oklch(68% 0.19 30);    /* Hero swatched */
+  --color-coral-600: oklch(60% 0.18 30);
+  --color-coral-700: oklch(52% 0.14 30);
+  --color-coral-800: oklch(42% 0.11 30);
+  --color-coral-900: oklch(32% 0.08 30);
+
+  /* Violet 🔮 — Secondary actions, cosmic depth, links */
+  --color-violet-50:  oklch(97% 0.03 300);
+  --color-violet-100: oklch(92% 0.07 300);
+  --color-violet-200: oklch(84% 0.13 300);
+  --color-violet-300: oklch(74% 0.17 300);
+  --color-violet-400: oklch(64% 0.20 300);
+  --color-violet-500: oklch(55% 0.22 300);  /* Hero */
+  --color-violet-600: oklch(47% 0.19 300);
+  --color-violet-700: oklch(39% 0.15 300);
+  --color-violet-800: oklch(31% 0.11 300);
+  --color-violet-900: oklch(23% 0.08 300);
+
+  /* Teal ⚡️ — Success, momentum, forward movement */
+  --color-teal-50:  oklch(98% 0.02 180);
+  --color-teal-100: oklch(93% 0.06 180);
+  --color-teal-200: oklch(87% 0.09 180);
+  --color-teal-300: oklch(81% 0.12 180);
+  --color-teal-400: oklch(76% 0.13 180);
+  --color-teal-500: oklch(72% 0.14 180);   /* Hero */
+  --color-teal-600: oklch(62% 0.13 180);
+  --color-teal-700: oklch(52% 0.11 180);
+  --color-teal-800: oklch(42% 0.09 180);
+  --color-teal-900: oklch(32% 0.06 180);
+
+  /* Amber 🍯 — Warnings, highlights, spark fire */
+  --color-amber-50:  oklch(98% 0.03 85);
+  --color-amber-100: oklch(94% 0.07 85);
+  --color-amber-200: oklch(89% 0.11 85);
+  --color-amber-300: oklch(85% 0.14 85);
+  --color-amber-400: oklch(82% 0.15 85);
+  --color-amber-500: oklch(80% 0.16 85);   /* Hero */
+  --color-amber-600: oklch(71% 0.15 85);
+  --color-amber-700: oklch(60% 0.12 85);
+  --color-amber-800: oklch(49% 0.10 85);
+  --color-amber-900: oklch(38% 0.07 85);
+
+  /* Fuchsia 🪩 — Alert, hot accent, failure/cautionary warning */
+  --color-fuchsia-50:  oklch(97% 0.03 340);
+  --color-fuchsia-100: oklch(92% 0.08 340);
+  --color-fuchsia-200: oklch(84% 0.14 340);
+  --color-fuchsia-300: oklch(74% 0.19 340);
+  --color-fuchsia-400: oklch(65% 0.23 340);
+  --color-fuchsia-500: oklch(58% 0.25 340); /* Hero */
+  --color-fuchsia-600: oklch(50% 0.21 340);
+  --color-fuchsia-700: oklch(42% 0.17 340);
+  --color-fuchsia-800: oklch(34% 0.13 340);
+  --color-fuchsia-900: oklch(25% 0.09 340);
+
+  /* Lime 🥑 — Tags, fresh launch, beta badge */
+  --color-lime-50:  oklch(98% 0.03 130);
+  --color-lime-100: oklch(94% 0.08 130);
+  --color-lime-200: oklch(89% 0.13 130);
+  --color-lime-300: oklch(86% 0.16 130);
+  --color-lime-400: oklch(84% 0.18 130);
+  --color-lime-500: oklch(82% 0.20 130);   /* Hero */
+  --color-lime-600: oklch(71% 0.17 130);
+  --color-lime-700: oklch(59% 0.14 130);
+  --color-lime-800: oklch(47% 0.11 130);
+  --color-lime-900: oklch(36% 0.08 130);
+
+  /* Slate ☕️ — Neutral grounding */
+  --color-slate-100: oklch(94% 0.01 260);
+  --color-slate-200: oklch(88% 0.01 260);
+  --color-slate-500: oklch(55% 0.02 260);
+  --color-slate-800: oklch(28% 0.02 260);
+  --color-slate-900: oklch(18% 0.02 260);
+
+  /* --------------------------------------------------------------------------
+     GEOMETRY & ASYMMETRIC FUNK SHAPES
+     -------------------------------------------------------------------------- */
+  --shape-xs: 4px;
+  --shape-sm: 8px 4px 8px 4px;
+  --shape-md: 16px 6px 16px 6px;
+  --shape-lg: 28px 10px 28px 10px;
+  --shape-xl: 36px 14px 36px 14px;
+  --shape-pill: 9999px;
+  --shape-squircle: 22.5%;
+
+  /* Funk Asymmetric Signature Patterns */
+  --shape-leaf: 28px 8px 28px 8px;
+  --shape-leaf-rev: 8px 28px 8px 28px;
+  --shape-wave: 14px 30px 14px 30px;
+  --shape-flag: 0px 24px 24px 24px;
+  --shape-shield: 6px 6px 36px 36px;
+  --shape-chat: 22px 22px 22px 0px;
+
+  /* --------------------------------------------------------------------------
+     HARD-OFFSET 3D COLORED ELEVATION (Funk 🎸 Signature)
+     -------------------------------------------------------------------------- */
+  --shadow-color: var(--border-dark);
+  --elevation-0: none;
+  --elevation-1: 3px 3px 0 var(--shadow-color);
+  --elevation-2: 6px 6px 0 var(--shadow-color);
+  --elevation-3: 10px 10px 0 var(--shadow-color);
+  --elevation-4: 14px 14px 0 var(--shadow-color);
+  --elevation-pressed: 1px 1px 0 var(--shadow-color);
+
+  /* Colored Hard Shadow Presets */
+  --shadow-coral: 6px 6px 0 var(--color-coral-500);
+  --shadow-coral-lg: 10px 10px 0 var(--color-coral-500);
+  --shadow-violet: 6px 6px 0 var(--color-violet-500);
+  --shadow-violet-lg: 10px 10px 0 var(--color-violet-500);
+  --shadow-teal: 6px 6px 0 var(--color-teal-500);
+  --shadow-teal-lg: 10px 10px 0 var(--color-teal-500);
+  --shadow-lime: 6px 6px 0 var(--color-lime-500);
+  --shadow-amber: 6px 6px 0 var(--color-amber-500);
+  --shadow-fuchsia: 6px 6px 0 var(--color-fuchsia-500);
+
+  /* --------------------------------------------------------------------------
+     SPRING PHYSICS (LINEAR APPROXIMATIONS)
+     -------------------------------------------------------------------------- */
+  /* Bouncy — visible overshoot for Funk 🎸 mode (damping ~0.75) */
+  --ease-spring-bouncy: linear(
+    0, 0.004, 0.016, 0.035, 0.063, 0.098, 0.141, 0.191, 0.25, 0.316,
+    0.39, 0.472, 0.562, 0.659, 0.763, 0.876, 0.998, 1.046, 1.078,
+    1.099, 1.109, 1.112, 1.109, 1.102, 1.091, 1.078, 1.063, 1.048,
+    1.033, 1.019, 1.008, 1.0
+  );
+
+  /* Snappy — fast settle */
+  --ease-spring-snappy: linear(
+    0, 0.009, 0.035, 0.078, 0.138, 0.213, 0.303, 0.406, 0.52, 0.642,
+    0.763, 0.868, 0.944, 0.988, 1.008, 1.014, 1.012, 1.006, 1.002, 1.0
+  );
+
+  /* Gentle — for sheets & dialogs */
+  --ease-spring-gentle: linear(
+    0, 0.002, 0.009, 0.02, 0.038, 0.063, 0.096, 0.139, 0.192, 0.255,
+    0.33, 0.415, 0.51, 0.612, 0.718, 0.822, 0.916, 0.982, 1.018,
+    1.028, 1.025, 1.016, 1.008, 1.003, 1.0
+  );
+
+  /* Quick — near-instant micro-interactions (press feedback) */
+  --ease-spring-quick: linear(
+    0, 0.02, 0.075, 0.165, 0.29, 0.44, 0.607, 0.774, 0.908, 0.985,
+    1.012, 1.008, 1.002, 1.0
+  );
+
+  --press-scale: 0.92;
+
+  /* --------------------------------------------------------------------------
+     TYPOGRAPHY TOKENS
+     -------------------------------------------------------------------------- */
+  --font-display: 'Satoshi Variable', 'Satoshi', system-ui, -apple-system, sans-serif;
+  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
+  --font-arabic: 'Cairo', system-ui, -apple-system, sans-serif;
+
+  /* Fluid Display Scale */
+  --type-display-hero: clamp(2.75rem, 6.5vw, 5.25rem);
+  --type-display-xl: clamp(2.25rem, 5vw, 4rem);
+  --type-display: clamp(1.75rem, 3.5vw, 2.75rem);
+  --type-h1: clamp(1.5rem, 2.5vw, 2.125rem);
+  --type-h2: clamp(1.25rem, 2vw, 1.625rem);
+  --type-h3: 1.125rem;
+
+  --type-body-lg: 1.125rem;
+  --type-body: 1rem;
+  --type-body-sm: 0.875rem;
+  --type-caption: 0.75rem;
+
+  --type-mono-lg: 1rem;
+  --type-mono: 0.875rem;
+  --type-mono-sm: 0.75rem;
+
+  /* --------------------------------------------------------------------------
+     SPACING TOKENS (4px BASE UNIT)
+     -------------------------------------------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+}
