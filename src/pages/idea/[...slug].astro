@@ -62,6 +62,14 @@ const hasCompany = !isMissing(idea.data.company);
 const hasStage = !isMissing(idea.data.stage);
 const hasSector = !isMissing(idea.data.sector);
 const hasCountry = !isMissing(idea.data.country);
+const hasFounders = !isMissing(idea.data.founders);
+const hasHq = !isMissing(idea.data.hqCity);
+const hasBiz = !isMissing(idea.data.businessModel);
+const hasLicense = !isMissing(idea.data.license);
+const hasVision = !isMissing(idea.data.vision2030Fit);
+const hasMetrics = !isMissing(idea.data.usersMetrics);
+const hasInvestors = !isMissing(idea.data.investors);
+const statusLabel = idea.data.status === 'closed' ? 'Closed' : idea.data.status === 'failed' ? 'Failed' : idea.data.status === 'idea' ? 'Idea' : 'Operating';
 
 const words = (idea.body || '').split(/\s+/).filter(Boolean).length;
 const readingMinutes = Math.max(2, Math.round((words + 120) / 200));
@@ -216,7 +224,14 @@ const pillars = [
           {hasCompany && (<><dt>Company</dt><dd>{idea.data.company}</dd></>)}
           {hasFounded && (<><dt>Founded</dt><dd>{idea.data.founded}</dd></>)}
           {hasStage && (<><dt>Stage</dt><dd style="text-transform: capitalize;">{idea.data.stage}</dd></>)}
-          <dt>Status</dt><dd style="text-transform: capitalize;">{idea.data.status === 'closed' ? 'Closed' : 'Operating'}</dd>
+          <dt>Status</dt><dd style="text-transform: capitalize;">{statusLabel}</dd>
+          {hasFounders && (<><dt>Founders</dt><dd>{idea.data.founders}</dd></>)}
+          {hasHq && (<><dt>HQ</dt><dd>{idea.data.hqCity}</dd></>)}
+          {hasBiz && (<><dt>Business model</dt><dd>{idea.data.businessModel}</dd></>)}
+          {hasLicense && (<><dt>License</dt><dd>{idea.data.license}</dd></>)}
+          {hasVision && (<><dt>Vision 2030 fit</dt><dd>{idea.data.vision2030Fit}</dd></>)}
+          {hasMetrics && (<><dt>Traction</dt><dd>{idea.data.usersMetrics}</dd></>)}
+          {hasInvestors && (<><dt>Investors</dt><dd>{idea.data.investors}</dd></>)}
           {hasRaised && (<><dt>Raised</dt><dd>{idea.data.amountRaised}{!isMissing(idea.data.amountSource) && <span class="iv2-src"> · {idea.data.amountSource}</span>}</dd></>)}
           {hasValuation && (<><dt>Valuation</dt><dd>{idea.data.valuation}{!isMissing(idea.data.valuationSource) && <span class="iv2-src"> · {idea.data.valuationSource}</span>}</dd></>)}
         </dl>
