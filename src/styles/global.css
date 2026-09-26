@@ -154,13 +154,16 @@ main {
 /* --------------------------------------------------------------------------
    OPAQUE FUNK NAVIGATION (NO BLUR, CONFIDENT HEAVY OUTLINES)
    -------------------------------------------------------------------------- */
+/* Floating dock: transparent sticky wrapper, opaque pill inside.
+   Page content flows above and around it — no navbar strip. */
 .nav {
   position: sticky;
   top: 0;
-  background-color: var(--surface-2);
-  border-bottom: 3px solid var(--border-dark);
-  box-shadow: 0 4px 0 var(--border-dark);
   z-index: 50;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 12px 16px 0;
 }
 
 .nav-inner {
@@ -172,6 +175,11 @@ main {
   margin: 0 auto;
   gap: var(--space-4);
   flex-wrap: wrap;
+  min-height: 72px;
+  background-color: var(--color-amber-200);
+  border: 3px solid var(--border-dark);
+  border-radius: 9999px;
+  box-shadow: 6px 6px 0 var(--border-dark);
 }
 
 .brand-group {
@@ -272,7 +280,7 @@ main {
 }
 
 .nav-link--active {
-  background-color: var(--color-amber-200);
+  background-color: var(--surface-3);
   border-color: var(--border-dark);
   box-shadow: var(--elevation-1);
 }
@@ -314,6 +322,180 @@ main {
   color: var(--surface-3);
   font-weight: 900;
   box-shadow: 1.5px 1.5px 0 var(--border-dark);
+}
+
+/* --------------------------------------------------------------------------
+   COMPACT HEADER: hamburger toggle + mobile-only CTA (hidden on desktop)
+   -------------------------------------------------------------------------- */
+.nav-toggle {
+  display: none;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 8px 14px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  background-color: var(--surface-3);
+  border: 2.5px solid var(--border-dark);
+  border-radius: var(--shape-pill);
+  box-shadow: var(--elevation-1);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform 100ms var(--ease-spring-quick), box-shadow 100ms var(--ease-spring-quick), background-color 150ms ease;
+}
+
+.nav-toggle:hover {
+  background-color: var(--surface-1);
+  transform: translateY(-2px);
+  box-shadow: var(--elevation-2);
+}
+
+.nav-toggle:active {
+  transform: scale(0.95);
+  box-shadow: var(--elevation-pressed);
+}
+
+.nav-toggle-bars {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 18px;
+}
+
+.nav-toggle-bars > span {
+  display: block;
+  height: 2.5px;
+  width: 100%;
+  background-color: var(--text-primary);
+  border-radius: 9999px;
+  transition: transform 180ms var(--ease-spring-quick), opacity 120ms ease;
+}
+
+/* (nav-cta removed: it duplicated the Sparks link) */
+
+/* Mobile: slim 60px bar, links live in a full-page overlay */
+@media (max-width: 859.98px) {
+  .nav-inner {
+    flex-wrap: nowrap;
+    gap: var(--space-3);
+    min-height: 60px;
+    padding: 8px var(--space-4);
+  }
+
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+
+  .brand-name {
+    font-size: 1.05rem;
+  }
+
+  .brand-kicker {
+    font-size: 0.6875rem;
+    margin-top: 1px;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+    flex-shrink: 0;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  body.is-menu-open {
+    overflow: hidden;
+  }
+
+  /* Floating menu card docked under the pill — opaque, in space, not a sheet */
+  body.is-menu-open .nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    position: fixed;
+    top: 80px;
+    left: 12px;
+    right: 12px;
+    z-index: 60;
+    max-height: calc(100dvh - 92px);
+    padding: var(--space-2) var(--space-4) var(--space-6);
+    overflow-y: auto;
+    background-color: var(--surface-2);
+    border: 3px solid var(--border-dark);
+    border-radius: 24px;
+    box-shadow: 10px 10px 0 var(--border-dark);
+    animation: menu-rise 200ms var(--ease-spring-quick);
+  }
+
+  /* Restrained list rows: hairline separators, single accent on the active page */
+  body.is-menu-open .nav-link {
+    font-size: 1.25rem;
+    min-height: 56px;
+    padding: 12px 8px;
+    align-items: center;
+    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid var(--border-default);
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  body.is-menu-open .nav-link:hover {
+    background-color: var(--surface-1);
+    transform: none;
+    box-shadow: none;
+    color: var(--text-primary);
+  }
+
+  body.is-menu-open .nav-link:active {
+    transform: scale(0.97);
+    background-color: var(--surface-1);
+    box-shadow: none;
+  }
+
+  body.is-menu-open .nav-link--active {
+    background-color: var(--color-amber-200);
+    border: 2.5px solid var(--border-dark);
+    border-radius: var(--shape-pill);
+    box-shadow: var(--elevation-1);
+    padding: 12px 18px;
+  }
+
+  body.is-menu-open .lang-switch-box {
+    align-self: flex-start;
+    margin-top: var(--space-4);
+  }
+
+  /* Hamburger morphs to X while the menu is open */
+  body.is-menu-open .nav-toggle-bars > span:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+
+  body.is-menu-open .nav-toggle-bars > span:nth-child(2) {
+    opacity: 0;
+  }
+
+  body.is-menu-open .nav-toggle-bars > span:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+}
+
+@keyframes menu-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1209,40 +1391,128 @@ main {
 /* --------------------------------------------------------------------------
    FOOTER
    -------------------------------------------------------------------------- */
+/* Ink band footer: warm espresso surface, amber edge, light text */
 .footer {
-  border-top: 3px solid var(--border-dark);
-  background-color: var(--surface-2);
+  border-top: 4px solid var(--color-amber-400);
+  background-color: var(--text-primary);
   padding: var(--space-10) 0 var(--space-8);
   margin-top: var(--space-16);
-  box-shadow: 0 -4px 0 var(--border-dark);
+  box-shadow: none;
 }
 
 .footer-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: var(--space-6);
 }
 
-.footer-stickers {
-  display: flex;
-  gap: var(--space-2);
-  flex-wrap: wrap;
+@media (min-width: 768px) {
+  .footer-inner {
+    grid-template-columns: 1.5fr 1fr 1fr;
+    align-items: start;
+  }
 }
 
-.footer-sticker {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  background-color: var(--surface-1);
-  border: 2px solid var(--border-dark);
-  border-radius: var(--shape-pill);
+.footer-brand-name {
+  font-size: 1.25rem;
+  margin-bottom: var(--space-2);
+  color: var(--surface-3);
+}
+
+.footer-brand-blurb {
+  font-size: 0.9375rem;
+  max-width: 44ch;
+  margin-bottom: var(--space-4);
+  color: var(--surface-1);
+}
+
+/* (footer-cta removed: it duplicated the All Sparks link) */
+
+.footer-heading {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 800;
-  box-shadow: 2px 2px 0 var(--border-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-amber-300);
+  margin-bottom: var(--space-2);
+}
+
+.footer-link-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 6px 0;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: var(--surface-3);
+  text-decoration: none;
+  touch-action: manipulation;
+  transition: transform 100ms var(--ease-spring-quick), color 150ms ease;
+}
+
+.footer-link:hover {
+  color: var(--color-amber-300);
+  transform: translateX(3px);
+}
+
+.footer-link:active {
+  transform: scale(0.96);
+}
+
+.footer-top-link {
+  display: inline-flex;
+  align-items: center;
+  margin-left: auto;
+  min-height: 44px;
+  padding: 6px 14px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  background-color: var(--color-amber-300);
+  border: 2px solid var(--surface-3);
+  border-radius: var(--shape-pill);
+  box-shadow: 2px 2px 0 var(--color-amber-600);
+  touch-action: manipulation;
+  transition: transform 100ms var(--ease-spring-quick), box-shadow 100ms var(--ease-spring-quick);
+}
+
+.footer-top-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 3px 3px 0 var(--color-amber-600);
+}
+
+.footer-top-link:active {
+  transform: scale(0.95);
+  box-shadow: 1px 1px 0 var(--color-amber-600);
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin-top: var(--space-8);
+  padding-top: var(--space-5);
+  border-top: 2px dashed var(--border-default);
+}
+
+.footer-bottom p {
+  font-size: 0.8125rem;
+  color: var(--surface-1);
+  margin: 0;
 }
 
 /* --------------------------------------------------------------------------
@@ -1275,5 +1545,11 @@ main {
   }
   .card:hover, .btn:hover, .brand-group:hover .brand-mark {
     transform: none !important;
+  }
+  body.is-menu-open .nav-links {
+    animation: none;
+  }
+  .nav-toggle, .nav-toggle-bars > span, .footer-link, .footer-top-link {
+    transition-duration: 0.01ms !important;
   }
 }

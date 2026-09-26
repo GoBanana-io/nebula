@@ -106,12 +106,8 @@ const copyText = `${title}\n\nSummary: ${summary}\n\nعربي: ${summaryAr || ''
     ))}
   </ul>
 
-  <!-- Card Action Bar: Direct Link + 1-Click Copy -->
+  <!-- Card Action Bar: 1-Click Copy left, Read Story right (thumb side) -->
   <div class="card-action-bar">
-    <a href={`/idea/${slug}`} class="btn-copy-spark" style="text-decoration: none;">
-      Read Story ➔
-    </a>
-
     <button
       class="btn-copy-spark"
       type="button"
@@ -122,5 +118,9 @@ const copyText = `${title}\n\nSummary: ${summary}\n\nعربي: ${summaryAr || ''
       <span>📋</span>
       <span>Copy</span>
     </button>
+
+    <a href={`/idea/${slug}`} class="btn-copy-spark" style="text-decoration: none;">
+      Read Story ➔
+    </a>
   </div>
 </div>

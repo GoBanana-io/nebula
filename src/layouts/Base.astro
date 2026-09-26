@@ -54,8 +54,8 @@ const {
   <body data-funky-mode="funk" data-funky-palette="sunlit">
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- Opaque Funk Header -->
-    <header class="nav">
+    <!-- Compact Funk Header: slim bar on mobile, full-page menu on demand -->
+    <header class="nav" id="site-nav">
       <div class="nav-inner">
         <a class="brand-group" href="/" aria-label="Banana Nebula Homepage">
           <span class="brand-mark" aria-hidden="true">✦</span>
@@ -65,23 +65,42 @@ const {
           </div>
         </a>
 
-        <!-- Navigation Links -->
-        <nav class="nav-links" aria-label="Primary Navigation">
+        <button
+          class="nav-toggle"
+          id="nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="primary-nav"
+          aria-label="Open menu"
+        >
+          <span class="nav-toggle-bars" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+          <span class="nav-toggle-text" id="nav-toggle-text">Menu</span>
+        </button>
+
+        <!-- Navigation Links: inline on desktop, full-page overlay on mobile -->
+        <nav class="nav-links" id="primary-nav" aria-label="Primary Navigation">
           <a
-            class={`nav-link ${activePath === '/' || activePath.startsWith('/#') ? 'nav-link--active' : ''}`}
+            class={`nav-link ${activePath === '/' ? 'nav-link--active' : ''}`}
             href="/#sparks"
+            aria-current={activePath === '/' ? 'page' : undefined}
           >
             🔥 Sparks
           </a>
           <a
             class={`nav-link ${activePath === '/random' ? 'nav-link--active' : ''}`}
             href="/random"
+            aria-current={activePath === '/random' ? 'page' : undefined}
           >
             🎲 Roulette
           </a>
           <a
             class={`nav-link ${activePath.startsWith('/tags') ? 'nav-link--active' : ''}`}
             href="/tags"
+            aria-current={activePath.startsWith('/tags') ? 'page' : undefined}
           >
             🏷 Sectors
           </a>
@@ -112,17 +131,35 @@ const {
     <footer class="footer">
       <div class="container footer-inner">
         <div class="footer-brand-summary">
-          <h3 style="font-size: 1.25rem;">Banana Nebula</h3>
-          <p style="font-size: 0.9375rem; max-width: 44ch;">
-            Real startup sparks to inspire founders and builders. Not a company. Just raw inspiration.
+          <h3 class="footer-brand-name">Banana Nebula</h3>
+          <p class="footer-brand-blurb">
+            Real startup sparks to inspire founders and builders.
           </p>
         </div>
 
-        <div class="footer-stickers">
-          <span class="footer-sticker">🎸 FUNK 11</span>
-          <span class="footer-sticker">⚡️ RAW INSPIRATION</span>
-          <span class="footer-sticker">💡 ZERO FLUFF</span>
-        </div>
+        <nav class="footer-col" aria-label="Explore">
+          <h4 class="footer-heading">Explore</h4>
+          <ul class="footer-link-list">
+            <li><a class="footer-link" href="/#sparks">🔥 All Sparks</a></li>
+            <li><a class="footer-link" href="/random">🎲 Roulette</a></li>
+            <li><a class="footer-link" href="/tags">🏷 Sectors</a></li>
+          </ul>
+        </nav>
+
+        <nav class="footer-col" aria-label="Top playbooks">
+          <h4 class="footer-heading">Top Playbooks</h4>
+          <ul class="footer-link-list">
+            <li><a class="footer-link" href="/tags/fintech">💳 Fintech</a></li>
+            <li><a class="footer-link" href="/tags/unicorn">🦄 Unicorns</a></li>
+            <li><a class="footer-link" href="/tags/failure">💥 Failed</a></li>
+          </ul>
+        </nav>
+
+      </div>
+
+      <div class="container footer-bottom">
+        <p class="footer-credit">© 2026 Banana Nebula</p>
+        <a class="footer-top-link" href="#main">↑ Top</a>
       </div>
     </footer>
 
@@ -178,6 +215,45 @@ const {
         } else {
           initLang();
         }
+
+        // Compact header: full-page mobile menu (closes on link, ESC, resize)
+        (function () {
+          var toggle = document.getElementById('nav-toggle');
+          var nav = document.getElementById('primary-nav');
+          var label = document.getElementById('nav-toggle-text');
+          if (!toggle || !nav) return;
+
+          function setMenu(open) {
+            document.body.classList.toggle('is-menu-open', open);
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+            if (label) label.textContent = open ? 'Close' : 'Menu';
+          }
+
+          function isOpen() {
+            return document.body.classList.contains('is-menu-open');
+          }
+
+          toggle.addEventListener('click', function () {
+            setMenu(!isOpen());
+          });
+
+          nav.addEventListener('click', function (e) {
+            var link = e.target && e.target.closest ? e.target.closest('a') : null;
+            if (link) setMenu(false);
+          });
+
+          document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && isOpen()) {
+              setMenu(false);
+              toggle.focus();
+            }
+          });
+
+          window.addEventListener('resize', function () {
+            if (window.innerWidth >= 860 && isOpen()) setMenu(false);
+          });
+        })();
 
         // Global Toast Helper
         window.showSparkToast = function (msg) {
