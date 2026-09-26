@@ -1,0 +1,147 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const ideas = await getCollection('ideas');
+
+// Arabic sector translations
+const tagArMap: Record<string, string> = {
+  fintech: 'تكنولوجيا مالية',
+  agritech: 'تكنولوجيا زراعية',
+  logistics: 'لوجستيات وتوصيل',
+  unicorn: 'شركات يونيكورن',
+  failure: 'دروس تعثر',
+  ecommerce: 'تجارة إلكترونية',
+  proptech: 'تكنولوجيا عقارية',
+  healthtech: 'تكنولوجيا صحية',
+  diagnostics: 'تشخيص طبي',
+  edtech: 'تعليم وتدريب',
+  mobility: 'نقل ذكي',
+  ai: 'ذكاء اصطناعي',
+  marketplace: 'منصات وسيطة',
+  climate: 'مناخ واستدامة',
+  energy: 'طاقة ونفايات',
+  b2b: 'تجارة بين الشركات',
+  saas: 'برمجيات خدمية',
+  payments: 'مدفوعات إلكترونية',
+  egypt: 'مصر',
+};
+
+// Map tag counts
+const tagCountMap: Record<string, number> = {};
+ideas.forEach((idea) => {
+  idea.data.tags.forEach((tag) => {
+    tagCountMap[tag] = (tagCountMap[tag] || 0) + 1;
+  });
+});
+
+const sortedTags = Object.entries(tagCountMap)
+  .map(([tag, count]) => ({
+    tag,
+    count,
+    ar: tagArMap[tag] || tag,
+  }))
+  .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag));
+---
+
+<Base
+  title="Sectors & Themes 🏷 — Banana Nebula"
+  description="Explore startup playbooks organized by sector, tech, and business models."
+  activePath="/tags"
+>
+  <div style="margin: var(--space-8) 0 var(--space-16);">
+    <!-- Tag Header -->
+    <div style="margin-bottom: var(--space-8);">
+      <div class="hero-tag-kicker">
+        <span>🏷</span>
+        <span>Sectors & Themes</span>
+        <span>✦</span>
+        <span>{sortedTags.length} Taxonomies</span>
+      </div>
+      <h1 style="font-size: var(--type-display-xl); margin-bottom: var(--space-2);">
+        Sectors & Themes
+      </h1>
+      <p style="font-size: 1.125rem;">
+        Pick a market sector to filter playbooks and lessons.
+      </p>
+    </div>
+
+    <!-- Funky Sticker Tag Cloud -->
+    <div
+      style="
+        background-color: var(--surface-2);
+        border: 3px solid var(--border-dark);
+        border-radius: var(--shape-xl);
+        padding: var(--space-8) var(--space-6);
+        box-shadow: var(--elevation-3);
+      "
+    >
+      <ul
+        class="chips"
+        aria-label="All tags with idea counts"
+        style="gap: var(--space-3); justify-content: flex-start;"
+      >
+        {sortedTags.map(({ tag, count, ar }, idx) => {
+          const rotations = [-2, 1.5, -1, 2.5, -1.5, 2];
+          const rot = rotations[idx % rotations.length];
+          const isHeavy = count >= 3;
+
+          return (
+            <li>
+              <a
+                class="chip"
+                href={`/tags/${tag}`}
+                style={`
+                  transform: rotate(${rot}deg);
+                  font-size: ${isHeavy ? '1rem' : '0.875rem'};
+                  padding: ${isHeavy ? '8px 16px' : '6px 14px'};
+                  background-color: ${
+                    tag === 'unicorn'
+                      ? 'var(--color-violet-100)'
+                      : tag === 'failure'
+                      ? 'var(--color-fuchsia-100)'
+                      : tag === 'fintech'
+                      ? 'var(--color-coral-100)'
+                      : isHeavy
+                      ? 'var(--color-amber-100)'
+                      : 'var(--color-lime-100)'
+                  };
+                `}
+              >
+                <span>#{tag}</span>
+                {ar && ar !== tag && (
+                  <span style="font-family: var(--font-arabic); font-size: 0.8125rem; font-weight: 800; color: var(--text-secondary); margin-left: 4px;">
+                    · {ar}
+                  </span>
+                )}
+                <span
+                  style="
+                    margin-left: 6px;
+                    padding: 2px 7px;
+                    background-color: var(--surface-3);
+                    border: 1px solid var(--border-dark);
+                    border-radius: var(--shape-pill);
+                    font-size: 0.75rem;
+                    font-weight: 800;
+                  "
+                >
+                  {count}
+                </span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+
+    <!-- Quick Return -->
+    <div style="margin-top: var(--space-10); display: flex; gap: var(--space-3);">
+      <a class="btn btn-secondary" href="/#sparks">
+        ← All Sparks
+      </a>
+      <a class="btn btn-violet" href="/random">
+        🎲 Random Spark
+      </a>
+    </div>
+  </div>
+</Base>

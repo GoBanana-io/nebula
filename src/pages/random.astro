@@ -1,0 +1,242 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const ideas = await getCollection('ideas');
+const sparksData = ideas.map((idea) => ({
+  slug: idea.id.replace(/\.md$/, ''),
+  title: idea.data.title,
+  summary: idea.data.summary,
+  summaryAr: idea.data.summaryAr || '',
+  sector: idea.data.sector || '',
+  stage: idea.data.stage || '',
+  valuation: idea.data.valuation || '',
+  amountRaised: idea.data.amountRaised || '',
+  status: idea.data.status || 'operating',
+  whyItWorked: idea.data.whyItWorked || idea.data.coreProblem || '',
+  isFailure: idea.data.status === 'closed' || idea.data.tags.includes('failure'),
+  isUnicorn: idea.data.tags.includes('unicorn'),
+}));
+
+const initialIndex = Math.floor(Math.random() * sparksData.length);
+const initialSpark = sparksData[initialIndex];
+---
+
+<Base
+  title="Spark Roulette 🎲 — Banana Nebula"
+  description="Spin the startup roulette and get your next spark in seconds."
+  activePath="/random"
+>
+  <section style="margin: var(--space-8) 0 var(--space-16);">
+    <!-- Roulette Header -->
+    <div style="text-align: center; max-width: 680px; margin: 0 auto var(--space-8);">
+      <div class="hero-tag-kicker" style="margin-bottom: var(--space-3);">
+        <span>🎰</span>
+        <span>Instant Serendipity</span>
+        <span>✦</span>
+        <span>12 Ready Sparks</span>
+      </div>
+      <h1 style="font-size: var(--type-display-xl); margin-bottom: var(--space-2);">
+        Spark Roulette
+      </h1>
+      <p style="margin: 0 auto; font-size: 1.125rem;">
+        Spin the wheel. Get one pure spark. Steal the playbook.
+      </p>
+    </div>
+
+    <!-- The Slot Machine Stage -->
+    <div
+      id="roulette-box"
+      style="
+        max-width: 840px;
+        margin: 0 auto;
+        background-color: var(--surface-2);
+        border: 3.5px solid var(--border-dark);
+        border-radius: var(--shape-xl);
+        box-shadow: var(--elevation-3);
+        padding: var(--space-8) var(--space-6);
+        position: relative;
+        overflow: hidden;
+      "
+    >
+      <!-- Slot Top Status Bar -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-5); flex-wrap: wrap; gap: var(--space-2);">
+        <span class="card-badge-status card-badge-status--unicorn" id="roulette-tag">
+          🎲 Ready to Roll
+        </span>
+        <span style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-muted);">
+          1 of {sparksData.length} Sparks
+        </span>
+      </div>
+
+      <!-- Live Display Card Preview -->
+      <div
+        id="spark-display"
+        style="
+          background-color: var(--surface-1);
+          border: 2.5px solid var(--border-dark);
+          border-radius: var(--shape-leaf);
+          padding: var(--space-6);
+          box-shadow: var(--elevation-2);
+          margin-bottom: var(--space-6);
+          transition: transform 150ms var(--ease-spring-bouncy), opacity 150ms ease;
+        "
+      >
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3); flex-wrap: wrap; gap: var(--space-2);">
+          <span class="chip chip-sector" id="spark-sector">
+            {initialSpark.sector || 'Startup'}
+          </span>
+          <span class="card-kpi-pill" id="spark-kpi">
+            {initialSpark.valuation && initialSpark.valuation !== 'MISSING'
+              ? `Val: ${initialSpark.valuation}`
+              : initialSpark.amountRaised
+              ? `Raised: ${initialSpark.amountRaised}`
+              : 'Active Spark'}
+          </span>
+        </div>
+
+        <h2 id="spark-title" style="font-size: clamp(1.5rem, 3.5vw, 2.25rem); margin-bottom: var(--space-3); line-height: 1.15;">
+          {initialSpark.title}
+        </h2>
+
+        <!-- Bilingual Body (Content) -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-4);">
+          <div class="lead-box-en" style="background-color: var(--surface-2); border: 1.5px solid var(--border-dark); border-radius: var(--shape-sm); padding: var(--space-4);">
+            <strong style="font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; color: var(--color-coral-700); display: block; margin-bottom: 3px;">
+              English Summary
+            </strong>
+            <p id="spark-summary" style="font-size: 1rem; color: var(--text-primary); margin: 0;">
+              {initialSpark.summary}
+            </p>
+          </div>
+
+          <div class="lead-box-ar" style="background-color: oklch(95% 0.02 65); border: 1.5px solid var(--border-dark); border-radius: var(--shape-sm); padding: var(--space-4); direction: rtl;">
+            <strong style="font-family: var(--font-arabic); font-size: 0.8125rem; font-weight: 900; color: var(--color-violet-700); display: block; margin-bottom: 3px;">
+              الملخص العربي
+            </strong>
+            <p id="spark-summary-ar" style="font-family: var(--font-arabic); font-size: 1.0625rem; font-weight: 700; color: var(--text-primary); margin: 0; line-height: 1.6;">
+              {initialSpark.summaryAr}
+            </p>
+          </div>
+        </div>
+
+        {initialSpark.whyItWorked && (
+          <div class="card-pitch-hook" id="spark-hook">
+            <strong>The Move</strong>
+            <span id="spark-hook-text">{initialSpark.whyItWorked}</span>
+          </div>
+        )}
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display: flex; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
+        <button class="btn btn-primary btn-lg" id="btn-spin" type="button">
+          🎰 Spin the Wheel
+        </button>
+        <button class="btn btn-secondary btn-lg" id="btn-copy-roulette" type="button">
+          📋 Copy Spark
+        </button>
+        <a class="btn btn-violet btn-lg" id="btn-open" href={`/idea/${initialSpark.slug}`}>
+          🚀 Full Story ➔
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Return Link -->
+    <div style="text-align: center; margin-top: var(--space-10);">
+      <a class="btn btn-secondary" href="/#sparks">
+        ← Back to All Sparks
+      </a>
+    </div>
+  </section>
+
+  <!-- Interactive Slot Script -->
+  <script define:vars={{ sparksData, initialIndex }}>
+    const allSparks = sparksData;
+    let currentIndex = initialIndex;
+
+    const btnSpin = document.getElementById('btn-spin');
+    const btnOpen = document.getElementById('btn-open');
+    const btnCopy = document.getElementById('btn-copy-roulette');
+    const displayCard = document.getElementById('spark-display');
+    const titleEl = document.getElementById('spark-title');
+    const summaryEl = document.getElementById('spark-summary');
+    const summaryArEl = document.getElementById('spark-summary-ar');
+    const sectorEl = document.getElementById('spark-sector');
+    const kpiEl = document.getElementById('spark-kpi');
+    const hookBox = document.getElementById('spark-hook');
+    const hookText = document.getElementById('spark-hook-text');
+    const tagEl = document.getElementById('roulette-tag');
+
+    let isSpinning = false;
+
+    btnSpin?.addEventListener('click', () => {
+      if (isSpinning) return;
+      isSpinning = true;
+      btnSpin.disabled = true;
+      btnSpin.textContent = '🎲 Rolling...';
+      tagEl.textContent = '⚡️ SPINNING...';
+
+      let rolls = 0;
+      const totalRolls = 16;
+      let intervalSpeed = 60;
+
+      function step() {
+        currentIndex = Math.floor(Math.random() * allSparks.length);
+        const item = allSparks[currentIndex];
+
+        displayCard.style.transform = `scale(0.97) rotate(${Math.sin(rolls) * 2}deg)`;
+
+        titleEl.textContent = item.title;
+        summaryEl.textContent = item.summary;
+        summaryArEl.textContent = item.summaryAr || item.summary;
+        sectorEl.textContent = item.sector || 'Startup';
+        kpiEl.textContent =
+          item.valuation && item.valuation !== 'MISSING'
+            ? `Val: ${item.valuation}`
+            : item.amountRaised
+            ? `Raised: ${item.amountRaised}`
+            : 'Active Spark';
+
+        if (hookBox && hookText) {
+          if (item.whyItWorked) {
+            hookBox.style.display = 'block';
+            hookText.textContent = item.whyItWorked;
+          } else {
+            hookBox.style.display = 'none';
+          }
+        }
+
+        btnOpen.setAttribute('href', `/idea/${item.slug}`);
+
+        rolls++;
+        if (rolls < totalRolls) {
+          intervalSpeed += 14;
+          setTimeout(step, intervalSpeed);
+        } else {
+          displayCard.style.transform = 'scale(1.02) rotate(0deg)';
+          setTimeout(() => {
+            displayCard.style.transform = 'scale(1) rotate(0deg)';
+          }, 180);
+
+          tagEl.textContent = '🎯 SPARK LOCKED';
+          btnSpin.textContent = '🎰 Spin Again';
+          btnSpin.disabled = false;
+          isSpinning = false;
+        }
+      }
+
+      step();
+    });
+
+    btnCopy?.addEventListener('click', () => {
+      const item = allSparks[currentIndex];
+      const text = `${item.title}\n\nSummary: ${item.summary}\n\nعربي: ${item.summaryAr}\n\nThe Move: ${item.whyItWorked}`;
+      navigator.clipboard.writeText(text).then(() => {
+        if (window.showSparkToast) {
+          window.showSparkToast('Playbook copied! Go build.');
+        }
+      });
+    });
+  </script>
+</Base>

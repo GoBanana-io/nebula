@@ -1,0 +1,228 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const ideas = await getCollection('ideas');
+  return ideas.map((idea) => ({
+    params: { slug: idea.id.replace(/\.md$/, '') },
+    props: { id: idea.id },
+  }));
+}
+
+const { id } = Astro.props;
+const idea = await getEntry('ideas', id);
+if (!idea) throw new Error(`Idea not found: ${id}`);
+const { Content } = await render(idea);
+
+// Fetch other ideas for serendipitous next jump
+const allIdeas = await getCollection('ideas');
+const otherIdeas = allIdeas.filter((i) => i.id !== idea.id);
+const randomNext = otherIdeas[Math.floor(Math.random() * otherIdeas.length)];
+const randomSlug = randomNext ? randomNext.id.replace(/\.md$/, '') : '';
+
+const isFailure = idea.data.status === 'closed' || idea.data.tags.includes('failure');
+const isUnicorn = idea.data.tags.includes('unicorn');
+
+const playbookCopyText = `${idea.data.title}\n\nEnglish: ${idea.data.summary}\n\nعربي: ${idea.data.summaryAr || ''}\n\nProblem: ${idea.data.coreProblem || ''}\n\nThe Move: ${idea.data.whyItWorked || ''}\n\nThe Trap: ${idea.data.challenges || ''}\n\nFunding: ${idea.data.amountRaised || ''} | Valuation: ${idea.data.valuation || ''}`;
+---
+
+<Base
+  title={`${idea.data.title} — Banana Nebula`}
+  description={idea.data.summary}
+>
+  <!-- Navigation Back & Quick Actions -->
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-8); flex-wrap: wrap; gap: var(--space-3);">
+    <a class="btn btn-secondary btn-sm" href="/#sparks">
+      ← All Sparks
+    </a>
+
+    <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+      <button
+        class="btn btn-amber btn-sm"
+        type="button"
+        id="btn-copy-playbook"
+        data-text={playbookCopyText}
+        onclick="navigator.clipboard.writeText(this.getAttribute('data-text')).then(() => window.showSparkToast && window.showSparkToast('Playbook copied! Go build.'))"
+      >
+        📋 Copy Playbook
+      </button>
+
+      {randomSlug && (
+        <a class="btn btn-violet btn-sm" href={`/idea/${randomSlug}`}>
+          🎲 Next Spark →
+        </a>
+      )}
+    </div>
+  </div>
+
+  <!-- Hero Teardown Poster -->
+  <header class="idea-detail-header">
+    <div class="card-header-row" style="margin-bottom: var(--space-4);">
+      <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; align-items: center;">
+        {isFailure ? (
+          <span class="card-badge-status card-badge-status--failure">
+            💥 FAILED CASE
+          </span>
+        ) : isUnicorn ? (
+          <span class="card-badge-status card-badge-status--unicorn">
+            🦄 UNICORN
+          </span>
+        ) : (
+          <span class="card-badge-status card-badge-status--operating">
+            ⚡️ {idea.data.stage ? idea.data.stage.toUpperCase() : 'OPERATING'}
+          </span>
+        )}
+
+        {idea.data.sector && (
+          <span class="chip chip-sector">{idea.data.sector}</span>
+        )}
+        {idea.data.country && (
+          <span class="chip" style="background-color: var(--surface-1); color: var(--text-secondary);">
+            📍 {idea.data.country}
+          </span>
+        )}
+      </div>
+
+      {idea.data.valuation && idea.data.valuation !== 'MISSING' && (
+        <span class="card-kpi-pill" style="font-size: 0.9375rem; padding: 4px 12px;">
+          Valuation: {idea.data.valuation}
+        </span>
+      )}
+    </div>
+
+    <h1 class="idea-detail-title">{idea.data.title}</h1>
+
+    <!-- First-Class Bilingual Summary Split -->
+    <div class="idea-bilingual-lead">
+      <div class="lead-box-en">
+        <strong style="font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; color: var(--color-coral-700); display: block; margin-bottom: 4px;">
+          English Summary
+        </strong>
+        <p style="margin: 0; color: var(--text-primary);">{idea.data.summary}</p>
+      </div>
+
+      {idea.data.summaryAr && (
+        <div class="lead-box-ar">
+          <strong style="font-family: var(--font-arabic); font-size: 0.8125rem; font-weight: 900; color: var(--color-violet-700); display: block; margin-bottom: 4px;">
+            الملخص العربي
+          </strong>
+          <p style="margin: 0;">{idea.data.summaryAr}</p>
+        </div>
+      )}
+    </div>
+
+    <!-- Tags -->
+    {idea.data.tags.length > 0 && (
+      <ul class="chips" aria-label="Tags" style="margin-bottom: var(--space-4);">
+        {idea.data.tags.map((tag) => (
+          <li><a class="chip" href={`/tags/${tag}`}>#{tag}</a></li>
+        ))}
+      </ul>
+    )}
+
+    <!-- Bento KPI Grid -->
+    <div class="idea-kpi-grid">
+      {idea.data.amountRaised && (
+        <div class="idea-kpi-cell">
+          <div class="idea-kpi-label">Raised</div>
+          <div class="idea-kpi-value">{idea.data.amountRaised}</div>
+        </div>
+      )}
+
+      {idea.data.valuation && idea.data.valuation !== 'MISSING' && (
+        <div class="idea-kpi-cell">
+          <div class="idea-kpi-label">Valuation</div>
+          <div class="idea-kpi-value" style="color: var(--color-coral-600);">
+            {idea.data.valuation}
+          </div>
+        </div>
+      )}
+
+      {idea.data.founded && (
+        <div class="idea-kpi-cell">
+          <div class="idea-kpi-label">Founded</div>
+          <div class="idea-kpi-value">{idea.data.founded}</div>
+        </div>
+      )}
+
+      {idea.data.status && (
+        <div class="idea-kpi-cell">
+          <div class="idea-kpi-label">Status</div>
+          <div class="idea-kpi-value" style="text-transform: capitalize;">
+            {idea.data.status === 'closed' ? 'Closed' : 'Operating'}
+          </div>
+        </div>
+      )}
+    </div>
+  </header>
+
+  <!-- Core Teardown Cards: Problem / The Move / The Trap -->
+  {(idea.data.coreProblem || idea.data.whyItWorked || idea.data.challenges) && (
+    <section class="teardown-grid" aria-label="Core Teardown Pillars">
+      {idea.data.coreProblem && (
+        <div class="teardown-card teardown-card--problem">
+          <span class="teardown-badge" style="background-color: var(--color-amber-200); color: var(--color-amber-950);">
+            🛑 The Bottleneck
+          </span>
+          <h3>What Was Broken?</h3>
+          <p>{idea.data.coreProblem}</p>
+        </div>
+      )}
+
+      {idea.data.whyItWorked && (
+        <div class="teardown-card teardown-card--why">
+          <span class="teardown-badge" style="background-color: var(--color-teal-200); color: var(--color-teal-950);">
+            🚀 The Move
+          </span>
+          <h3>Why It Worked</h3>
+          <p>{idea.data.whyItWorked}</p>
+        </div>
+      )}
+
+      {idea.data.challenges && (
+        <div class="teardown-card teardown-card--challenges">
+          <span class="teardown-badge" style="background-color: var(--color-coral-200); color: var(--color-coral-950);">
+            ⚠️ The Trap
+          </span>
+          <h3>Battle Scars</h3>
+          <p>{idea.data.challenges}</p>
+        </div>
+      )}
+    </section>
+  )}
+
+  <!-- Full Markdown Body -->
+  <article class="idea-prose">
+    <Content />
+  </article>
+
+  <!-- Sources Section -->
+  {idea.data.sources.length > 0 && (
+    <section class="sources-card" aria-label="Reporting Sources">
+      <h2 style="font-size: 1.2rem; margin-bottom: var(--space-2);">
+        📚 Verification Sources
+      </h2>
+      <ul class="sources-list">
+        {idea.data.sources.map((s) => (
+          <li class="source-item">
+            <a href={s.url} target="_blank" rel="noopener noreferrer">
+              <span>↗</span>
+              <span>{s.title}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <!-- Bottom Navigation -->
+  <div style="display: flex; gap: var(--space-3); margin: var(--space-12) 0 var(--space-8); flex-wrap: wrap;">
+    <a class="btn btn-primary btn-lg" href="/#sparks">
+      🔥 All 12 Sparks
+    </a>
+    <a class="btn btn-violet btn-lg" href="/random">
+      🎲 Spin Roulette
+    </a>
+  </div>
+</Base>

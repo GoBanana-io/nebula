@@ -1,0 +1,325 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Card from '../components/Card.astro';
+
+const ideas = (await getCollection('ideas')).sort(
+  (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime()
+);
+
+const featured = ideas.find((i) => i.data.featured) ?? ideas[0];
+
+// Prepare serializable ideas array for client-side Flashcard mode
+const flashcards = ideas.map((idea) => ({
+  slug: idea.id.replace(/\.md$/, ''),
+  title: idea.data.title,
+  summary: idea.data.summary,
+  summaryAr: idea.data.summaryAr || '',
+  sector: idea.data.sector || '',
+  stage: idea.data.stage || '',
+  valuation: idea.data.valuation || '',
+  amountRaised: idea.data.amountRaised || '',
+  status: idea.data.status || 'operating',
+  coreProblem: idea.data.coreProblem || '',
+  whyItWorked: idea.data.whyItWorked || '',
+  challenges: idea.data.challenges || '',
+  isFailure: idea.data.status === 'closed' || idea.data.tags.includes('failure'),
+  isUnicorn: idea.data.tags.includes('unicorn'),
+}));
+---
+
+<Base>
+  <Hero
+    title="Startup sparks. Steal the playbook."
+    summary="Real startup opportunities, playbooks, and failure lessons. 100% real numbers, zero corporate fluff."
+  />
+
+  <!-- View Switcher & Filter Toolbar -->
+  <section class="filter-bar" id="sparks" aria-labelledby="sparks-heading">
+    <div class="section-title-wrap">
+      <h2 class="section-title" id="sparks-heading">
+        Sparks
+      </h2>
+      <span class="section-counter" id="spark-count" aria-live="polite">
+        {ideas.length} Sparks Live
+      </span>
+    </div>
+
+    <!-- View Mode Switcher -->
+    <div class="view-mode-toggle" role="group" aria-label="View Mode">
+      <button class="view-btn is-active" id="view-mode-grid" type="button">
+        🗂 Grid
+      </button>
+      <button class="view-btn" id="view-mode-flash" type="button">
+        ⚡️ Flashcard
+      </button>
+    </div>
+
+    <!-- Category Filter Buttons -->
+    <div class="filter-pills" role="toolbar" aria-label="Filter sparks">
+      <button class="filter-btn is-active" data-filter="all" type="button">
+        ✦ All ({ideas.length})
+      </button>
+      <button class="filter-btn" data-filter="unicorn" type="button">
+        🦄 Unicorns
+      </button>
+      <button class="filter-btn" data-filter="fintech" type="button">
+        💳 Fintech
+      </button>
+      <button class="filter-btn" data-filter="agritech" type="button">
+        🥑 Agritech
+      </button>
+      <button class="filter-btn" data-filter="logistics" type="button">
+        🚚 Logistics
+      </button>
+      <button class="filter-btn" data-filter="failure" type="button">
+        💥 Failed
+      </button>
+    </div>
+  </section>
+
+  <!-- FLASHCARD FOCUS STAGE (Hidden by default, active in Flashcard Mode) -->
+  <section class="flashcard-stage" id="flashcard-stage" aria-label="Flashcard Spark Viewer">
+    <div class="flashcard-card" id="fc-container">
+      <div class="flashcard-header-bar">
+        <span class="card-badge-status card-badge-status--operating" id="fc-badge">
+          ⚡️ OPERATING
+        </span>
+        <span class="card-kpi-pill" id="fc-kpi">
+          Valuation
+        </span>
+        <span style="font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-muted);" id="fc-counter">
+          1 / {ideas.length}
+        </span>
+      </div>
+
+      <h3 class="flashcard-title" id="fc-title">
+        {flashcards[0].title}
+      </h3>
+
+      <div class="flashcard-body-bilingual">
+        <!-- English Spark Pane -->
+        <div class="flashcard-pane-en">
+          <strong style="font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; color: var(--color-coral-700); display: block; margin-bottom: 4px;">
+            English Pitch
+          </strong>
+          <p id="fc-summary-en" style="font-size: 1.125rem; color: var(--text-primary); font-weight: 500; margin-bottom: var(--space-3);">
+            {flashcards[0].summary}
+          </p>
+          <div style="font-size: 0.9375rem; color: var(--text-secondary);" id="fc-hook-en">
+            {flashcards[0].whyItWorked ? `The Move: ${flashcards[0].whyItWorked}` : flashcards[0].coreProblem}
+          </div>
+        </div>
+
+        <!-- Arabic Spark Pane -->
+        <div class="flashcard-pane-ar">
+          <strong style="font-family: var(--font-arabic); font-size: 0.8125rem; font-weight: 900; color: var(--color-violet-700); display: block; margin-bottom: 4px;">
+            الفكرة بالعربي
+          </strong>
+          <p id="fc-summary-ar" style="font-family: var(--font-arabic); font-size: 1.1875rem; color: var(--text-primary); font-weight: 800; margin-bottom: var(--space-3); line-height: 1.6;">
+            {flashcards[0].summaryAr}
+          </p>
+          <div style="font-family: var(--font-arabic); font-size: 0.9375rem; color: var(--text-secondary); font-weight: 700;" id="fc-hook-ar">
+            {flashcards[0].whyItWorked ? `سر النجاح: ${flashcards[0].whyItWorked}` : flashcards[0].coreProblem}
+          </div>
+        </div>
+      </div>
+
+      <!-- Flashcard Controls -->
+      <div class="flashcard-nav-controls">
+        <div style="display: flex; gap: var(--space-2);">
+          <button class="btn btn-secondary btn-sm" id="fc-btn-prev" type="button">
+            ← Previous
+          </button>
+          <button class="btn btn-primary btn-sm" id="fc-btn-next" type="button">
+            Next →
+          </button>
+          <button class="btn btn-violet btn-sm" id="fc-btn-rand" type="button">
+            🎲 Shuffle
+          </button>
+        </div>
+
+        <div style="display: flex; gap: var(--space-2);">
+          <button class="btn btn-secondary btn-sm" id="fc-btn-copy" type="button">
+            📋 Copy Spark
+          </button>
+          <a class="btn btn-primary btn-sm" id="fc-btn-open" href={`/idea/${flashcards[0].slug}`}>
+            Full Teardown ➔
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sparks Grid -->
+  <div class="grid" id="ideas-grid">
+    {ideas.map((idea, idx) => (
+      <Card
+        slug={idea.id.replace(/\.md$/, '')}
+        title={idea.data.title}
+        summary={idea.data.summary}
+        summaryAr={idea.data.summaryAr}
+        tags={idea.data.tags}
+        featured={idea.id === featured?.id}
+        date={idea.data.publishedAt.toISOString().slice(0, 10)}
+        sector={idea.data.sector || undefined}
+        stage={idea.data.stage || undefined}
+        amountRaised={idea.data.amountRaised || undefined}
+        valuation={idea.data.valuation || undefined}
+        status={idea.data.status}
+        coreProblem={idea.data.coreProblem}
+        whyItWorked={idea.data.whyItWorked}
+        country={idea.data.country}
+        index={idx}
+      />
+    ))}
+  </div>
+
+  <!-- Interactive Client-Side Script: Filter & Flashcard Controller -->
+  <script define:vars={{ flashcards }}>
+    const allCards = flashcards;
+    let fcIndex = 0;
+
+    // View Switcher Elements
+    const btnViewGrid = document.getElementById('view-mode-grid');
+    const btnViewFlash = document.getElementById('view-mode-flash');
+    const flashStage = document.getElementById('flashcard-stage');
+    const gridContainer = document.getElementById('ideas-grid');
+
+    // Flashcard UI Elements
+    const fcTitle = document.getElementById('fc-title');
+    const fcSummaryEn = document.getElementById('fc-summary-en');
+    const fcSummaryAr = document.getElementById('fc-summary-ar');
+    const fcHookEn = document.getElementById('fc-hook-en');
+    const fcHookAr = document.getElementById('fc-hook-ar');
+    const fcBadge = document.getElementById('fc-badge');
+    const fcKpi = document.getElementById('fc-kpi');
+    const fcCounter = document.getElementById('fc-counter');
+    const fcBtnPrev = document.getElementById('fc-btn-prev');
+    const fcBtnNext = document.getElementById('fc-btn-next');
+    const fcBtnRand = document.getElementById('fc-btn-rand');
+    const fcBtnOpen = document.getElementById('fc-btn-open');
+    const fcBtnCopy = document.getElementById('fc-btn-copy');
+
+    function renderFlashcard(idx) {
+      if (idx < 0) idx = allCards.length - 1;
+      if (idx >= allCards.length) idx = 0;
+      fcIndex = idx;
+
+      const item = allCards[fcIndex];
+      if (fcTitle) fcTitle.textContent = item.title;
+      if (fcSummaryEn) fcSummaryEn.textContent = item.summary;
+      if (fcSummaryAr) fcSummaryAr.textContent = item.summaryAr || item.summary;
+
+      const hookText = item.whyItWorked || item.coreProblem || '';
+      if (fcHookEn) fcHookEn.textContent = hookText ? `The Move: ${hookText}` : '';
+      if (fcHookAr) fcHookAr.textContent = hookText ? `الاستراتيجية: ${hookText}` : '';
+
+      if (fcBadge) {
+        if (item.isFailure) {
+          fcBadge.textContent = '💥 FAILED · تعثرت';
+          fcBadge.className = 'card-badge-status card-badge-status--failure';
+        } else if (item.isUnicorn) {
+          fcBadge.textContent = '🦄 UNICORN · يونيكورن';
+          fcBadge.className = 'card-badge-status card-badge-status--unicorn';
+        } else {
+          fcBadge.textContent = `⚡️ ${item.stage.toUpperCase() || 'OPERATING'}`;
+          fcBadge.className = 'card-badge-status card-badge-status--operating';
+        }
+      }
+
+      if (fcKpi) {
+        fcKpi.textContent =
+          item.valuation && item.valuation !== 'MISSING'
+            ? `Val: ${item.valuation}`
+            : item.amountRaised
+            ? `Raised: ${item.amountRaised}`
+            : 'Active Spark';
+      }
+
+      if (fcCounter) {
+        fcCounter.textContent = `${fcIndex + 1} / ${allCards.length}`;
+      }
+
+      if (fcBtnOpen) {
+        fcBtnOpen.setAttribute('href', `/idea/${item.slug}`);
+      }
+    }
+
+    fcBtnNext?.addEventListener('click', () => renderFlashcard(fcIndex + 1));
+    fcBtnPrev?.addEventListener('click', () => renderFlashcard(fcIndex - 1));
+    fcBtnRand?.addEventListener('click', () => {
+      const nextRand = Math.floor(Math.random() * allCards.length);
+      renderFlashcard(nextRand);
+    });
+
+    fcBtnCopy?.addEventListener('click', () => {
+      const item = allCards[fcIndex];
+      const text = `${item.title}\n\nEnglish: ${item.summary}\n\nعربي: ${item.summaryAr}\n\nPlaybook: ${item.whyItWorked || item.coreProblem}`;
+      navigator.clipboard.writeText(text).then(() => {
+        if (window.showSparkToast) {
+          window.showSparkToast('Playbook copied! Go build · تم نسخ الفكرة');
+        }
+      });
+    });
+
+    // View Mode Switching
+    btnViewGrid?.addEventListener('click', () => {
+      btnViewGrid.classList.add('is-active');
+      btnViewFlash.classList.remove('is-active');
+      flashStage.classList.remove('is-active');
+      gridContainer.classList.remove('is-hidden');
+    });
+
+    btnViewFlash?.addEventListener('click', () => {
+      btnViewFlash.classList.add('is-active');
+      btnViewGrid.classList.remove('is-active');
+      flashStage.classList.add('is-active');
+      gridContainer.classList.add('is-hidden');
+      renderFlashcard(fcIndex);
+    });
+
+    // Category Filter Buttons Logic
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('#ideas-grid .card');
+    const countDisplay = document.getElementById('spark-count');
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+
+        const filter = btn.getAttribute('data-filter') || 'all';
+        let visibleCount = 0;
+
+        cards.forEach((card) => {
+          const sector = card.getAttribute('data-sector') || '';
+          const status = card.getAttribute('data-status') || '';
+          let match = false;
+
+          if (filter === 'all') {
+            match = true;
+          } else if (filter === 'unicorn') {
+            match = status === 'unicorn';
+          } else if (filter === 'failure') {
+            match = status === 'failure';
+          } else {
+            match = sector.includes(filter);
+          }
+
+          if (match) {
+            card.style.display = 'flex';
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        if (countDisplay) {
+          countDisplay.textContent = `${visibleCount} Sparks Live`;
+        }
+      });
+    });
+  </script>
+</Base>

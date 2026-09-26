@@ -1,0 +1,103 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Card from '../../components/Card.astro';
+
+export async function getStaticPaths() {
+  const ideas = await getCollection('ideas');
+  const tags = [...new Set(ideas.flatMap((i) => i.data.tags))];
+  return tags.map((tag) => ({ params: { tag }, props: { tag } }));
+}
+
+const { tag } = Astro.props;
+const ideas = (await getCollection('ideas'))
+  .filter((i) => i.data.tags.includes(tag))
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+
+const tagArMap: Record<string, string> = {
+  fintech: 'تكنولوجيا مالية',
+  agritech: 'تكنولوجيا زراعية',
+  logistics: 'لوجستيات وتوصيل',
+  unicorn: 'شركات يونيكورن',
+  failure: 'دروس تعثر',
+  ecommerce: 'تجارة إلكترونية',
+  proptech: 'تكنولوجيا عقارية',
+  healthtech: 'تكنولوجيا صحية',
+  diagnostics: 'تشخيص طبي',
+  edtech: 'تعليم وتدريب',
+  mobility: 'نقل ذكي',
+  ai: 'ذكاء اصطناعي',
+  marketplace: 'منصات وسيطة',
+  climate: 'مناخ واستدامة',
+  energy: 'طاقة ونفايات',
+  b2b: 'تجارة بين الشركات',
+  saas: 'برمجيات خدمية',
+  payments: 'مدفوعات إلكترونية',
+  egypt: 'مصر',
+};
+
+const arName = tagArMap[tag] || '';
+---
+
+<Base
+  title={`#${tag} Sparks (${ideas.length}) — Banana Nebula`}
+  description={`Startup playbooks and ideas tagged #${tag}.`}
+  activePath="/tags"
+>
+  <div style="margin: var(--space-8) 0 var(--space-16);">
+    <!-- Navigation Back -->
+    <div style="margin-bottom: var(--space-6); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3);">
+      <a class="btn btn-secondary btn-sm" href="/tags">
+        ← All Sectors
+      </a>
+      <span class="card-badge-status card-badge-status--operating">
+        {ideas.length} {ideas.length === 1 ? 'Spark' : 'Sparks'}
+      </span>
+    </div>
+
+    <!-- Tag Headline Banner -->
+    <div
+      style="
+        background-color: var(--surface-2);
+        border: 3px solid var(--border-dark);
+        border-radius: var(--shape-xl);
+        padding: var(--space-8) var(--space-6);
+        box-shadow: var(--elevation-2);
+        margin-bottom: var(--space-8);
+      "
+    >
+      <div class="hero-tag-kicker" style="margin-bottom: var(--space-2);">
+        <span>🏷 Sector Collection</span>
+      </div>
+      <h1 style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: var(--space-2);">
+        #{tag} {arName && <span class="ar-text" style="color: var(--color-coral-600); font-size: 0.8em;">· {arName}</span>}
+      </h1>
+      <p style="font-size: 1.125rem;">
+        Showing {ideas.length} startup sparks and playbooks for #{tag}.
+      </p>
+    </div>
+
+    <!-- Filtered Grid -->
+    <div class="grid">
+      {ideas.map((idea, idx) => (
+        <Card
+          slug={idea.id.replace(/\.md$/, '')}
+          title={idea.data.title}
+          summary={idea.data.summary}
+          summaryAr={idea.data.summaryAr}
+          tags={idea.data.tags}
+          date={idea.data.publishedAt.toISOString().slice(0, 10)}
+          sector={idea.data.sector || undefined}
+          stage={idea.data.stage || undefined}
+          amountRaised={idea.data.amountRaised || undefined}
+          valuation={idea.data.valuation || undefined}
+          status={idea.data.status}
+          coreProblem={idea.data.coreProblem}
+          whyItWorked={idea.data.whyItWorked}
+          country={idea.data.country}
+          index={idx}
+        />
+      ))}
+    </div>
+  </div>
+</Base>
