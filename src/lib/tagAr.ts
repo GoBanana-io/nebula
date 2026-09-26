@@ -57,6 +57,10 @@ export const tagArMap: Record<string, string> = {
   japan: 'اليابان',
   uae: 'الإمارات',
   jordan: 'الأردن',
+  china: 'الصين',
+  biotech: 'تكنولوجيا حيوية',
+  semiconductors: 'أشباه الموصلات',
+  ev: 'سيارات كهربائية',
 };
 
 // Tags that denote a country, not a sector/theme. The /tags index renders
@@ -72,6 +76,7 @@ export const countryTags = new Set([
   'uae',
   'japan',
   'jordan',
+  'china',
 ]);
 
 export const countryFlagMap: Record<string, string> = {
@@ -84,6 +89,7 @@ export const countryFlagMap: Record<string, string> = {
   uae: '🇦🇪',
   japan: '🇯🇵',
   jordan: '🇯🇴',
+  china: '🇨🇳',
 };
 
 // Display English name per country tag (tags use short codes like ksa/uae).
@@ -97,6 +103,7 @@ export const countryEnMap: Record<string, string> = {
   uae: 'United Arab Emirates',
   japan: 'Japan',
   jordan: 'Jordan',
+  china: 'China',
 };
 
 // Per-country accent pair for the /tags country cards: soft wash behind the
@@ -113,4 +120,5 @@ export const countryAccentMap: Record<string, { wash: string; bar: string }> = {
   syria: { wash: 'var(--color-violet-100)', bar: 'var(--color-violet-500)' },
   uae: { wash: 'var(--color-lime-100)', bar: 'var(--color-lime-500)' },
   jordan: { wash: 'var(--color-slate-100)', bar: 'var(--color-slate-500)' },
+  china: { wash: 'var(--color-coral-50)', bar: 'var(--color-coral-700)' },
 };
