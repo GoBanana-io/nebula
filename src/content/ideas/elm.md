@@ -23,8 +23,8 @@ businessModel: "Revenue primarily from digital services to government and privat
 founders: ""
 hqCity: "Riyadh"
 usersMetrics: "30M+ users, 170+ large-scale digital projects, 2B+ digital transactions annually (Media OutReach, Jul 2026)"
-competitors: ""
-license: ""
+competitors: "Thiqah — acquired by Elm for $907M in January 2025 — and Takamol, the fellow Digital Government Authority-licensed govtech operators."
+license: "Digital Government Authority interim licenses to operate platforms including Wasl and Naql (53M+ annual transactions)."
 vision2030Fit: "Digital Government: national e-services maturity index of 86% in 2025; regional govtech export model (Oman, Jordan, Iraq)."
 investors: "Public Investment Fund (PIF, majority stake)"
 sources:
@@ -32,6 +32,10 @@ sources:
     url: "https://www.media-outreach.com/news/hong-kong/2026/07/03/474295/elm-to-showcase-saudi-digital-transformation-model-at-leap-east-hong-kong-eyes-apac-collaboration/"
   - title: "The IPOX Watch - Elm Co."
     url: "https://www.ipox.com/ipox/the-ipox-watch-elm-co"
+  - title: "Elm's Landmark $907 Million Deal to Acquire Thiqah — Arageek"
+    url: "https://en.arageek.com/elms-landmark-907-million-deal-to-acquire-thiqah-sparks-innovation-in-saudi-arabias-digital-sector"
+  - title: "Saudi Arabia grants licenses to 3 technology firms — The Technology Express"
+    url: "https://thetechnologyexpress.com/saudi-arabia-grants-licenses-to-3-technology-firms-to-create-and-run-products-for-10-government-organizations/"
 summaryAr: "الرّكيزة الرقمية للحكومة السعودية: تحويل المعاملات الحكومية إلى خدمات إلكترونية عبر منصّات الهوية الرقمية والذكاء الاصطناعي والمدن الذكية يستخدمها أكثر من 30 مليون شخص."
 ---
 

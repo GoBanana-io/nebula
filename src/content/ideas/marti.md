@@ -22,7 +22,7 @@ painPoints: "Taxi scarcity and surge pricing, first/last-mile gaps to transit, a
 businessModel: "Ride commissions and per-minute vehicle rentals plus delivery fees, all flowing through the Marti app."
 founders: "Oguz Alper Oktem, Sena Oktem, Cankut Durgun"
 hqCity: "Istanbul"
-usersMetrics: ""
+usersMetrics: "4.4M+ all-time riders and 544,000 registered drivers across 30 cities; 18.78M trips in Q2 2026 (Wikipedia, Aug 2026)."
 competitors: "Uber, local taxi fleets, shared-scooter operators"
 vision2030Fit: "Sustainable urban mobility for Turkish cities: electric shared fleets cutting congestion and emissions on the Middle Corridor's western gateway."
 investors: "Galata Acquisition Corp. (SPAC merger)"

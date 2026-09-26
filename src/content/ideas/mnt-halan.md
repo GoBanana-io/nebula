@@ -17,6 +17,15 @@ status: "operating"
 coreProblem: "Most Egyptians lack access to formal banking and credit."
 whyItWorked: "Combined micro-lending with a payments super-app and offline agent network, meeting users where they are."
 challenges: "Regulatory licensing, credit risk on small loans, and regional expansion execution."
+howItWorks: "A single Halan super-app plus physical branches and an offline agent network offering consumer and micro-enterprise loans, wallets, prepaid cards that draw on consumer-finance limits, payments, savings, investments and e-commerce — built on Neuron, its proprietary core banking software, and issuing 1,000–2,500 new cards daily."
+painPoints: "Around two-thirds of Egyptians have no formal bank relationship, with irregular incomes that traditional bank underwriting will not touch — leaving cash as the only option."
+businessModel: "Lending margins on micro, consumer and SME loans on a book approaching $1B including Turkey's Tam Finans, plus payments, wallet/card fees and e-commerce and logistics income."
+founders: "Mounir Nakhla and Ahmed Mohsen"
+hqCity: "Cairo"
+usersMetrics: "8M+ customers; over a quarter of Egypt's microfinance market; $15.5B+ in loans disbursed (September 2026)"
+competitors: "ValU (EGX-listed consumer finance), Fawry, Paymob and bank-led digital wallets"
+vision2030Fit: "Egypt Vision 2030 financial-inclusion goals: digitally banking the unbanked and substituting cash with electronic solutions at national scale."
+investors: "DPI, Lorax Capital Partners, Apis Partners, Lunate, GB Corp, IFC ($40M in the 2024 round); Chimera Investments (20% for $200M, 2023); Al Ahly Capital Holding (2026 round lead)"
 sources:
   - title: "Egypt's MNT-Halan raises $157.5 million to propel expansion plans"
     url: "http://wamda.com/2024/07/egypt-mnt-halan-raises-157-5-million-propel-expansion-plans"
@@ -24,12 +33,30 @@ sources:
     url: "https://launchbaseafrica.com/2026/09/11/mnt-halan-gb-corp/"
   - title: "Valued at $1.4B, Egypt's MNT-Halan Starts Six-Month Countdown to Cairo IPO"
     url: "https://www.europesays.com/africa/427139/"
+  - title: "MNT-Halan Files for Cairo Stock Exchange Listing in Egypt"
+    url: "https://techmoonshot.com/2026/09/10/mnt-halan-files-for-cairo-stock-exchange-listing-in-egypt/"
+  - title: "Egypt's MNT-Halan banks $157.5M, gobbles up a fintech in Turkey to expand"
+    url: "https://techcrunch.com/2024/07/26/egypts-mnt-halan-banks-157-5m-gobbles-up-a-fintech-in-turkey-to-expand/"
+  - title: "MNT-Halan's valuation to exceed $1 billion with $400 new investment"
+    url: "https://innovation-village.com/mnt-halans-valuation-to-exceed-1-billion-with-400-new-investments/"
 summaryAr: "منصة «إم إن تي-حالًا» المالية تخدم ملايين المصريين خارج المنظومة المصرفية عبر الإقراض متناهي الصغر والمدفوعات الرقمية."
 ---
 
 ## The problem
 
 Tens of millions of Egyptians operate outside the formal banking system, with little access to credit, digital payments, or financial services tailored to irregular incomes.
+
+## How it works
+
+Founded in Cairo in 2018 by Mounir Nakhla with CTO Ahmed Mohsen, MNT-Halan started as a ride-hailing app for two- and three-wheelers before pivoting into finance. Today one super-app plus branches and agents delivers micro and consumer loans, wallets, prepaid cards, payments, savings, investments and e-commerce — all running on Neuron, its proprietary core banking software — with 1,000–2,500 new cards issued daily.
+
+## Pain points
+
+Two-thirds of Egyptians have no formal bank relationship and irregular incomes that fail traditional credit scoring — cash dependence, no credit history, and no path into the financial system.
+
+## Business model
+
+Interest margin on a fast-growing micro, consumer and SME loan book (near $1B combined with Tam Finans), plus fee income from payments, wallets, prepaid cards and e-commerce/logistics.
 
 ## Why it worked
 

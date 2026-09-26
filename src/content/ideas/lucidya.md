@@ -23,7 +23,7 @@ businessModel: "Enterprise SaaS subscriptions for its CXM platform (OmniServe, P
 founders: "Abdullah Asiri"
 hqCity: "Riyadh"
 usersMetrics: "Operating in 11 countries; enterprise clients with $250B+ combined market cap; reach of 75M+ users (SaaSNews, Jul 2025)"
-competitors: ""
+competitors: "Sprinklr, Brandwatch, and Meltwater — global social-listening and CXM suites."
 license: ""
 vision2030Fit: "Digital Economy: Arabic AI capability serving telecom, banking and the public sector."
 investors: "Impact46 (lead), Wa'ed Ventures, Takamol Ventures, SparkLabs Group, Rua Growth Fund, ARG"
@@ -32,6 +32,8 @@ sources:
     url: "https://news.bloomberglaw.com/private-equity/aramcos-vc-arm-backs-record-ai-funding-round-for-saudi-startup"
   - title: "Lucidya Secures $30 Million in Series B"
     url: "https://www.thesaasnews.com/news/lucidya-secures-30-million-in-series-b/"
+  - title: "Top Lucidya Alternatives — WebCatalog"
+    url: "https://webcatalog.io/en/apps/lucidya/alternatives"
 summaryAr: "منصّة ذكاء اصطناعي عربية لإدارة تجربة العملاء: تستمع إلى شبكات التواصل والقنوات الخدمية لتفهم الشركات مشاعر عملائها وتتصرّف بناءً عليها."
 ---
 

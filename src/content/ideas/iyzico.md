@@ -21,10 +21,10 @@ howItWorks: "Merchants embed iyzico's checkout or send payment links; iyzico rou
 painPoints: "Weeks of bank paperwork for a virtual POS, marketplace payouts reconciled by hand, and shoppers who abandon checkout for lack of instalment or trust options."
 businessModel: "Take-rate commission per transaction plus value-added services (marketplace payout splitting, subscriptions billing, physical POS, B2B collections via Paynet)."
 founders: "Barbaros Özbugutu, Tahsin Isın"
-hqCity: ""
+hqCity: "Istanbul"
 usersMetrics: "130,000+ e-commerce merchants (Crowdfund Insider, Feb 2025); 300 marketplaces and 30,000 merchants at acquisition (YourStory, Jun 2019)"
-competitors: ""
-license: ""
+competitors: "PayU and iPara among licensed third-party providers; banks' own virtual-POS rails and global gateways for cross-border volume."
+license: "Licensed by Turkey's Banking Regulation and Supervision Agency (BDDK); PCI-DSS certified."
 vision2030Fit: "Turkey strategy fit: SME digitisation and the CBRT fintech hub — the rails letting hundreds of thousands of small sellers join the digital economy."
 investors: "PayU / Prosus (owner since 2019)"
 sources:
@@ -36,6 +36,12 @@ sources:
     url: "https://yourstory.com/2019/06/naspers-payu-acquisition-iyzico"
   - title: "Arena Signed Agreement to Sell Paynet to iyzico"
     url: "https://digitalterminal.in/channel/arena-signed-agreement-to-sell-paynet-to-iyzico"
+  - title: "PayU Continues Fintech Investments — Nilson Report"
+    url: "https://nilsonreport.com/articles/payu-continues-fintech-investments/"
+  - title: "How to accept payments in Turkey — Stripe"
+    url: "https://stripe.com/gb/resources/more/payments-in-turkey"
+  - title: "Who is iyzico? — iyzico Help Center"
+    url: "https://www.iyzico.com/en/support/help-center"
 summaryAr: "بوابة دفع إلكتروني تمكّن المتاجر والمنصات التركية الصغيرة من قبول البطاقات عبر الإنترنت بسهولة وأمان."
 ---
 

@@ -22,7 +22,7 @@ painPoints: "Time-consuming browsing, misleading photos, unknown all-in rental c
 businessModel: "Lead-generation and marketing services for real-estate companies and developers (agent subscriptions and listing products), plus data reports and valuations."
 founders: "Ahmad AlKhanji (CEO); Abdulla Al-Fadhala, Haajerah Khan, Abdulaziz Al-Yazeedi (co-founders)"
 hqCity: "Doha"
-usersMetrics: ""
+usersMetrics: "50+ real-estate company clients in Qatar (Entrepreneur, Dec 2021)."
 sources:
   - title: "Kuwaiti proptech Sakan acquires Qatar's Hapondo"
     url: "https://www.wamda.com/2024/08/kuwaiti-proptech-sakan-acquires-qatar-hapondo"

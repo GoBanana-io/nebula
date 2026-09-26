@@ -23,7 +23,7 @@ businessModel: "Free store creation; revenue from payment take-rates, PAY.JP onl
 founders: "Yuta Tsuruoka"
 hqCity: "Tokyo"
 usersMetrics: "1.2M+ registered shops and 7M shopping-app users (company, 2020); FY revenue $132.27M, 401 employees (TradingView)"
-investors: ""
+investors: "SBI Holdings (capital and business alliance, Aug 2026, company press room)"
 vision2030Fit: "Society 5.0 SME digitisation: giving rural and micro-retailers a zero-cost path onto the internet economy."
 sources:
   - title: "Intern Builds Billion-Dollar Company Inspired by Mom's Comment"

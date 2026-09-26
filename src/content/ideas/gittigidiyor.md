@@ -18,7 +18,7 @@ challenges: "Squeezed between Trendyol's super-app subsidies and Amazon's arriva
 howItWorks: "Sellers listed new and second-hand goods auction or fixed-price; buyers shopped with platform-mediated trust and account histories, operating as eBay's independent Turkish platform after 2011."
 painPoints: "No trusted online resale channel, cash-on-delivery risk between strangers, and small sellers with no digital storefront."
 businessModel: "Marketplace take-rate: listing fees plus final-value commissions on completed sales."
-hqCity: ""
+hqCity: "Istanbul"
 usersMetrics: "~4M active buyers contributed to eBay's count at end-Q1 2022 (eBay)"
 investors: "eBay (majority stake 2011)"
 sources:

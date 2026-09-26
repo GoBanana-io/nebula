@@ -20,8 +20,8 @@ challenges: "Cooling greenhouses in 45°C summers is energy-hungry; imported inp
 howItWorks: "Agrico runs organic greenhouses (hydroponic and aquaponic systems, LED plantation, mushroom houses), a shrimp farm, and R&D with partners like QAFCO and Yara; its iFarm partnership added AI-managed vertical farming where drones with computer vision monitor crop health and yields."
 painPoints: "Empty shelves during supply shocks, water scarcity ruling out conventional irrigation, and a new generation disconnected from how food is grown."
 businessModel: "Sells organic produce (vegetables, leafy greens, fruits, mushrooms, honey, eggs, shrimp) through retail and foodservice, plus turnkey farm projects, greenhouses, equipment, and growing services for private and commercial farms."
-founders: ""
-hqCity: ""
+founders: "Nasser Ahmed al-Khalaf (owner and managing director)"
+hqCity: "Al Khor"
 usersMetrics: "Urban farm hub opened at Qatar Foundation's Green Island (Nov 2024); multi-year iFarm vertical-farming partnership (2021)"
 competitors: "Qatari greenhouse growers; imported organic produce; regional vertical-farming entrants"
 investors: "Al Sadarah Group (owner)"
@@ -33,6 +33,8 @@ sources:
     url: "https://thespoon.tech/ifarm-and-al-sadarah-group-to-boost-food-security-in-qatar-through-vertical-farming/"
   - title: "Agrico — official site (farm, technologies, projects)"
     url: "https://agrico.qa/"
+  - title: "New hydroponic Agrico farm brings organics to Qatar — HortiDaily (Gulf Times)"
+    url: "https://www.hortidaily.com/article/6036594/new-hydroponc-agrico-farm-brings-organics-to-qatar/"
 summaryAr: "تزرع أغريكو الغذاء العضوي في الصحراء القطرية — خضارًا وفواكه وفطرًا وعسلًا وروبيانًا — بالزراعة المائية والذكية المدعومة بالذكاء الاصطناعي."
 ---
 

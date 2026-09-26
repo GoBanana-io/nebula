@@ -21,12 +21,12 @@ howItWorks: "Users open a free Papara account in minutes, get a prepaid card, an
 painPoints: "Bank transfers that take hours and charge fees, no card for the unbanked, and bill-paying that means queuing at branches or dealers."
 businessModel: "Interchange and transaction fees on card and transfer volume, merchant acquiring margins, plus premium tiers and adjacent products (insurance, investments, cross-border transfers)."
 founders: "Ahmet Faruk Karslı (founder)"
-hqCity: ""
+hqCity: "Istanbul"
 usersMetrics: "23M+ individual users and 1M+ business clients (Yogonet, May 2025)"
 competitors: ""
 license: "Electronic-money / payment-institution licence revoked by the CBRT on 30 Oct 2025; company under TMSF trusteeship"
 vision2030Fit: "Turkey strategy fit: CBRT-supervised fintech and digital-payments hub — and a cautionary tale that licensing-scale without AML/KYC depth can unwind a national champion."
-investors: ""
+investors: "Bootstrapped on founder equity until Spain's Beka Finance joined as shareholder via the Rebellion acquisition (Bloomberg via Gad Insider, Nov 2023)"
 sources:
   - title: "Turkey's Central Bank Revokes Papara's License in Landmark Fintech Crackdown"
     url: "https://payspacemagazine.com/news/turkeys-central-bank-revokes-paparas-license-in-landmark-fintech-crackdown/"
@@ -34,6 +34,8 @@ sources:
     url: "https://www.yogonet.com/international/news/2025/05/27/106177-papara-founder-arrested-in-turkey-over-330-million-illegal-gambling-investigation"
   - title: "7 Turkish Unicorns Unleashed [2026 Update]"
     url: "https://lucidityinsights.com/infobytes/list-of-turkeys-unicorns"
+  - title: "How did Papara become Turkey's first fintech unicorn - Gad Insider"
+    url: "https://www.gadinsider.com/how-did-papara-become-turkeys-first-fintech-unicorn-startups-513"
 summaryAr: "محفظة رقمية وبطاقة مسبقة الدفع مجانية تتيح لملايين الأتراك تحويل الأموال ودفع الفواتير لحظيًا من الهاتف."
 ---
 

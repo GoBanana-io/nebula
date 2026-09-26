@@ -21,10 +21,10 @@ howItWorks: "A farmer compares input prices on Tarfin Mobile, buys fertiliser, s
 painPoints: "Planting-season cash gaps, dealer credit at ~45% annual cost, and banks that won't touch smallholders without collateral."
 businessModel: "A single-digit spread on the input credit plus dealer-network economics; capital-markets structuring (asset-backed securities on farmer receivables) recycles balance sheet for the next season."
 founders: "Mehmet Memecan (founder & CEO)"
-hqCity: ""
+hqCity: "Istanbul"
 usersMetrics: "32,000+ farmers and $8M+ inputs financed via 800+ points of sale in 70+ cities (Tarfin, Dec 2021)"
 competitors: ""
-license: ""
+license: "Fertilizer distributor authorization (No. 34.1186.0115), TODAB membership, and Agriculture Ministry enterprise registration (YK-TR-3400946)."
 vision2030Fit: "Turkey strategy fit: agricultural productivity and food security through SME finance innovation — a model now exported to Romania's underserved farm belt."
 investors: "Yara Growth Ventures, Quona Capital, Elevator Ventures, Syngenta Group Ventures, Collective Spark Fund, Wamda"
 sources:

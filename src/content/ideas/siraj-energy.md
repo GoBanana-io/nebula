@@ -20,7 +20,7 @@ challenges: "Single-buyer dependence on KAHRAMAA; dust, heat, and water scarcity
 howItWorks: "Siraj (1), a subsidiary of QatarEnergy Renewable Solutions, developed the 800 MW Al Kharsaah plant with TotalEnergies and Marubeni: 2 million Longi Hi-MO 4 bifacial modules on single-axis trackers feeding the national grid since June 2022."
 painPoints: "Summer peak demand straining gas-fired capacity, a grid built for gas with no solar at scale, and industrial cities needing clean power for new industries."
 businessModel: "Independent power producer: long-term power purchase agreements with KAHRAMAA pay per kilowatt-hour delivered over decades."
-founders: ""
+founders: "Qatar Petroleum (now QatarEnergy) and Qatar Electricity & Water Co. (QEWC) — state joint venture incorporated in 2017."
 hqCity: "Doha"
 usersMetrics: "800 MW operating; 1,675 MW national solar capacity with Ras Laffan and Mesaieed; Dukhan build-out targets 4,000 MW+ (SolarQuarter, Sep 2025)"
 competitors: "QatarEnergy's own gas fleet; regional solar IPPs from Masdar and ACWA Power"
@@ -31,6 +31,8 @@ sources:
     url: "https://www.pv-magazine.com/2022/10/19/totalenergies-marubeni-switch-on-800-mw-of-solar-in-qatar/"
   - title: "GCCIA Delegation Visits Al-Kharsaah Solar Plant to Explore Qatar's Renewable Energy Innovations"
     url: "https://solarquarter.com/2025/09/30/gccia-delegation-visits-al-kharsaah-solar-plant-to-explore-qatars-renewable-energy-innovations/"
+  - title: "QatarEnergy to take full ownership of solar company Siraj Energy — NS Energy"
+    url: "https://www.nsenergybusiness.com/deals/qatarenergy-take-full-ownership-solar-company-siraj-energy/"
 summaryAr: "تطور وتشغل شركة سراج للطاقة محطات شمسية عملاقة — بدءًا بمحطة سراج-1 بقدرة 800 ميغاواط في الخرسعة — وتبيع الكهرباء النظيفة للشبكة الوطنية القطرية."
 ---
 

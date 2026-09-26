@@ -20,18 +20,20 @@ challenges: "Desert dairy means imported feed, water-hungry cooling and thin mar
 howItWorks: "Baladna runs a fully vertically integrated farm-to-shelf model: a 2.4M sqm farm north of Doha housing up to 24,000 dairy cows, on-site milking parlours with quantity readers, and its own factory filling milk and producing cheese, yoghurt and juices — 268+ SKUs through a nationwide distribution network."
 painPoints: "Empty dairy shelves during supply shocks, short shelf-life on imported fresh milk, and a food import bill that left the country exposed."
 businessModel: "Branded dairy and beverage sales through retail across Qatar, plus government supply contracts and export sales; growth funded by retained earnings and shareholder capital increases."
-founders: ""
+founders: "Moutaz Al-Khayyat and Ramez Al-Khayyat (Power International Holding)"
 hqCity: "Doha"
 usersMetrics: "Q1 2026: QAR 329.9M revenue, QAR 61.5M net profit (+6% YoY), 18.6% net margin (company)"
 competitors: "Regional dairy importers, Almarai, local Qatari farms"
 license: ""
 vision2030Fit: "Qatar National Vision 2030 food security: the flagship domestic dairy producer underpinning self-sufficiency, now replicating the model abroad."
-investors: ""
+investors: "Qatar Exchange public shareholders (QAR 1.426B IPO, 2019); Power International Holding group (Wikipedia)"
 sources:
   - title: "Baladna — Accelerating Growth, Strengthening Our Future (rights issue + Q1 2026 highlights)"
     url: "https://baladna.com/en/investment"
   - title: "Baladna — About Us (farm, capacity, mission)"
     url: "https://baladna.com/en/about"
+  - title: "Baladna (company) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Baladna_(company)"
 summaryAr: "الحليب الطازج والألبان والعصائر من مزرعة عملاقة شمال الدوحة — عملاق الألبان الذي حقق لقطر الاكتفاء الذاتي ويصدّر نموذجه إلى الخارج."
 ---
 

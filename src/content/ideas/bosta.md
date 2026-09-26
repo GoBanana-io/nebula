@@ -17,6 +17,15 @@ status: "operating"
 coreProblem: "E-commerce merchants in Egypt face unreliable delivery, failed cash collection, and zero shipment visibility."
 whyItWorked: "Built next-day delivery with live tracking and cash collection purpose-made for online sellers, then scaled into Saudi Arabia."
 challenges: "Fuel and FX costs, courier quality at 80M-shipment scale, and executing Egypt's first tech-logistics IPO."
+howItWorks: "Full-stack delivery platform for e-commerce: merchants manage shipments through digital tools with next-day delivery, live tracking, cash collection, exchanges and returns. Bosta runs the physical layer itself — about 50 warehouses, an ~8,000-rider courier fleet and a $5M automated sorting facility in Cairo — across Egypt and Saudi Arabia."
+painPoints: "Parcels lost, cash-on-delivery uncollected, customers blaming merchants for courier failures; a logistics sector long plagued by inefficiency and unreliable service; diesel and FX swings hitting every lane."
+businessModel: "Per-shipment delivery fees at high volume — 37M shipments and EGP 27B (~$510M) in GMV in 2025 at a 95% delivery success rate — plus value-added cash collection, exchanges and returns for 25,000+ businesses."
+founders: "Mohamed Ezzat, Ahmed Gaber"
+hqCity: "Cairo"
+usersMetrics: "37M shipments and EGP 27B (~$510M) GMV in 2025 at 95% delivery success; 25,000+ businesses; ~50 warehouses, ~8,000-rider fleet"
+competitors: "Legacy couriers and generalist carriers — the unreliable incumbents Bosta was founded to replace"
+vision2030Fit: "Logistics and capital markets: digitises e-commerce fulfilment in line with Egypt Vision 2030's ICT push, and its planned EGX listing would deepen the local tech-capital market."
+investors: "Silicon Badia (Series A lead), 4DX Ventures, Plug and Play, Wealthwell VC, Khwarizmi Ventures; later Beltone VC, Citadel International, Avanz/Manara, Lorax Capital"
 sources:
   - title: "ACE exits Bosta (EnterpriseAM Egypt, 6 Sep 2026)"
     url: "https://enterpriseam.com/egypt/issues/reforming-executive-regulations-isnt-enough/"
@@ -24,6 +33,8 @@ sources:
     url: "https://weetracker.com/2026/05/12/egyptian-startup-cash-exit/"
   - title: "Egyptian Logistics Startup Bosta Eyes $170M IPO on Local Exchange"
     url: "https://launchbaseafrica.com/2026/02/02/egyptian-logistics-startup-bosta-eyes-170m-ipo-on-local-exchange/"
+  - title: "Egyptian logistics startup Bosta raises $6.7m Series A funding round"
+    url: "https://disruptafrica.com/2021/05/19/egyptian-logistics-startup-bosta-raises-6-7m-series-a-funding-round/"
 summaryAr: "شركة «بوسطة» اللوجستية توصّل طرود التجارة الإلكترونية في مصر والسعودية مع التتبع المباشر وتحصيل النقد."
 ---
 
@@ -31,9 +42,17 @@ summaryAr: "شركة «بوسطة» اللوجستية توصّل طرود ال�
 
 Egyptian online sellers lived or died on couriers they couldn't track: parcels lost, cash-on-delivery uncollected, and customers blaming the merchant for the courier's failures.
 
-## Why it worked
+## How it works
 
-Founded in 2017 by Mohamed Ezzat and Ahmed Gaber, Bosta built delivery infrastructure for e-commerce first — next-day service across Egypt, live tracking, and cash collection — rather than retrofitting a traditional courier. A $6.7M Series A led by Silicon Badia (2021) funded expansion into Saudi Arabia; the network now spans about 50 warehouses with an ~8,000-rider courier fleet and an estimated 20% of domestic parcel volume. Bosta handled 37M shipments in 2025, targets 80M in 2026, and opened a $5M automated sorting facility in January 2026.
+Founded in 2017 by Mohamed Ezzat and Ahmed Gaber, Bosta built delivery infrastructure for e-commerce first — next-day service across Egypt, live tracking, and cash collection — rather than retrofitting a traditional courier. Merchants run everything through Bosta's digital tools: shipment management, exchanges, returns and cash collection. Bosta owns the physical layer behind it — about 50 warehouses, an ~8,000-rider courier fleet and a $5M automated sorting facility in Cairo — and has expanded into Saudi Arabia.
+
+## Pain points
+
+Untrackable parcels and uncollected cash destroyed merchant reputations; diesel and FX swings hit every lane; and quality control across thousands of riders is a permanent grind.
+
+## Business model
+
+Per-shipment fees at massive volume: 37M shipments and EGP 27B (~$510M) in GMV in 2025 at a 95% delivery success rate, serving 25,000+ businesses — with cash collection and returns deepening the take per merchant.
 
 ## Challenges
 
