@@ -49,12 +49,20 @@ const assignedShape = shapeVariants[index % shapeVariants.length];
 
 const isFailure = status === 'closed' || tags.includes('failure');
 const isUnicorn = tags.includes('unicorn');
+const statusClass = isFailure
+  ? 'card--failure'
+  : isUnicorn
+    ? 'card--unicorn'
+    : 'card--operating';
 
+const eyebrow = [country, date].filter(Boolean).join(' · ');
+
+// Full playbook still travels on Copy — the card surface itself stays summary-only.
 const copyText = `${title}\n\nSummary: ${summary}\n\nعربي: ${summaryAr || ''}\n\nThe Move: ${whyItWorked || coreProblem || ''}`;
 ---
 
 <div
-  class={`card ${assignedShape} ${featured ? 'card-featured' : ''}`}
+  class={`card ${assignedShape} ${statusClass} ${featured ? 'card-featured' : ''}`}
   data-sector={sector ? sector.toLowerCase() : ''}
   data-status={isFailure ? 'failure' : isUnicorn ? 'unicorn' : 'operating'}
 >
@@ -75,24 +83,22 @@ const copyText = `${title}\n\nSummary: ${summary}\n\nعربي: ${summaryAr || ''
     ) : null}
   </div>
 
-  <!-- English Title & Short Summary (stretched: whole card clicks through) -->
+  <!-- Eyebrow: locale + date -->
+  {eyebrow && (
+    <p class="card-eyebrow">{eyebrow}</p>
+  )}
+
+  <!-- English Title & Summary (stretched: whole card clicks through) -->
   <a href={`/idea/${slug}`} rel="prefetch" class="card-stretched-link" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: var(--space-2);">
     <h2>{title}</h2>
     <p class="card-summary">{summary}</p>
   </a>
 
-  <!-- Arabic Core Summary Box (Content - shown in Dual, hidden in EN) -->
+  <!-- Arabic Summary (shown in Dual, hidden in EN) -->
   {summaryAr && (
-    <div class="card-arabic-box" dir="rtl">
+    <div class="card-arabic-box" dir="rtl" lang="ar">
+      <span class="card-arabic-kicker">بالعربي</span>
       <p>{summaryAr}</p>
-    </div>
-  )}
-
-  <!-- Playbook Hook (The Move) -->
-  {(whyItWorked || coreProblem) && (
-    <div class="card-pitch-hook">
-      <strong>The Move</strong>
-      <span>{whyItWorked || coreProblem}</span>
     </div>
   )}
 
@@ -119,8 +125,8 @@ const copyText = `${title}\n\nSummary: ${summary}\n\nعربي: ${summaryAr || ''
       <span>Copy</span>
     </button>
 
-    <a href={`/idea/${slug}`} rel="prefetch" class="btn-copy-spark" style="text-decoration: none;">
-      Read Story ➔
+    <a href={`/idea/${slug}`} rel="prefetch" class="card-read-link" style="text-decoration: none;">
+      Read Story <span aria-hidden="true">➔</span>
     </a>
   </div>
 </div>

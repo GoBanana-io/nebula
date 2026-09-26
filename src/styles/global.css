@@ -987,6 +987,11 @@ main {
 .card-shape-flag { border-radius: var(--shape-flag); }
 .card-shape-shield { border-radius: var(--shape-shield); }
 
+/* Status-tinted top edge: instant scan for operating / unicorn / failure */
+.card--operating { border-top: 6px solid var(--color-teal-500); }
+.card--unicorn { border-top: 6px solid var(--color-violet-500); }
+.card--failure { border-top: 6px solid var(--color-fuchsia-500); }
+
 .card:hover {
   transform: translate(-4px, -4px) rotate(-0.75deg);
   border-radius: 32px 10px 32px 10px;
@@ -1059,51 +1064,59 @@ main {
   line-height: 1.15;
 }
 
+.card:hover h2 {
+  text-decoration: underline;
+  text-decoration-color: var(--color-coral-500);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 3px;
+}
+
+/* Locale + date eyebrow above the title */
+.card-eyebrow {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+/* Summary is the hero of the card now */
 .card p.card-summary {
   margin: 0;
-  color: var(--text-secondary);
-  font-size: 0.9375rem;
-  line-height: 1.5;
+  color: var(--text-primary);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.55;
 }
 
 /* Arabic Summary Box in Card */
 .card-arabic-box {
-  background-color: oklch(95% 0.02 65);
+  background-color: var(--surface-sunken);
   border: 1.5px solid var(--border-dark);
+  border-right: 5px solid var(--color-violet-500);
   border-radius: var(--shape-sm);
-  padding: 8px 12px;
+  padding: 10px 14px;
   direction: rtl;
-  box-shadow: 2px 2px 0 var(--border-dark);
+}
+
+.card-arabic-kicker {
+  font-family: var(--font-arabic);
+  font-size: 0.75rem;
+  font-weight: 900;
+  color: var(--color-violet-700);
+  display: block;
+  margin-bottom: 2px;
 }
 
 .card-arabic-box p {
   font-family: var(--font-arabic);
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   font-weight: 700;
   color: var(--text-primary);
-  line-height: 1.5;
+  line-height: 1.6;
   margin: 0;
-}
-
-/* Playbook Quick Hook */
-.card-pitch-hook {
-  background-color: var(--surface-1);
-  border-left: 3px solid var(--color-violet-500);
-  border-radius: 0 var(--shape-xs) var(--shape-xs) 0;
-  padding: 8px 12px;
-  font-size: 0.875rem;
-  color: var(--text-primary);
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-.card-pitch-hook strong {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  color: var(--color-violet-700);
-  display: block;
-  margin-bottom: 2px;
 }
 
 /* Stretched card link: anywhere on the card navigates, except real controls */
@@ -1146,6 +1159,23 @@ main {
 .btn-copy-spark:hover {
   background-color: var(--color-amber-200);
   transform: scale(1.05);
+}
+
+/* Read Story: bold text link so Copy keeps the button spotlight */
+.card-read-link {
+  font-weight: 900;
+  font-size: 0.875rem;
+  color: var(--color-coral-700);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 2px;
+}
+
+.card-read-link:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
 }
 
 .btn-copy-spark:active {
