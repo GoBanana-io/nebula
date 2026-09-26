@@ -10,6 +10,9 @@
 // - No-JS / crawlers see every card: the grid server-renders fully and this
 //   bar starts `hidden`. The inline script unhides it and collapses the grid
 //   to the first page. SEO and no-JS behavior are unchanged.
+// - Deliberately click-to-load (no infinite scroll): an IntersectionObserver
+//   pre-loader cascaded through all pages on its own, so the button never
+//   survived first paint. Pages advance ONLY via the Load More button.
 // - Matching reuses the card's own `data-status` / `data-sector` attributes
 //   (see Card.astro), so any page filter just sets
 //   `grid.dataset.activeFilter = '<value>'` and dispatches `bn:filter` on the
@@ -25,15 +28,21 @@ interface Props {
 }
 
 const { gridId, pageSize = 12, total } = Astro.props;
+const firstShown = Math.min(pageSize, total);
+const firstPct = total > 0 ? Math.round((firstShown / total) * 100) : 0;
 ---
 
 <div class="load-more" data-paginate-controls-for={gridId} hidden>
-  <p class="load-more-status" aria-live="polite" data-paginate-status>
-    Showing <strong data-paginate-visible>{Math.min(pageSize, total)}</strong>
-    of <span data-paginate-total>{total}</span> sparks
+  <span class="load-more-kicker" aria-hidden="true">✦ Keep digging</span>
+  <p class="load-more-status" aria-live="polite">
+    <span data-paginate-countwrap>
+      Showing <strong data-paginate-visible>{firstShown}</strong>
+      of <span data-paginate-total>{total}</span> sparks
+    </span>
+    <span data-paginate-empty hidden>No sparks here yet — try another filter ✦</span>
   </p>
   <div class="load-more-track" aria-hidden="true">
-    <div class="load-more-fill" data-paginate-fill></div>
+    <div class="load-more-fill" data-paginate-fill style={`width: ${firstPct}%`}></div>
   </div>
   <div class="load-more-actions">
     <button class="btn btn-primary btn-lg" type="button" data-paginate-more>
@@ -43,7 +52,6 @@ const { gridId, pageSize = 12, total } = Astro.props;
       Show less ↑
     </button>
   </div>
-  <div data-paginate-sentinel aria-hidden="true"></div>
 </div>
 
 <script is:inline>
@@ -105,15 +113,16 @@ const { gridId, pageSize = 12, total } = Astro.props;
         var fill = controls.querySelector('[data-paginate-fill]');
         var more = controls.querySelector('[data-paginate-more]');
         var less = controls.querySelector('[data-paginate-less]');
-        var status = controls.querySelector('[data-paginate-status]');
+        var countwrap = controls.querySelector('[data-paginate-countwrap]');
+        var empty = controls.querySelector('[data-paginate-empty]');
+        var isEmpty = seen.total === 0;
         if (vis) vis.textContent = String(shown);
         if (tot) tot.textContent = String(seen.total);
+        if (countwrap) countwrap.hidden = isEmpty;
+        if (empty) empty.hidden = !isEmpty;
         if (fill) {
           var pct = seen.total > 0 ? Math.round((shown / seen.total) * 100) : 0;
           fill.style.width = pct + '%';
-        }
-        if (status && seen.total === 0) {
-          status.innerHTML = 'No sparks here yet — try another filter ✦';
         }
         if (more) {
           var left = seen.total - shown;
@@ -155,7 +164,6 @@ const { gridId, pageSize = 12, total } = Astro.props;
         controls.hidden = false;
         var more = controls.querySelector('[data-paginate-more]');
         var less = controls.querySelector('[data-paginate-less]');
-        var sentinel = controls.querySelector('[data-paginate-sentinel]');
 
         if (more) {
           more.addEventListener('click', function () {
@@ -172,27 +180,6 @@ const { gridId, pageSize = 12, total } = Astro.props;
               top.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
           });
-        }
-
-        // Infinite scroll: pre-load the next page before the user reaches
-        // the bottom. The explicit button stays as the accessible fallback.
-        // Skipped while the grid itself is hidden (e.g. Flashcard view).
-        if (sentinel && 'IntersectionObserver' in window) {
-          var io = new IntersectionObserver(
-            function (entries) {
-              for (var i = 0; i < entries.length; i++) {
-                if (!entries[i].isIntersecting) continue;
-                if (grid.offsetParent === null) continue;
-                var seen = countMatches(grid);
-                if (grid._bnLimit < seen.total) {
-                  grid._bnLimit += grid._bnPageSize;
-                  applyGrid(grid);
-                }
-              }
-            },
-            { rootMargin: '600px 0px' }
-          );
-          io.observe(sentinel);
         }
       }
 
