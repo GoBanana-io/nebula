@@ -774,8 +774,30 @@ main {
   transition: all 150ms var(--ease-spring-quick);
 }
 
+.view-islands {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.view-btn {
+  gap: 6px;
+  transition: background-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+}
+
 .view-btn:hover {
   background-color: var(--surface-1);
+}
+
+.view-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 var(--border-dark);
+}
+
+.view-btn:focus-visible {
+  outline: 2px dashed var(--border-dark);
+  outline-offset: 2px;
 }
 
 .view-btn.is-active {
@@ -783,6 +805,24 @@ main {
   color: var(--surface-3);
   border-color: var(--border-dark);
   box-shadow: 2px 2px 0 var(--border-dark);
+}
+
+.view-mode-toggle--order .view-btn.is-active {
+  background-color: var(--color-coral-500);
+}
+
+.view-mode-toggle--order .view-btn:hover {
+  background-color: var(--color-coral-100);
+}
+
+.view-mode-toggle--order .view-btn.is-active:hover {
+  background-color: var(--color-coral-500);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .view-btn {
+    transition: none;
+  }
 }
 
 .filter-pills {

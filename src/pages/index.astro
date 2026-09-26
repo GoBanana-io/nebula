@@ -43,14 +43,25 @@ const flashcards = ideas.map((idea) => ({
       </span>
     </div>
 
-    <!-- View Mode Switcher -->
-    <div class="view-mode-toggle" role="group" aria-label="View Mode">
-      <button class="view-btn is-active" id="view-mode-grid" type="button">
-        🗂 Grid
-      </button>
-      <button class="view-btn" id="view-mode-flash" type="button">
-        ⚡️ Flashcard
-      </button>
+    <!-- View + Order Islands -->
+    <div class="view-islands">
+      <div class="view-mode-toggle" role="group" aria-label="View Mode">
+        <button class="view-btn is-active" id="view-mode-grid" type="button">
+          🗂 Grid
+        </button>
+        <button class="view-btn" id="view-mode-flash" type="button">
+          ⚡️ Flashcard
+        </button>
+      </div>
+
+      <div class="view-mode-toggle view-mode-toggle--order" role="group" aria-label="Order">
+        <button class="view-btn is-active" id="order-shuffle" type="button" title="Random order">
+          🎲 Shuffle
+        </button>
+        <button class="view-btn" id="order-date" type="button" title="Newest first">
+          📅 Newest
+        </button>
+      </div>
     </div>
 
     <!-- Category Filter Buttons -->
@@ -281,6 +292,34 @@ const flashcards = ideas.map((idea) => ({
       gridContainer.classList.add('is-hidden');
       renderFlashcard(fcIndex);
     });
+
+    // Grid Order: Shuffle (default) / Newest first (keeps filter visibility)
+    const gridEl = document.getElementById('ideas-grid');
+    const btnOrderShuffle = document.getElementById('order-shuffle');
+    const btnOrderDate = document.getElementById('order-date');
+    const homeOrder = gridEl ? Array.from(gridEl.children) : [];
+    function applyHomeOrder() {
+      if (!gridEl) return;
+      homeOrder.forEach((n) => gridEl.appendChild(n));
+    }
+    function applyShuffle() {
+      if (!gridEl) return;
+      const nodes = Array.from(gridEl.children);
+      for (let i = nodes.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [nodes[i], nodes[j]] = [nodes[j], nodes[i]];
+      }
+      nodes.forEach((n) => gridEl.appendChild(n));
+    }
+    function setOrder(mode) {
+      if (mode === 'date') applyHomeOrder();
+      else applyShuffle();
+      btnOrderShuffle?.classList.toggle('is-active', mode !== 'date');
+      btnOrderDate?.classList.toggle('is-active', mode === 'date');
+    }
+    btnOrderShuffle?.addEventListener('click', () => setOrder('shuffle'));
+    btnOrderDate?.addEventListener('click', () => setOrder('date'));
+    setOrder('shuffle');
 
     // Category Filter Buttons Logic
     const filterBtns = document.querySelectorAll('.filter-btn');
