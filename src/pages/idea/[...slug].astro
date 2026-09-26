@@ -47,6 +47,12 @@ const similar = allIdeas
 const allSlugs = sorted.map((i) => i.id.replace(/\.md$/, ''));
 const currentSlug = idea.id.replace(/\.md$/, '');
 
+// Breadcrumb chips only link when a matching tag page exists;
+// otherwise render plain text so we never link to a 404.
+const allTags = new Set(allIdeas.flatMap((i) => i.data.tags));
+const sectorTag = (idea.data.sector || '').split('/')[0].toLowerCase();
+const countryTag = (idea.data.country || '').toLowerCase();
+
 const isFailure = idea.data.status === 'closed' || idea.data.tags.includes('failure');
 const isUnicorn = idea.data.tags.includes('unicorn');
 
@@ -123,8 +129,12 @@ const pillars = [
   <nav class="iv2-crumb" aria-label="Breadcrumb">
     <a class="btn btn-secondary btn-sm" href="/#sparks" rel="prefetch">← All Sparks</a>
     <div class="iv2-crumb-mid">
-      {hasSector && <a class="chip chip-sector" rel="prefetch" href={`/tags/${idea.data.sector.split('/')[0].toLowerCase()}`}>{idea.data.sector}</a>}
-      {hasCountry && <a class="iv2-crumb-loc iv2-crumb-loc--link" rel="prefetch" href={`/tags/${idea.data.country.toLowerCase()}`}>{idea.data.country}</a>}
+      {hasSector && (allTags.has(sectorTag)
+        ? <a class="chip chip-sector" rel="prefetch" href={`/tags/${sectorTag}`}>{idea.data.sector}</a>
+        : <span class="chip chip-sector">{idea.data.sector}</span>)}
+      {hasCountry && (allTags.has(countryTag)
+        ? <a class="iv2-crumb-loc iv2-crumb-loc--link" rel="prefetch" href={`/tags/${countryTag}`}>{idea.data.country}</a>
+        : <span class="iv2-crumb-loc">{idea.data.country}</span>)}
       <span class="iv2-crumb-meta">{readingMinutes} min · {publishedStr}</span>
     </div>
     <button class="btn btn-violet btn-sm" id="iv2-shuffle" type="button" title="Jump to a random spark">

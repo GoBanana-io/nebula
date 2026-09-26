@@ -4,48 +4,7 @@ import Base from '../../layouts/Base.astro';
 
 const ideas = await getCollection('ideas');
 
-// Arabic sector translations
-const tagArMap: Record<string, string> = {
-  fintech: 'تكنولوجيا مالية',
-  agritech: 'تكنولوجيا زراعية',
-  logistics: 'لوجستيات وتوصيل',
-  unicorn: 'شركات يونيكورن',
-  failure: 'فشل',
-  ecommerce: 'تجارة إلكترونية',
-  proptech: 'تكنولوجيا عقارية',
-  healthtech: 'تكنولوجيا صحية',
-  diagnostics: 'تشخيص طبي',
-  edtech: 'تعليم وتدريب',
-  mobility: 'نقل ذكي',
-  ai: 'ذكاء اصطناعي',
-  marketplace: 'منصات وسيطة',
-  climate: 'مناخ واستدامة',
-  energy: 'طاقة ونفايات',
-  b2b: 'تجارة بين الشركات',
-  saas: 'برمجيات خدمية',
-  payments: 'مدفوعات إلكترونية',
-  egypt: 'مصر',
-  ksa: 'السعودية',
-  'saudi arabia': 'السعودية',
-  contech: 'تكنولوجيا الإنشاءات',
-  procurement: 'مشتريات وتوريد',
-  govtech: 'تقنية حكومية',
-  public: 'قطاع عام',
-  hydrogen: 'هيدروجين',
-  'hajj-umrah': 'حج وعمرة',
-  'travel-tech': 'تكنولوجيا السفر',
-  tourism: 'سياحة',
-  delivery: 'توصيل وطلبات',
-  cxm: 'تجربة العملاء',
-  education: 'تعليم',
-  foodtech: 'تكنولوجيا الأغذية',
-  closed: 'شركات مغلقة',
-  bnpl: 'اشترِ الآن وادفع لاحقًا',
-  communications: 'اتصالات ومراسلات',
-  'e-commerce': 'تجارة إلكترونية',
-  'retail-tech': 'تكنولوجيا التجزئة',
-  enablement: 'تمكين التجارة',
-};
+import { tagArMap } from '../../lib/tagAr';
 
 // Map tag counts
 const tagCountMap: Record<string, number> = {};
