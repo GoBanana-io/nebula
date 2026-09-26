@@ -82,3 +82,30 @@ export const countryFlagMap: Record<string, string> = {
   uae: '🇦🇪',
   japan: '🇯🇵',
 };
+
+// Display English name per country tag (tags use short codes like ksa/uae).
+export const countryEnMap: Record<string, string> = {
+  egypt: 'Egypt',
+  syria: 'Syria',
+  ksa: 'Saudi Arabia',
+  'saudi arabia': 'Saudi Arabia',
+  qatar: 'Qatar',
+  turkey: 'Turkey',
+  uae: 'United Arab Emirates',
+  japan: 'Japan',
+};
+
+// Per-country accent pair for the /tags country cards: soft wash behind the
+// flag blob + saturated top ribbon. Small accents only, so near-family
+// repeats (the two red-flag countries, the two green-flag countries) read
+// as intentional.
+export const countryAccentMap: Record<string, { wash: string; bar: string }> = {
+  egypt: { wash: 'var(--color-amber-100)', bar: 'var(--color-amber-500)' },
+  japan: { wash: 'var(--color-coral-100)', bar: 'var(--color-coral-500)' },
+  turkey: { wash: 'var(--color-coral-200)', bar: 'var(--color-coral-600)' },
+  ksa: { wash: 'var(--color-teal-100)', bar: 'var(--color-teal-500)' },
+  'saudi arabia': { wash: 'var(--color-teal-100)', bar: 'var(--color-teal-500)' },
+  qatar: { wash: 'var(--color-fuchsia-100)', bar: 'var(--color-fuchsia-500)' },
+  syria: { wash: 'var(--color-violet-100)', bar: 'var(--color-violet-500)' },
+  uae: { wash: 'var(--color-lime-100)', bar: 'var(--color-lime-500)' },
+};

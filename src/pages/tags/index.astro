@@ -4,7 +4,7 @@ import Base from '../../layouts/Base.astro';
 
 const ideas = await getCollection('ideas');
 
-import { tagArMap } from '../../lib/tagAr';
+import { tagArMap, countryTags, countryFlagMap, countryEnMap, countryAccentMap } from '../../lib/tagAr';
 
 // Map tag counts
 const tagCountMap: Record<string, number> = {};
@@ -14,18 +14,29 @@ ideas.forEach((idea) => {
   });
 });
 
-const sortedTags = Object.entries(tagCountMap)
-  .map(([tag, count]) => ({
-    tag,
-    count,
-    ar: tagArMap[tag] || tag,
-  }))
+const toEntry = ([tag, count]: [string, number]) => ({
+  tag,
+  count,
+  ar: tagArMap[tag] || tag,
+});
+
+// Countries get their own section + shape — never mixed into the sector cloud.
+const countryEntries = Object.entries(tagCountMap)
+  .filter(([tag]) => countryTags.has(tag))
+  .map(toEntry)
   .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag));
+
+const sectorEntries = Object.entries(tagCountMap)
+  .filter(([tag]) => !countryTags.has(tag))
+  .map(toEntry)
+  .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag));
+
+const countrySparkTotal = countryEntries.reduce((n, e) => n + e.count, 0);
 ---
 
 <Base
-  title="Sectors & Themes 🏷 — Banana Nebula"
-  description="Explore startup playbooks organized by sector, tech, and business models."
+  title="Sectors, Themes & Countries 🏷 — Banana Nebula"
+  description="Explore startup playbooks organized by country, sector, tech, and business models."
   activePath="/tags"
 >
   <div style="margin: var(--space-8) 0 var(--space-16);">
@@ -33,19 +44,69 @@ const sortedTags = Object.entries(tagCountMap)
     <div style="margin-bottom: var(--space-8);">
       <div class="hero-tag-kicker">
         <span>🏷</span>
-        <span>Sectors & Themes</span>
+        <span>Browse the Library</span>
         <span>✦</span>
-        <span>{sortedTags.length} Taxonomies</span>
+        <span>{countryEntries.length} Countries · {sectorEntries.length} Sectors & Themes</span>
       </div>
       <h1 style="font-size: var(--type-display-xl); margin-bottom: var(--space-2);">
         Sectors & Themes
       </h1>
       <p style="font-size: 1.125rem;">
-        Pick a market sector to filter playbooks and lessons.
+        Pick a country to browse its startups, or a market sector to filter playbooks and lessons.
       </p>
     </div>
 
-    <!-- Funky Sticker Tag Cloud -->
+    <!-- Countries: passport-style cards, not sticker pills -->
+    <div class="country-head">
+      <h2 class="country-title">🌍 Browse by Country</h2>
+      <span class="country-total">
+        {countryEntries.length} COUNTRIES · {countrySparkTotal} SPARKS
+      </span>
+    </div>
+    <p class="country-sub">
+      Start from home turf — every spark filed under its country's flag.
+    </p>
+    <div class="country-panel">
+      <ul class="country-grid" aria-label="Countries with idea counts">
+        {countryEntries.map(({ tag, count, ar }, idx) => {
+          const accent = countryAccentMap[tag] ?? {
+            wash: 'var(--surface-1)',
+            bar: 'var(--color-amber-500)',
+          };
+          const tilt = idx % 2 === 0 ? '-0.6deg' : '0.6deg';
+          return (
+            <li>
+              <a
+                class="country-card"
+                rel="prefetch"
+                href={`/tags/${tag}`}
+                style={`--cc-wash: ${accent.wash}; --cc-bar: ${accent.bar}; --cc-tilt: ${tilt};`}
+              >
+                <span class="country-card-top">
+                  <span class="country-flag" aria-hidden="true">
+                    {countryFlagMap[tag] || '🌍'}
+                  </span>
+                  <span class="country-count">
+                    {count} {count === 1 ? 'spark' : 'sparks'}
+                  </span>
+                </span>
+                <span class="country-en">{countryEnMap[tag] || tag}</span>
+                <span class="country-ar" lang="ar">{ar}</span>
+                <span class="country-foot">
+                  <span class="country-slug">#{tag}</span>
+                  <span class="country-go" aria-hidden="true">→</span>
+                </span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+
+    <!-- Sectors & Themes: funky sticker tag cloud -->
+    <h2 style="font-size: 1.375rem; margin-bottom: var(--space-4);">
+      🏷 Sectors & Themes
+    </h2>
     <div
       style="
         background-color: var(--surface-2);
@@ -60,7 +121,7 @@ const sortedTags = Object.entries(tagCountMap)
         aria-label="All tags with idea counts"
         style="gap: var(--space-3); justify-content: flex-start;"
       >
-        {sortedTags.map(({ tag, count, ar }, idx) => {
+        {sectorEntries.map(({ tag, count, ar }, idx) => {
           const rotations = [-2, 1.5, -1, 2.5, -1.5, 2];
           const rot = rotations[idx % rotations.length];
           const isHeavy = count >= 3;
@@ -125,3 +186,210 @@ const sortedTags = Object.entries(tagCountMap)
     </div>
   </div>
 </Base>
+
+<style>
+  /* -- Country section: passport cards on a dotted panel ---------------- */
+  .country-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-2);
+  }
+
+  .country-title {
+    font-size: var(--type-h1);
+  }
+
+  .country-total {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono-sm);
+    font-weight: 700;
+    color: var(--text-secondary);
+    background-color: var(--surface-1);
+    border: 2px solid var(--border-dark);
+    border-radius: var(--shape-pill);
+    padding: 4px 12px;
+    box-shadow: var(--elevation-1);
+    white-space: nowrap;
+  }
+
+  .country-sub {
+    font-size: var(--type-body-lg);
+    margin-bottom: var(--space-5);
+  }
+
+  .country-panel {
+    background-color: var(--surface-2);
+    background-image: radial-gradient(var(--border-default) 1.2px, transparent 1.2px);
+    background-size: 18px 18px;
+    border: 3px solid var(--border-dark);
+    border-radius: var(--shape-xl);
+    padding: var(--space-8) var(--space-6);
+    box-shadow: var(--elevation-3);
+    margin-bottom: var(--space-10);
+  }
+
+  .country-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--space-4);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .country-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    height: 100%;
+    background-color: var(--surface-3);
+    border: 3px solid var(--border-dark);
+    border-radius: var(--shape-lg);
+    box-shadow: var(--elevation-2);
+    padding: var(--space-5) var(--space-5) var(--space-4);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transform: rotate(var(--cc-tilt));
+    transition:
+      transform 150ms var(--ease-spring-quick),
+      box-shadow 150ms var(--ease-spring-quick);
+  }
+
+  .country-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background-color: var(--cc-bar);
+  }
+
+  .country-card:hover {
+    transform: rotate(0deg) translate(-2px, -3px);
+    box-shadow: 8px 8px 0 var(--border-dark);
+  }
+
+  .country-card:focus-visible {
+    outline: 3px solid var(--color-violet-500);
+    outline-offset: 3px;
+  }
+
+  .country-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-2);
+  }
+
+  .country-flag {
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    font-size: 1.8rem;
+    line-height: 1;
+    background-color: var(--cc-wash);
+    border: 2.5px solid var(--border-dark);
+    border-radius: 18px 8px 18px 8px;
+    box-shadow: var(--elevation-1);
+  }
+
+  .country-count {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono-sm);
+    font-weight: 700;
+    color: var(--text-secondary);
+    background-color: var(--surface-1);
+    border: 2px solid var(--border-dark);
+    border-radius: var(--shape-pill);
+    padding: 3px 10px;
+    white-space: nowrap;
+  }
+
+  .country-en {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.375rem;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--text-primary);
+  }
+
+  .country-ar {
+    font-family: var(--font-arabic);
+    font-weight: 800;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  .country-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 2px dashed var(--border-default);
+  }
+
+  .country-slug {
+    font-family: var(--font-mono);
+    font-size: var(--type-mono-sm);
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+
+  .country-go {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--cc-wash);
+    border: 2px solid var(--border-dark);
+    font-weight: 800;
+    color: var(--text-primary);
+    transition: transform 150ms var(--ease-spring-quick);
+  }
+
+  .country-card:hover .country-go {
+    transform: translateX(3px);
+  }
+
+  @media (max-width: 560px) {
+    .country-panel {
+      padding: var(--space-5) var(--space-4);
+    }
+
+    .country-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+    }
+
+    .country-card {
+      padding: var(--space-4) var(--space-4) var(--space-3);
+    }
+
+    .country-flag {
+      width: 46px;
+      height: 46px;
+      font-size: 1.5rem;
+    }
+
+    .country-en {
+      font-size: 1.0625rem;
+    }
+
+    .country-ar {
+      font-size: 1rem;
+    }
+  }
+</style>

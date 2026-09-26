@@ -14,9 +14,11 @@ const ideas = (await getCollection('ideas'))
   .filter((i) => i.data.tags.includes(tag))
   .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
 
-import { tagArMap } from '../../lib/tagAr';
+import { tagArMap, countryTags, countryFlagMap } from '../../lib/tagAr';
 
 const arName = tagArMap[tag] || '';
+const isCountry = countryTags.has(tag);
+const flag = countryFlagMap[tag] || '';
 ---
 
 <Base
@@ -28,7 +30,7 @@ const arName = tagArMap[tag] || '';
     <!-- Navigation Back -->
     <div style="margin-bottom: var(--space-6); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3);">
       <a class="btn btn-secondary btn-sm" href="/tags" rel="prefetch">
-        ← All Sectors
+        ← All Countries & Sectors
       </a>
       <span class="card-badge-status card-badge-status--operating">
         {ideas.length} {ideas.length === 1 ? 'Spark' : 'Sparks'}
@@ -47,13 +49,15 @@ const arName = tagArMap[tag] || '';
       "
     >
       <div class="hero-tag-kicker" style="margin-bottom: var(--space-2);">
-        <span>🏷 Sector Collection</span>
+        <span>{isCountry ? `🌍 Country Collection ${flag}` : '🏷 Sector Collection'}</span>
       </div>
       <h1 style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: var(--space-2);">
-        #{tag} {arName && <span class="ar-text" style="color: var(--color-coral-600); font-size: 0.8em;">· {arName}</span>}
+        {isCountry ? (arName || tag) : `#${tag}`} {isCountry ? <span class="ar-text" style="color: var(--color-coral-600); font-size: 0.8em;">· #{tag}</span> : arName && <span class="ar-text" style="color: var(--color-coral-600); font-size: 0.8em;">· {arName}</span>}
       </h1>
       <p style="font-size: 1.125rem;">
-        Showing {ideas.length} startup sparks and playbooks for #{tag}.
+        {isCountry
+          ? `Showing ${ideas.length} startup sparks and playbooks from ${arName || tag}.`
+          : `Showing ${ideas.length} startup sparks and playbooks for #${tag}.`}
       </p>
     </div>
 
