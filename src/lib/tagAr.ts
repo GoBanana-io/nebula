@@ -63,6 +63,8 @@ export const tagArMap: Record<string, string> = {
   biotech: 'تكنولوجيا حيوية',
   semiconductors: 'أشباه الموصلات',
   ev: 'سيارات كهربائية',
+  palestine: 'فلسطين',
+  'occupied-palestine': 'فلسطين المحتلة',
 };
 
 // Tags that denote a country, not a sector/theme. The /tags index renders
@@ -81,6 +83,8 @@ export const countryTags = new Set([
   'china',
   'south-korea',
   'singapore',
+  'palestine',
+  'occupied-palestine',
 ]);
 
 export const countryFlagMap: Record<string, string> = {
@@ -96,6 +100,8 @@ export const countryFlagMap: Record<string, string> = {
   china: '🇨🇳',
   'south-korea': '🇰🇷',
   singapore: '🇸🇬',
+  palestine: '🇵🇸',
+  'occupied-palestine': '🇵🇸',
 };
 
 // Display English name per country tag (tags use short codes like ksa/uae).
@@ -111,6 +117,8 @@ export const countryEnMap: Record<string, string> = {
   jordan: 'Jordan',
   china: 'China',
   'south-korea': 'South Korea',
+  palestine: 'Palestine',
+  'occupied-palestine': 'Occupied Palestine',
   singapore: 'Singapore',
 };
 
@@ -131,4 +139,6 @@ export const countryAccentMap: Record<string, { wash: string; bar: string }> = {
   china: { wash: 'var(--color-coral-50)', bar: 'var(--color-coral-700)' },
   'south-korea': { wash: 'var(--color-coral-100)', bar: 'var(--color-coral-600)' },
   singapore: { wash: 'var(--color-coral-50)', bar: 'var(--color-coral-600)' },
+  palestine: { wash: 'var(--color-teal-50)', bar: 'var(--color-teal-500)' },
+  'occupied-palestine': { wash: 'var(--color-violet-200)', bar: 'var(--color-violet-600)' },
 };

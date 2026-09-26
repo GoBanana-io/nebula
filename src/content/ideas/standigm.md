@@ -19,7 +19,7 @@ whyItWorked: "Built full-stack workflow AI — target identification, drug repos
 challenges: "AI-designed molecules must still survive animal and human trials; the company has stayed private since its 2021 pre-IPO round; and global AI-drug-discovery rivals compete for the same pharma partnerships."
 howItWorks: "Proprietary platforms (including the STELLA generative engine, and STELLA-MGD for molecular glue degraders) mine biomedical data with neural networks, decision trees, and NLP to propose novel targets and design optimized small molecules, validated through iterative lab testing with partners."
 painPoints: "'Undruggable' proteins with no known ligands, degrader drugs that hit the wrong proteins, and pharma R&D budgets wasted on candidates that fail late."
-businessModel: "B2B joint discovery programs and licensing of AI-generated candidates to pharmaceutical companies — e.g. the Protai molecular-glue program backed by the Korea-Israel Industrial R&D Foundation — plus platform-driven pipeline deals."
+businessModel: "B2B joint discovery programs and licensing of AI-generated candidates to pharmaceutical companies — e.g. the Protai molecular-glue program backed by the KORIL-RDF joint R&D foundation — plus platform-driven pipeline deals."
 founders: "Kim Jin-han and two fellow Samsung Advanced Institute of Technology Ph.D.s"
 usersMetrics: "Joint R&D program with Protai on selective molecular glue degraders with KORIL-RDF backing over two years (Sep 2026); earlier NASH candidates advanced to animal trials"
 investors: "SK Holdings, Kakao Ventures, SKS PE, Daishin Private Equity, KDB Bank, Atinum Investment, DSC Investment, InterVest, LB Investment, Wonik Investment Partners"
@@ -61,4 +61,4 @@ Every candidate still faces wet-lab and clinical attrition no algorithm can waiv
 
 ## Latest — September 2026
 
-Standigm and Israel's Protai launched a joint R&D program to design selective molecular glue degraders, pairing Protai's structural-proteomics platform with STELLA-MGD under Korea-Israel Industrial R&D Foundation (KORIL-RDF) support over two years — targeting proteins previous drugs couldn't touch.
+Standigm and Protai launched a joint R&D program to design selective molecular glue degraders, pairing Protai's structural-proteomics platform with STELLA-MGD under KORIL-RDF joint-foundation support over two years — targeting proteins previous drugs couldn't touch.

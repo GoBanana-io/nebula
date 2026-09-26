@@ -47,7 +47,7 @@ No public pricing yet — the concept earns today through the restaurant and jar
 
 ## Challenges
 
-A paper-stage exporter: no disclosed funding or factory, novel-food and labelling gauntlets in each new market, and entrenched whole-cut competitors — Israel's Redefine Meat, Slovenia's Juicy Marbles, America's Chunk Foods — already on European shelves with far more capital.
+A paper-stage exporter: no disclosed funding or factory, novel-food and labelling gauntlets in each new market, and entrenched whole-cut competitors — Redefine Meat, Slovenia's Juicy Marbles, America's Chunk Foods — already on European shelves with far more capital.
 
 ## Funding
 
