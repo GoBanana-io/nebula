@@ -25,10 +25,6 @@ sources:
 summaryAr: "منصة «ناوي» العقارية تجمع بين القوائم الموثقة والوساطة والتمويل العقاري لزيادة الشفافية في السوق المصرية."
 ---
 
-## Latest — September 2026
-
-On 3 September 2026 Shore Africa reported that the International Finance Corporation (IFC) is considering an equity investment in Nawy, disclosed via IFC due-diligence filings. The filings sketch Nawy's current scale — 1M+ unique monthly users and roughly 1,000 active MSME brokers — and its product stack: Nawy Properties multi-listing, Nawy Now mortgage origination (passed to banks via off-balance-sheet securitisation), Nawy Shares fractional ownership, and Nawy Unlocked refurbish-to-rent. IFC's review included a November 2025 head-office site visit and flagged environmental-and-social gaps (contractor oversight, grievance timelines) for Nawy to remediate. The investment is proposed and still pending approval — not a closed round.
-
 ## The problem
 
 Egyptian homebuyers navigated scattered listings, unverified brokers pushing their own inventory, and almost no mortgage infrastructure — high stakes, low trust.
@@ -47,3 +43,6 @@ Real estate is cyclical and rate-sensitive; holding mortgage risk on balance she
 - September 2026: IFC disclosed a proposed (pending-approval) equity investment; amount undisclosed — MISSING.
 - Valuation: MISSING.
 
+## Latest — September 2026
+
+On 3 September 2026 Shore Africa reported that the International Finance Corporation (IFC) is considering an equity investment in Nawy, disclosed via IFC due-diligence filings. The filings sketch Nawy's current scale — 1M+ unique monthly users and roughly 1,000 active MSME brokers — and its product stack: Nawy Properties multi-listing, Nawy Now mortgage origination (passed to banks via off-balance-sheet securitisation), Nawy Shares fractional ownership, and Nawy Unlocked refurbish-to-rent. IFC's review included a November 2025 head-office site visit and flagged environmental-and-social gaps (contractor oversight, grievance timelines) for Nawy to remediate. The investment is proposed and still pending approval — not a closed round.

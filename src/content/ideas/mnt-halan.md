@@ -27,10 +27,6 @@ sources:
 summaryAr: "منصة «إم إن تي-حالًا» المالية تخدم ملايين المصريين خارج المنظومة المصرفية عبر الإقراض متناهي الصغر والمدفوعات الرقمية."
 ---
 
-## Latest — September 2026
-
-MNT-Halan closed a strategic capital increase led by Al Ahly Capital Holding, the private-equity arm of the National Bank of Egypt, lifting its valuation to $1.4bn — up from the $1bn mark set by its $400M equity-and-debt round.Launch Base Africa reported on 11 September 2026, corporate documents show GB Corp (formerly GB Auto) retaining a 41.61% controlling stake after the round. The deal is the first closing of an ongoing round — reportedly a $30M initial infusion toward $70M+ — and the first time a commercial bank has taken an equity stake in the company. Founder and chairman Mounir Nakhla called the banking partner a milestone; Al Ahly Capital CEO Karim Saadé cited institutional confidence in MNT-Halan's regional expansion and management performance.
-
 ## The problem
 
 Tens of millions of Egyptians operate outside the formal banking system, with little access to credit, digital payments, or financial services tailored to irregular incomes.
@@ -49,3 +45,6 @@ Lending to thin-file borrowers means constant credit-risk tuning; a banking or e
 - September 2026: strategic capital increase led by Al Ahly Capital Holding at a $1.4bn valuation (first closing; second closing expected) — Launch Base Africa.
 - Valuation: $1.4B (September 2026 round). Earlier $1B+ (company statement, 2023).
 
+## Latest — September 2026
+
+MNT-Halan closed a strategic capital increase led by Al Ahly Capital Holding, the private-equity arm of the National Bank of Egypt, lifting its valuation to $1.4bn — up from the $1bn mark set by its $400M equity-and-debt round.Launch Base Africa reported on 11 September 2026, corporate documents show GB Corp (formerly GB Auto) retaining a 41.61% controlling stake after the round. The deal is the first closing of an ongoing round — reportedly a $30M initial infusion toward $70M+ — and the first time a commercial bank has taken an equity stake in the company. Founder and chairman Mounir Nakhla called the banking partner a milestone; Al Ahly Capital CEO Karim Saadé cited institutional confidence in MNT-Halan's regional expansion and management performance.

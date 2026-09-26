@@ -111,14 +111,12 @@ const pillars = [
   title={`${idea.data.title} — Banana Nebula`}
   description={idea.data.summary}
 >
-  <div class="iv2-progress" id="iv2-progress" aria-hidden="true"></div>
-
   <!-- Breadcrumb bar -->
   <nav class="iv2-crumb" aria-label="Breadcrumb">
     <a class="btn btn-secondary btn-sm" href="/#sparks">← All Sparks</a>
     <div class="iv2-crumb-mid">
       {hasSector && <a class="chip chip-sector" href={`/tags/${idea.data.sector.split('/')[0].toLowerCase()}`}>{idea.data.sector}</a>}
-      {hasCountry && <span class="iv2-crumb-loc">{idea.data.country}</span>}
+      {hasCountry && <a class="iv2-crumb-loc iv2-crumb-loc--link" href={`/tags/${idea.data.country.toLowerCase()}`}>{idea.data.country}</a>}
       <span class="iv2-crumb-meta">{readingMinutes} min · {publishedStr}</span>
     </div>
     <button class="btn btn-violet btn-sm" id="iv2-shuffle" type="button" title="Jump to a random spark">
@@ -143,12 +141,10 @@ const pillars = [
 
     <div class="iv2-lede">
       <div class="iv2-lede-en">
-        <span class="iv2-lede-kicker">English summary</span>
         <p>{idea.data.summary}</p>
       </div>
       {idea.data.summaryAr && (
         <div class="iv2-lede-ar" dir="rtl" lang="ar">
-          <span class="iv2-lede-kicker">الملخص العربي</span>
           <p>{idea.data.summaryAr}</p>
         </div>
       )}
@@ -174,24 +170,25 @@ const pillars = [
     </div>
   </header>
 
-  <!-- Main + sticky sidebar -->
+  <!-- Full-width teardown band -->
+  {pillars.length > 0 && (
+    <section aria-label="Teardown">
+      <ol class="iv2-pillars">
+        {pillars.map((p) => (
+          <li class={`iv2-pillar ${p.mod}`}>
+            <span class="iv2-pillar-num" aria-hidden="true">{p.n}</span>
+            <span class="teardown-badge">{p.badge}</span>
+            <h2>{p.title}</h2>
+            <p>{p.text}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+  )}
+
+  <!-- Reading layout: prose + sticky sidebar -->
   <div class="iv2-layout">
     <div class="iv2-main">
-      {pillars.length > 0 && (
-        <section aria-label="Teardown">
-          <ol class="iv2-pillars">
-            {pillars.map((p) => (
-              <li class={`iv2-pillar ${p.mod}`}>
-                <span class="iv2-pillar-num" aria-hidden="true">{p.n}</span>
-                <span class="teardown-badge">{p.badge}</span>
-                <h2>{p.title}</h2>
-                <p>{p.text}</p>
-              </li>
-            ))}
-          </ol>
-        </section>
-      )}
-
       <article class="idea-prose iv2-prose">
         <Content />
       </article>
@@ -310,31 +307,8 @@ const pillars = [
     </div>
   </section>
 
-  <!-- Sticky mobile action bar -->
-  <div class="iv2-stickybar" role="group" aria-label="Quick actions">
-    <button class="btn btn-amber btn-sm" type="button" id="iv2-copy-m" data-text={playbookCopyText}>
-      Copy
-    </button>
-    {nextSlug ? (
-      <a class="btn btn-violet btn-sm" href={`/idea/${nextSlug}`}>Next →</a>
-    ) : (
-      <a class="btn btn-violet btn-sm" href="/random">Roulette →</a>
-    )}
-  </div>
-
   <script define:vars={{ allSlugs, currentSlug, prevSlug, nextSlug }}>
     (function () {
-      var bar = document.getElementById('iv2-progress');
-      function onScroll() {
-        if (!bar) return;
-        var h = document.documentElement;
-        var max = h.scrollHeight - h.clientHeight;
-        var p = max > 0 ? h.scrollTop / max : 0;
-        bar.style.transform = 'scaleX(' + p + ')';
-      }
-      document.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
-
       function copyText(t, msg) {
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(t).then(function () {
@@ -342,7 +316,7 @@ const pillars = [
           });
         }
       }
-      ['iv2-copy', 'iv2-copy-m', 'iv2-copy-take'].forEach(function (id) {
+      ['iv2-copy', 'iv2-copy-take'].forEach(function (id) {
         var el = document.getElementById(id);
         if (el) el.addEventListener('click', function () {
           copyText(el.getAttribute('data-text') || '');

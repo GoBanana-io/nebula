@@ -25,10 +25,6 @@ sources:
 summaryAr: "شركة «ريمي-دي» المصرية تطور وتصنع اختبارات التشخيص الجزيئي لأمراض مثل السل والإيدز بأسعار مناسبة للأسواق الأفريقية وجمعت ١٫٤٥ مليون دولار."
 ---
 
-## Latest — July 2026
-
-On 20–24 July 2026 TechMoran and Disrupt Africa reported that Reme-D raised a $1.45M pre-Series A round led by Anara Impact Capital, with participation from the Global Innovation Fund (GIF), Africa Health Ventures and others. The capital funds manufacturing-capacity expansion, regional footprint growth, and new tests — including genetic-disease and cancer panels — on top of its existing TB, HIV, hepatitis and HPV assays.
-
 ## The problem
 
 Molecular testing across Africa leans on imported kits that are expensive, need cold chains, and are rarely designed around the continent's highest-burden diseases — so patients go undiagnosed or pay out of reach.
@@ -46,3 +42,6 @@ Each new assay and each new country means fresh regulatory clearance; scaling ma
 - Raised: $1.45M pre-Series A led by Anara Impact Capital with GIF and Africa Health Ventures (Disrupt Africa, July 2026).
 - Valuation: MISSING.
 
+## Latest — July 2026
+
+On 20–24 July 2026 TechMoran and Disrupt Africa reported that Reme-D raised a $1.45M pre-Series A round led by Anara Impact Capital, with participation from the Global Innovation Fund (GIF), Africa Health Ventures and others. The capital funds manufacturing-capacity expansion, regional footprint growth, and new tests — including genetic-disease and cancer panels — on top of its existing TB, HIV, hepatitis and HPV assays.

@@ -27,10 +27,6 @@ sources:
 summaryAr: "شركة «فوري» حوّلت الأكشاك ومحلات التجزئة إلى شبكة مدفوعات إلكترونية وأصبحت أول شركة تكنولوجيا مالية مصرية تُطرح في البورصة."
 ---
 
-## Latest — September 2026
-
-On 13 August 2026 Fawry reported myFawry app transactions reached EGP 48 billion in H1 2026, up 68.5% year-on-year from EGP 28.5 billion, with cumulative downloads up 37.2% to 28 million on new retail investment products (EGX30, gold-backed and Sharia-compliant funds). On 14 September 2026 Fawry partnered with DMS to integrate Fawry Business POS solutions directly with DMS's medical management system for healthcare payments.
-
 ## The problem
 
 In a cash-dominated economy, paying utility bills, topping up phones, or settling fees meant queues, cash handling, and no receipts — exclusionary for anyone far from a bank branch.
@@ -48,3 +44,6 @@ As a listed company every quarter is judged; bank-led wallets (InstaPay and othe
 - Raised: MISSING (public company; historical private raises undisclosed in citable sources).
 - Valuation: $366M market cap at 2019 IPO (WeeTracker). Current market cap: MISSING.
 
+## Latest — September 2026
+
+On 13 August 2026 Fawry reported myFawry app transactions reached EGP 48 billion in H1 2026, up 68.5% year-on-year from EGP 28.5 billion, with cumulative downloads up 37.2% to 28 million on new retail investment products (EGX30, gold-backed and Sharia-compliant funds). On 14 September 2026 Fawry partnered with DMS to integrate Fawry Business POS solutions directly with DMS's medical management system for healthcare payments.

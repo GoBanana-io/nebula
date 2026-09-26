@@ -27,10 +27,6 @@ sources:
 summaryAr: "شركة «سويفل» للنقل الجماعي الذكي انطلقت من القاهرة ووصلت إلى بورصة ناسداك الأمريكية."
 ---
 
-## Latest — August–September 2026
-
-Swvl stacked two in-window financings. On 25 August 2026 it announced a $13M private placement led by the Sawiris family and Coefficient LP to fund its next growth phase and US expansion; on 29 August entARABI reported a further $1.5M definitive agreement with Sovico Holding at $1.46 per share (six-month lockup), taking the strategic round to about $14.5M for working capital and general corporate purposes. Then on 8 September 2026 Swvl announced HSBC had raised its working-capital facility limit by 110% to $1.4M — more than doubling capacity under the line first established in November 2024 — and deepened the tie-up into HSBC global payment solutions. The Egypt-anchored facility funds working-capital cycles behind new and renewing enterprise contracts across Egypt, the GCC, the UK and the US.
-
 ## The problem
 
 Cairo commuters lose hours daily to gridlock and informal microbuses — unpredictable, uncomfortable, and hard to plan a life around.
@@ -50,3 +46,6 @@ SPAC-era valuations deflated fast; filling every seat profitably on every route 
 - September 2026: HSBC working-capital facility limit raised 110% to $1.4M — company announcement via TipRanks.
 - Valuation: $1B+ at Nasdaq listing (MAGNiTT, 2022).
 
+## Latest — August–September 2026
+
+Swvl stacked two in-window financings. On 25 August 2026 it announced a $13M private placement led by the Sawiris family and Coefficient LP to fund its next growth phase and US expansion; on 29 August entARABI reported a further $1.5M definitive agreement with Sovico Holding at $1.46 per share (six-month lockup), taking the strategic round to about $14.5M for working capital and general corporate purposes. Then on 8 September 2026 Swvl announced HSBC had raised its working-capital facility limit by 110% to $1.4M — more than doubling capacity under the line first established in November 2024 — and deepened the tie-up into HSBC global payment solutions. The Egypt-anchored facility funds working-capital cycles behind new and renewing enterprise contracts across Egypt, the GCC, the UK and the US.

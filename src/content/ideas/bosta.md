@@ -27,10 +27,6 @@ sources:
 summaryAr: "شركة «بوسطة» اللوجستية تقدم خدمات التوصيل للتجارة الإلكترونية في مصر والسعودية وتستعد للطرح في البورصة المصرية."
 ---
 
-## Latest — September 2026
-
-On 6 September 2026 EnterpriseAM reported that Avanz Capital Egypt (ACE) sold Manara's stake in Bosta to Lorax Capital Partners for an undisclosed sum, booking a 4.1x return on invested capital and a 92% IRR over a roughly two-year hold — converting an EGP-denominated entry into a USD exit for Manara investors including National Bank of Egypt, Banque Misr, Banque du Caire and Misr Insurance Holding. ACE is the third Bosta shareholder to sell down since May: Beltone Venture Capital and Citadel International Holdings exited jointly at a 75% IRR in May, and Saudi Arabia's Khwarizmi Ventures partially exited in August at roughly 3x. Bosta is working toward a $160–170M EGX IPO (20–30% float, EGP ~8bn, EFG Hermes tipped to manage) by end-2026 — set to be the exchange's first tech-logistics listing.
-
 ## The problem
 
 Egyptian online sellers lived or died on couriers they couldn't track: parcels lost, cash-on-delivery uncollected, and customers blaming the merchant for the courier's failures.
@@ -49,3 +45,6 @@ Diesel and FX swings hit every lane; quality control across thousands of riders 
 - Secondary exits 2026: Beltone VC + Citadel (May, 75% IRR), Khwarizmi partial (August, ~3x), Avanz/Manara to Lorax (September, 4.1x, 92% IRR).
 - Valuation: $160–170M IPO target (Launch Base Africa, 2026); no public priced-round valuation — treat others as MISSING.
 
+## Latest — September 2026
+
+On 6 September 2026 EnterpriseAM reported that Avanz Capital Egypt (ACE) sold Manara's stake in Bosta to Lorax Capital Partners for an undisclosed sum, booking a 4.1x return on invested capital and a 92% IRR over a roughly two-year hold — converting an EGP-denominated entry into a USD exit for Manara investors including National Bank of Egypt, Banque Misr, Banque du Caire and Misr Insurance Holding. ACE is the third Bosta shareholder to sell down since May: Beltone Venture Capital and Citadel International Holdings exited jointly at a 75% IRR in May, and Saudi Arabia's Khwarizmi Ventures partially exited in August at roughly 3x. Bosta is working toward a $160–170M EGX IPO (20–30% float, EGP ~8bn, EFG Hermes tipped to manage) by end-2026 — set to be the exchange's first tech-logistics listing.

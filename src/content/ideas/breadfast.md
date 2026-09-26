@@ -27,10 +27,6 @@ sources:
 summaryAr: "تطبيق «بريكفاست» يوصّل الخبز الطازج والبقالة صباحًا ووصلت قيمته إلى نحو ٤٠٠ مليون دولار."
 ---
 
-## Latest — September 2026
-
-On 14–15 September 2026 Breadfast officially launched Breadfast Food, a restaurant-delivery service inside the existing Breadfast app. After a beta period the company said saw strong customer adoption, users can order from a curated selection of restaurants alongside groceries, bakery, coffee and pharmacy products, using the same technology, logistics and delivery network. The company said it plans to grow restaurant partners and extend the service across more Egyptian governorates as part of its everyday-convenience super-app strategy.
-
 ## The problem
 
 Egyptian households buy bread, milk, and eggs fresh every morning — a ritual no generalist e-grocer served, since their slots start hours after breakfast.
@@ -48,3 +44,6 @@ Fresh food spoils and margins are thin; each fulfillment center is capex up fron
 - Raised: $10M Series B2 from EBRD (Novastar-led round, Wamda, August 2025).
 - Valuation: approximately $382–400M (Wamda, August 2025).
 
+## Latest — September 2026
+
+On 14–15 September 2026 Breadfast officially launched Breadfast Food, a restaurant-delivery service inside the existing Breadfast app. After a beta period the company said saw strong customer adoption, users can order from a curated selection of restaurants alongside groceries, bakery, coffee and pharmacy products, using the same technology, logistics and delivery network. The company said it plans to grow restaurant partners and extend the service across more Egyptian governorates as part of its everyday-convenience super-app strategy.
