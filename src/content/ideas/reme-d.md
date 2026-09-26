@@ -46,11 +46,3 @@ Each new assay and each new country means fresh regulatory clearance; scaling ma
 - Raised: $1.45M pre-Series A led by Anara Impact Capital with GIF and Africa Health Ventures (Disrupt Africa, July 2026).
 - Valuation: MISSING.
 
-## Sources
-
-- [Egyptian e-health startup Reme-D raises $1.45m pre-Series A funding](https://disruptafrica.com/2026/07/24/egyptian-e-health-startup-reme-d-raises-1-45m-pre-series-a-funding/)
-- [Anara Backs Egyptian Healthtech Startup Reme-D in $1.45 Million Funding Round](https://techmoran.com/2026/07/20/anara-backs-egyptian-healthtech-startup-reme-d-in-1-45-million-funding-round/)
-
-## ملخص عربي
-
-شركة «ريمي-دي» المصرية تطور وتصنع اختبارات التشخيص الجزيئي لأمراض مثل السل والإيدز والتهاب الكبد بأسعار مناسبة للأسواق الأفريقية، وجمعت ١٫٤٥ مليون دولار في جولة ما قبل السلسلة «أ» بقيادة «أنارا» للتوسع في التصنيع والأسواق الإقليمية.

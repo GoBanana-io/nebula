@@ -42,11 +42,3 @@ Youth education is high-touch and instructor-dependent; expanding into Saudi Ara
 - Raised: $3M seed led by MRG Economic Group with Amr Saad and angels (WeeTracker, Disrupt Africa, 2–3 September 2026).
 - Valuation: MISSING.
 
-## Sources
-
-- [Egyptian Edtech 3C Coding School Raises USD 3 M To Expand Into Saudi Arabia](https://weetracker.com/2026/09/02/3c-coding-school-raises-3m-saudi-arabia/)
-- [Egyptian ed-tech startup 3C Coding School raises $3m seed round to fuel regional expansion](https://disruptafrica.com/2026/09/03/egyptian-ed-tech-startup-3c-coding-school-raises-3m-seed-round-to-fuel-regional-expansion/)
-
-## ملخص عربي
-
-منصة «3C» المصرية لتعليم البرمجة والذكاء الاصطناعي للأطفال جمعت ٣ ملايين دولار للتوسع في السعودية.

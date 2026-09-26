@@ -47,11 +47,3 @@ Real estate is cyclical and rate-sensitive; holding mortgage risk on balance she
 - September 2026: IFC disclosed a proposed (pending-approval) equity investment; amount undisclosed — MISSING.
 - Valuation: MISSING.
 
-## Sources
-
-- [Egypt's Nawy, the largest proptech in Africa, raises $52M to take on MENA](https://techcrunch.com/2025/05/11/egypts-nawy-lands-a-52m-series-a-to-take-on-mena)
-- [IFC considers equity investment in Egypt's Nawy as proptech platform expands](https://shore.africa/2026/09/03/ifc-to-invests-in-egypts-nawy/)
-
-## ملخص عربي
-
-منصة «ناوي» العقارية تجمع بين القوائم الموثقة والوساطة والتمويل العقاري لزيادة الشفافية في السوق المصرية.

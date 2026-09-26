@@ -48,12 +48,3 @@ As a listed company every quarter is judged; bank-led wallets (InstaPay and othe
 - Raised: MISSING (public company; historical private raises undisclosed in citable sources).
 - Valuation: $366M market cap at 2019 IPO (WeeTracker). Current market cap: MISSING.
 
-## Sources
-
-- [Cairo-based Fintech Startup Fawry IPOs At A USD 366 Mn Market Cap](https://weetracker.com/2019/08/12/cairo-based-fintech-startup-fawry-ipos-at-a-usd-366-mn-market-cap/)
-- [myFawry App Transactions Surge 68.5% to EGP 48 Billion in H1 2026 Amid Massive Ecosystem Growth](https://www.technotime.net/15944)
-- [Fawry and DMS Partner to Simplify Digital Payments Across Egypt's Healthcare Sector](https://hakunamatatamedia.com/2026/09/14/fawry-and-dms-partner-to-simplify-digital-payments-across-egypts-healthcare-sector/)
-
-## ملخص عربي
-
-شركة «فوري» حوّلت الأكشاك ومحلات التجزئة إلى شبكة مدفوعات إلكترونية وأصبحت أول شركة تكنولوجيا مالية مصرية تُطرح في البورصة.

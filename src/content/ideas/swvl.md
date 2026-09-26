@@ -50,12 +50,3 @@ SPAC-era valuations deflated fast; filling every seat profitably on every route 
 - September 2026: HSBC working-capital facility limit raised 110% to $1.4M — company announcement via TipRanks.
 - Valuation: $1B+ at Nasdaq listing (MAGNiTT, 2022).
 
-## Sources
-
-- [Egypt's Swvl has gone public on Nasdaq](https://furtherafrica.com/2022/04/11/egypts-swvl-has-gone-public-on-nasdaq/)
-- [Swvl Raises Strategic Investment Round to $14.5 Million with Sovico Investment](https://entarabi.com/en/2026/08/swvl-raises-strategic-investment-round-to-14-5-million-with-sovico-investment/)
-- [Swvl Doubles HSBC Working Capital Facility and Adopts Global Payment Solutions After Egypt Growth](https://www.tipranks.com/news/company-announcements/swvl-doubles-hsbc-working-capital-facility-and-adopts-global-payment-solutions-after-egypt-growth)
-
-## ملخص عربي
-
-شركة «سويفل» للنقل الجماعي الذكي انطلقت من القاهرة ووصلت إلى بورصة ناسداك الأمريكية.

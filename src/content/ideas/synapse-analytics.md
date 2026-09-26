@@ -40,10 +40,3 @@ Enterprise bank deals take quarters to close; GCC and international expansion wi
 - Raised: $13M Series A led by Partech (Disrupt Africa, September 2026); $17M total since 2018 including a $2M round in July 2024.
 - Valuation: MISSING.
 
-## Sources
-
-- [Egyptian AI startup Synapse Analytics raises $13m Series A funding round](https://disruptafrica.com/2026/09/15/egyptian-ai-startup-synapse-analytics-raises-13m-series-a-funding-round/)
-
-## ملخص عربي
-
-شركة «سينابس أناليتكس» تقدم منصة ذكاء اصطناعي للبنوك لاتخاذ قرارات الائتمان وكشف الاحتيال وجمعت ١٣ مليون دولار.

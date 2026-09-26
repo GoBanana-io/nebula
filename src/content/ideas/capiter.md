@@ -43,11 +43,3 @@ Founder–board trust collapsed completely; no bridge financing materialized onc
 - Valuation: MISSING.
 - Status: closed — funds exhausted, company liquidated.
 
-## Sources
-
-- [Egyptian E-commerce Startup Capiter Closes $33M Series A Funding](https://techbuild.africa/egyptian-startup-capiter-closes-33m-funding/)
-- [Egyptian B2B buying platform Capiter has collapsed](https://trendtype.com/news/egyptian-b2b-buying-platform-capiter-has-collapsed/)
-
-## ملخص عربي
-
-شركة «كابتر» للتجارة بين الشركات جمعت ٣٣ مليون دولار ثم انهارت بعد خلاف بين المؤسسين والمستثمرين.

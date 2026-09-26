@@ -49,12 +49,3 @@ Diesel and FX swings hit every lane; quality control across thousands of riders 
 - Secondary exits 2026: Beltone VC + Citadel (May, 75% IRR), Khwarizmi partial (August, ~3x), Avanz/Manara to Lorax (September, 4.1x, 92% IRR).
 - Valuation: $160–170M IPO target (Launch Base Africa, 2026); no public priced-round valuation — treat others as MISSING.
 
-## Sources
-
-- [ACE exits Bosta (EnterpriseAM Egypt, 6 Sep 2026)](https://enterpriseam.com/egypt/issues/reforming-executive-regulations-isnt-enough/)
-- [Egyptian Startup Delivers Rare Cash Exit For African Tech Investors After 2 Years](https://weetracker.com/2026/05/12/egyptian-startup-cash-exit/)
-- [Egyptian Logistics Startup Bosta Eyes $170M IPO on Local Exchange](https://launchbaseafrica.com/2026/02/02/egyptian-logistics-startup-bosta-eyes-170m-ipo-on-local-exchange/)
-
-## ملخص عربي
-
-شركة «بوسطة» اللوجستية تقدم خدمات التوصيل للتجارة الإلكترونية في مصر والسعودية، وحققت عشرات الملايين من الشحنات وتستعد للطرح في البورصة المصرية بتقييم مستهدف يصل إلى ١٧٠ مليون دولار.

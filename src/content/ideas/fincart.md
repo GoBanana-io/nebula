@@ -42,11 +42,3 @@ Delivery quality depends on third-party couriers; SMB churn is high when volumes
 - Raised: $2.8M oversubscribed seed co-led by Launch Africa and Antler MENAP with Yango Ventures, Five35 Ventures, Bluestream, Hi2 Global and Kalahari Venture Labs (Disrupt Africa 6 Aug 2026; TechMoran 1 Aug 2026).
 - Valuation: MISSING.
 
-## Sources
-
-- [Egypt's Fincart raises $2.8m to accelerate regional expansion](https://disruptafrica.com/2026/08/06/egypts-fincart-raises-2-8m-to-accelerate-regional-expansion/)
-- [Fincart Raises $2.8 Million Seed Round to Scale AI E-Commerce Platform Across Africa and MENA](https://techmoran.com/2026/08/01/fincart-raises-2-8-million-seed-round-to-scale-ai-e-commerce-platform-across-africa-and-mena/)
-
-## ملخص عربي
-
-منصة «فينكارت» المصرية تدير الشحن والمبيعات والسلف النقدية للتجار إلكترونيًا وجمعت ٢٫٨ مليون دولار للتوسع إقليميًا.

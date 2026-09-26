@@ -48,12 +48,3 @@ Fresh food spoils and margins are thin; each fulfillment center is capex up fron
 - Raised: $10M Series B2 from EBRD (Novastar-led round, Wamda, August 2025).
 - Valuation: approximately $382–400M (Wamda, August 2025).
 
-## Sources
-
-- [Breadfast bags $10 million from EBRD, nears $400 million valuation](https://www.wamda.com/2025/08/breadfast-bags-10-million-ebrd-nears-400-million-valuation)
-- [E-Commerce Startup Breadfast Launches Restaurant Delivery in Egypt](https://dabafinance.com/en/news/breadfast-launches-restaurant-delivery-in-egypt)
-- [Breadfast Enters Egypt's Restaurant Delivery Market as It Expands Beyond Groceries](https://techmoran.com/2026/09/15/breadfast-enters-egypts-restaurant-delivery-market-as-it-expands-beyond-groceries/)
-
-## ملخص عربي
-
-تطبيق «بريكفاست» يوصّل الخبز الطازج والبقالة صباحًا ووصلت قيمته إلى نحو ٤٠٠ مليون دولار.

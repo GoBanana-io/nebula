@@ -1,6 +1,7 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import Card from '../../components/Card.astro';
 
 export async function getStaticPaths() {
   const ideas = await getCollection('ideas');
@@ -15,214 +16,363 @@ const idea = await getEntry('ideas', id);
 if (!idea) throw new Error(`Idea not found: ${id}`);
 const { Content } = await render(idea);
 
-// Fetch other ideas for serendipitous next jump
 const allIdeas = await getCollection('ideas');
-const otherIdeas = allIdeas.filter((i) => i.id !== idea.id);
-const randomNext = otherIdeas[Math.floor(Math.random() * otherIdeas.length)];
-const randomSlug = randomNext ? randomNext.id.replace(/\.md$/, '') : '';
+const sorted = [...allIdeas].sort(
+  (a, b) => a.data.publishedAt.getTime() - b.data.publishedAt.getTime()
+);
+const idx = sorted.findIndex((i) => i.id === idea.id);
+const prev = idx > 0 ? sorted[idx - 1] : null;
+const next = idx >= 0 && idx < sorted.length - 1 ? sorted[idx + 1] : null;
+const prevSlug = prev ? prev.id.replace(/\.md$/, '') : '';
+const nextSlug = next ? next.id.replace(/\.md$/, '') : '';
+
+function scoreSimilarity(aTags: string[], aSector: string, b: (typeof allIdeas)[number]) {
+  let s = 0;
+  if (aSector && b.data.sector && aSector.toLowerCase() === b.data.sector.toLowerCase()) s += 3;
+  for (const t of aTags) if (b.data.tags.includes(t)) s += 1;
+  return s;
+}
+
+const similar = allIdeas
+  .filter((i) => i.id !== idea.id)
+  .map((i) => ({ item: i, score: scoreSimilarity(idea.data.tags, idea.data.sector, i) }))
+  .sort(
+    (x, y) =>
+      y.score - x.score ||
+      y.item.data.publishedAt.getTime() - x.item.data.publishedAt.getTime()
+  )
+  .slice(0, 3)
+  .map((s) => s.item);
+
+const allSlugs = sorted.map((i) => i.id.replace(/\.md$/, ''));
+const currentSlug = idea.id.replace(/\.md$/, '');
 
 const isFailure = idea.data.status === 'closed' || idea.data.tags.includes('failure');
 const isUnicorn = idea.data.tags.includes('unicorn');
 
-const playbookCopyText = `${idea.data.title}\n\nEnglish: ${idea.data.summary}\n\nعربي: ${idea.data.summaryAr || ''}\n\nProblem: ${idea.data.coreProblem || ''}\n\nThe Move: ${idea.data.whyItWorked || ''}\n\nThe Trap: ${idea.data.challenges || ''}\n\nFunding: ${idea.data.amountRaised || ''} | Valuation: ${idea.data.valuation || ''}`;
+const clean = (v: string) => (v || '').trim();
+const isMissing = (v: string) => {
+  const t = clean(v).toUpperCase();
+  return t === '' || t === 'MISSING';
+};
+const hasValuation = !isMissing(idea.data.valuation);
+const hasRaised = !isMissing(idea.data.amountRaised);
+const hasFounded = !isMissing(idea.data.founded);
+const hasCompany = !isMissing(idea.data.company);
+const hasStage = !isMissing(idea.data.stage);
+const hasSector = !isMissing(idea.data.sector);
+const hasCountry = !isMissing(idea.data.country);
+
+const words = (idea.body || '').split(/\s+/).filter(Boolean).length;
+const readingMinutes = Math.max(2, Math.round((words + 120) / 200));
+const publishedStr = idea.data.publishedAt.toISOString().slice(0, 10);
+
+function hostOf(url: string) {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return '';
+  }
+}
+
+const fundingBits = [
+  !isMissing(idea.data.amountRaised) ? `Raised: ${clean(idea.data.amountRaised)}` : '',
+  hasValuation ? `Valuation: ${clean(idea.data.valuation)}` : '',
+].filter(Boolean);
+const playbookCopyText = [
+  idea.data.title,
+  `\n\nEnglish: ${idea.data.summary}`,
+  idea.data.summaryAr ? `\n\nعربي: ${idea.data.summaryAr}` : '',
+  idea.data.coreProblem ? `\n\nProblem: ${idea.data.coreProblem}` : '',
+  idea.data.whyItWorked ? `\n\nThe Move: ${idea.data.whyItWorked}` : '',
+  idea.data.challenges ? `\n\nThe Trap: ${idea.data.challenges}` : '',
+  fundingBits.length ? `\n\n${fundingBits.join(' | ')}` : '',
+].join('');
+
+const stealTake = [
+  idea.data.whyItWorked ? `Steal: ${idea.data.whyItWorked}` : '',
+  idea.data.challenges ? `Dodge: ${idea.data.challenges}` : '',
+].filter(Boolean).join(' ');
+
+const pillars = [
+  idea.data.coreProblem
+    ? { n: '01', badge: 'The Bottleneck', title: 'What was broken?', text: idea.data.coreProblem, mod: 'iv2-pillar--problem' }
+    : null,
+  idea.data.whyItWorked
+    ? { n: '02', badge: 'The Move', title: 'Why it worked', text: idea.data.whyItWorked, mod: 'iv2-pillar--move' }
+    : null,
+  idea.data.challenges
+    ? { n: '03', badge: 'The Trap', title: 'Battle scars', text: idea.data.challenges, mod: 'iv2-pillar--trap' }
+    : null,
+].filter(Boolean);
 ---
 
 <Base
   title={`${idea.data.title} — Banana Nebula`}
   description={idea.data.summary}
 >
-  <!-- Navigation Back & Quick Actions -->
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-8); flex-wrap: wrap; gap: var(--space-3);">
-    <a class="btn btn-secondary btn-sm" href="/#sparks">
-      ← All Sparks
-    </a>
+  <div class="iv2-progress" id="iv2-progress" aria-hidden="true"></div>
 
-    <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+  <!-- Breadcrumb bar -->
+  <nav class="iv2-crumb" aria-label="Breadcrumb">
+    <a class="btn btn-secondary btn-sm" href="/#sparks">← All Sparks</a>
+    <div class="iv2-crumb-mid">
+      {hasSector && <a class="chip chip-sector" href={`/tags/${idea.data.sector.split('/')[0].toLowerCase()}`}>{idea.data.sector}</a>}
+      {hasCountry && <span class="iv2-crumb-loc">{idea.data.country}</span>}
+      <span class="iv2-crumb-meta">{readingMinutes} min · {publishedStr}</span>
+    </div>
+    <button class="btn btn-violet btn-sm" id="iv2-shuffle" type="button" title="Jump to a random spark">
+      Shuffle
+    </button>
+  </nav>
+
+  <!-- Hero -->
+  <header class="iv2-hero">
+    <div class="iv2-hero-badges">
+      {isFailure ? (
+        <span class="card-badge-status card-badge-status--failure">Failed case</span>
+      ) : isUnicorn ? (
+        <span class="card-badge-status card-badge-status--unicorn">Unicorn</span>
+      ) : (
+        <span class="card-badge-status card-badge-status--operating">{hasStage ? idea.data.stage : 'Operating'}</span>
+      )}
+      {hasCompany && <span class="iv2-hero-company">{idea.data.company}</span>}
+    </div>
+
+    <h1 class="iv2-title">{idea.data.title}</h1>
+
+    <div class="iv2-lede">
+      <div class="iv2-lede-en">
+        <span class="iv2-lede-kicker">English summary</span>
+        <p>{idea.data.summary}</p>
+      </div>
+      {idea.data.summaryAr && (
+        <div class="iv2-lede-ar" dir="rtl" lang="ar">
+          <span class="iv2-lede-kicker">الملخص العربي</span>
+          <p>{idea.data.summaryAr}</p>
+        </div>
+      )}
+    </div>
+
+    <div class="iv2-actions">
       <button
         class="btn btn-amber btn-sm"
         type="button"
-        id="btn-copy-playbook"
+        id="iv2-copy"
         data-text={playbookCopyText}
-        onclick="navigator.clipboard.writeText(this.getAttribute('data-text')).then(() => window.showSparkToast && window.showSparkToast('Playbook copied! Go build.'))"
       >
-        📋 Copy Playbook
+        Copy Playbook
       </button>
-
-      {randomSlug && (
-        <a class="btn btn-violet btn-sm" href={`/idea/${randomSlug}`}>
-          🎲 Next Spark →
+      <button class="btn btn-secondary btn-sm" type="button" id="iv2-share">
+        Share
+      </button>
+      {nextSlug && (
+        <a class="btn btn-violet btn-sm iv2-actions-next" href={`/idea/${nextSlug}`}>
+          Next →
         </a>
-      )}
-    </div>
-  </div>
-
-  <!-- Hero Teardown Poster -->
-  <header class="idea-detail-header">
-    <div class="card-header-row" style="margin-bottom: var(--space-4);">
-      <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; align-items: center;">
-        {isFailure ? (
-          <span class="card-badge-status card-badge-status--failure">
-            💥 FAILED CASE
-          </span>
-        ) : isUnicorn ? (
-          <span class="card-badge-status card-badge-status--unicorn">
-            🦄 UNICORN
-          </span>
-        ) : (
-          <span class="card-badge-status card-badge-status--operating">
-            ⚡️ {idea.data.stage ? idea.data.stage.toUpperCase() : 'OPERATING'}
-          </span>
-        )}
-
-        {idea.data.sector && (
-          <span class="chip chip-sector">{idea.data.sector}</span>
-        )}
-        {idea.data.country && (
-          <span class="chip" style="background-color: var(--surface-1); color: var(--text-secondary);">
-            📍 {idea.data.country}
-          </span>
-        )}
-      </div>
-
-      {idea.data.valuation && idea.data.valuation !== 'MISSING' && (
-        <span class="card-kpi-pill" style="font-size: 0.9375rem; padding: 4px 12px;">
-          Valuation: {idea.data.valuation}
-        </span>
-      )}
-    </div>
-
-    <h1 class="idea-detail-title">{idea.data.title}</h1>
-
-    <!-- First-Class Bilingual Summary Split -->
-    <div class="idea-bilingual-lead">
-      <div class="lead-box-en">
-        <strong style="font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; color: var(--color-coral-700); display: block; margin-bottom: 4px;">
-          English Summary
-        </strong>
-        <p style="margin: 0; color: var(--text-primary);">{idea.data.summary}</p>
-      </div>
-
-      {idea.data.summaryAr && (
-        <div class="lead-box-ar">
-          <strong style="font-family: var(--font-arabic); font-size: 0.8125rem; font-weight: 900; color: var(--color-violet-700); display: block; margin-bottom: 4px;">
-            الملخص العربي
-          </strong>
-          <p style="margin: 0;">{idea.data.summaryAr}</p>
-        </div>
-      )}
-    </div>
-
-    <!-- Tags -->
-    {idea.data.tags.length > 0 && (
-      <ul class="chips" aria-label="Tags" style="margin-bottom: var(--space-4);">
-        {idea.data.tags.map((tag) => (
-          <li><a class="chip" href={`/tags/${tag}`}>#{tag}</a></li>
-        ))}
-      </ul>
-    )}
-
-    <!-- Bento KPI Grid -->
-    <div class="idea-kpi-grid">
-      {idea.data.amountRaised && (
-        <div class="idea-kpi-cell">
-          <div class="idea-kpi-label">Raised</div>
-          <div class="idea-kpi-value">{idea.data.amountRaised}</div>
-        </div>
-      )}
-
-      {idea.data.valuation && idea.data.valuation !== 'MISSING' && (
-        <div class="idea-kpi-cell">
-          <div class="idea-kpi-label">Valuation</div>
-          <div class="idea-kpi-value" style="color: var(--color-coral-600);">
-            {idea.data.valuation}
-          </div>
-        </div>
-      )}
-
-      {idea.data.founded && (
-        <div class="idea-kpi-cell">
-          <div class="idea-kpi-label">Founded</div>
-          <div class="idea-kpi-value">{idea.data.founded}</div>
-        </div>
-      )}
-
-      {idea.data.status && (
-        <div class="idea-kpi-cell">
-          <div class="idea-kpi-label">Status</div>
-          <div class="idea-kpi-value" style="text-transform: capitalize;">
-            {idea.data.status === 'closed' ? 'Closed' : 'Operating'}
-          </div>
-        </div>
       )}
     </div>
   </header>
 
-  <!-- Core Teardown Cards: Problem / The Move / The Trap -->
-  {(idea.data.coreProblem || idea.data.whyItWorked || idea.data.challenges) && (
-    <section class="teardown-grid" aria-label="Core Teardown Pillars">
-      {idea.data.coreProblem && (
-        <div class="teardown-card teardown-card--problem">
-          <span class="teardown-badge" style="background-color: var(--color-amber-200); color: var(--color-amber-950);">
-            🛑 The Bottleneck
-          </span>
-          <h3>What Was Broken?</h3>
-          <p>{idea.data.coreProblem}</p>
-        </div>
+  <!-- Main + sticky sidebar -->
+  <div class="iv2-layout">
+    <div class="iv2-main">
+      {pillars.length > 0 && (
+        <section aria-label="Teardown">
+          <ol class="iv2-pillars">
+            {pillars.map((p) => (
+              <li class={`iv2-pillar ${p.mod}`}>
+                <span class="iv2-pillar-num" aria-hidden="true">{p.n}</span>
+                <span class="teardown-badge">{p.badge}</span>
+                <h2>{p.title}</h2>
+                <p>{p.text}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
       )}
 
-      {idea.data.whyItWorked && (
-        <div class="teardown-card teardown-card--why">
-          <span class="teardown-badge" style="background-color: var(--color-teal-200); color: var(--color-teal-950);">
-            🚀 The Move
-          </span>
-          <h3>Why It Worked</h3>
-          <p>{idea.data.whyItWorked}</p>
-        </div>
+      <article class="idea-prose iv2-prose">
+        <Content />
+      </article>
+
+      {stealTake && (
+        <aside class="iv2-steal" aria-label="Steal this">
+          <span class="iv2-steal-kicker">Steal this today</span>
+          <p>{stealTake}</p>
+          <button
+            class="btn btn-secondary btn-sm iv2-steal-copy"
+            type="button"
+            id="iv2-copy-take"
+            data-text={`${idea.data.title} — ${stealTake}`}
+          >
+            Copy take
+          </button>
+        </aside>
+      )}
+    </div>
+
+    <aside class="iv2-side" aria-label="Fact file">
+      <section class="iv2-card">
+        <h2 class="iv2-card-title">Snapshot</h2>
+        <dl class="iv2-facts">
+          {hasCompany && (<><dt>Company</dt><dd>{idea.data.company}</dd></>)}
+          {hasFounded && (<><dt>Founded</dt><dd>{idea.data.founded}</dd></>)}
+          {hasStage && (<><dt>Stage</dt><dd style="text-transform: capitalize;">{idea.data.stage}</dd></>)}
+          <dt>Status</dt><dd style="text-transform: capitalize;">{idea.data.status === 'closed' ? 'Closed' : 'Operating'}</dd>
+          {hasRaised && (<><dt>Raised</dt><dd>{idea.data.amountRaised}{!isMissing(idea.data.amountSource) && <span class="iv2-src"> · {idea.data.amountSource}</span>}</dd></>)}
+          {hasValuation && (<><dt>Valuation</dt><dd>{idea.data.valuation}{!isMissing(idea.data.valuationSource) && <span class="iv2-src"> · {idea.data.valuationSource}</span>}</dd></>)}
+        </dl>
+      </section>
+
+      {idea.data.tags.length > 0 && (
+        <section class="iv2-card">
+          <h2 class="iv2-card-title">Tags</h2>
+          <ul class="chips" aria-label="Tags">
+            {idea.data.tags.map((tag) => (
+              <li><a class="chip" href={`/tags/${tag}`}>#{tag}</a></li>
+            ))}
+          </ul>
+        </section>
       )}
 
-      {idea.data.challenges && (
-        <div class="teardown-card teardown-card--challenges">
-          <span class="teardown-badge" style="background-color: var(--color-coral-200); color: var(--color-coral-950);">
-            ⚠️ The Trap
-          </span>
-          <h3>Battle Scars</h3>
-          <p>{idea.data.challenges}</p>
-        </div>
+      {idea.data.sources.length > 0 && (
+        <section class="iv2-card">
+          <h2 class="iv2-card-title">Sources</h2>
+          <ul class="iv2-sources">
+            {idea.data.sources.map((s) => (
+              <li>
+                <a href={s.url} target="_blank" rel="noopener noreferrer">
+                  <span aria-hidden="true">↗</span>
+                  <span>{s.title}</span>
+                  <span class="iv2-src">{hostOf(s.url)}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
       )}
-    </section>
-  )}
-
-  <!-- Full Markdown Body -->
-  <article class="idea-prose">
-    <Content />
-  </article>
-
-  <!-- Sources Section -->
-  {idea.data.sources.length > 0 && (
-    <section class="sources-card" aria-label="Reporting Sources">
-      <h2 style="font-size: 1.2rem; margin-bottom: var(--space-2);">
-        📚 Verification Sources
-      </h2>
-      <ul class="sources-list">
-        {idea.data.sources.map((s) => (
-          <li class="source-item">
-            <a href={s.url} target="_blank" rel="noopener noreferrer">
-              <span>↗</span>
-              <span>{s.title}</span>
-            </a>
-          </li>
-        ))}
-      </ul>
-    </section>
-  )}
-
-  <!-- Bottom Navigation -->
-  <div style="display: flex; gap: var(--space-3); margin: var(--space-12) 0 var(--space-8); flex-wrap: wrap;">
-    <a class="btn btn-primary btn-lg" href="/#sparks">
-      🔥 All 12 Sparks
-    </a>
-    <a class="btn btn-violet btn-lg" href="/random">
-      🎲 Spin Roulette
-    </a>
+    </aside>
   </div>
+
+  <!-- Keep exploring -->
+  <section class="iv2-explore" aria-label="Keep exploring">
+    <div class="iv2-upnext">
+      {prevSlug && (
+        <a class="iv2-upnext-card" href={`/idea/${prevSlug}`}>
+          <span class="iv2-upnext-kicker">← Previous</span>
+          <span class="iv2-upnext-title">{prev.data.title}</span>
+        </a>
+      )}
+      {nextSlug ? (
+        <a class="iv2-upnext-card iv2-upnext-card--next" href={`/idea/${nextSlug}`}>
+          <span class="iv2-upnext-kicker">Up next →</span>
+          <span class="iv2-upnext-title">{next.data.title}</span>
+        </a>
+      ) : (
+        <a class="iv2-upnext-card iv2-upnext-card--next" href="/random">
+          <span class="iv2-upnext-kicker">Up next →</span>
+          <span class="iv2-upnext-title">Spin the Roulette for one more spark</span>
+        </a>
+      )}
+    </div>
+
+    {similar.length > 0 && (
+      <>
+        <h2 class="iv2-similar-title">Similar sparks</h2>
+        <div class="iv2-similar">
+          {similar.map((s, i) => (
+            <Card
+              slug={s.id.replace(/\.md$/, '')}
+              title={s.data.title}
+              summary={s.data.summary}
+              summaryAr={s.data.summaryAr}
+              tags={s.data.tags}
+              date={s.data.publishedAt.toISOString().slice(0, 10)}
+              sector={s.data.sector || undefined}
+              stage={s.data.stage || undefined}
+              amountRaised={s.data.amountRaised || undefined}
+              valuation={s.data.valuation || undefined}
+              status={s.data.status}
+              coreProblem={s.data.coreProblem}
+              whyItWorked={s.data.whyItWorked}
+              country={s.data.country}
+              index={i}
+            />
+          ))}
+        </div>
+      </>
+    )}
+
+    <div class="iv2-explore-actions">
+      <a class="btn btn-secondary" href="/#sparks">All Sparks</a>
+      <a class="btn btn-violet" href="/random">Spin Roulette</a>
+    </div>
+  </section>
+
+  <!-- Sticky mobile action bar -->
+  <div class="iv2-stickybar" role="group" aria-label="Quick actions">
+    <button class="btn btn-amber btn-sm" type="button" id="iv2-copy-m" data-text={playbookCopyText}>
+      Copy
+    </button>
+    {nextSlug ? (
+      <a class="btn btn-violet btn-sm" href={`/idea/${nextSlug}`}>Next →</a>
+    ) : (
+      <a class="btn btn-violet btn-sm" href="/random">Roulette →</a>
+    )}
+  </div>
+
+  <script define:vars={{ allSlugs, currentSlug, prevSlug, nextSlug }}>
+    (function () {
+      var bar = document.getElementById('iv2-progress');
+      function onScroll() {
+        if (!bar) return;
+        var h = document.documentElement;
+        var max = h.scrollHeight - h.clientHeight;
+        var p = max > 0 ? h.scrollTop / max : 0;
+        bar.style.transform = 'scaleX(' + p + ')';
+      }
+      document.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      function copyText(t, msg) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(t).then(function () {
+            if (window.showSparkToast) window.showSparkToast(msg || 'Playbook copied! Go build.');
+          });
+        }
+      }
+      ['iv2-copy', 'iv2-copy-m', 'iv2-copy-take'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.addEventListener('click', function () {
+          copyText(el.getAttribute('data-text') || '');
+        });
+      });
+
+      var shareBtn = document.getElementById('iv2-share');
+      if (shareBtn) shareBtn.addEventListener('click', function () {
+        var data = { title: document.title, text: document.title, url: window.location.href };
+        if (navigator.share) {
+          navigator.share(data).catch(function () {});
+        } else {
+          copyText(window.location.href, 'Link copied! Send it to a founder.');
+        }
+      });
+
+      var shuffle = document.getElementById('iv2-shuffle');
+      if (shuffle) shuffle.addEventListener('click', function () {
+        var pool = (allSlugs || []).filter(function (s) { return s !== currentSlug; });
+        if (!pool.length) return;
+        var pick = pool[Math.floor(Math.random() * pool.length)];
+        window.location.href = '/idea/' + pick;
+      });
+
+      document.addEventListener('keydown', function (e) {
+        var tag = (e.target && e.target.tagName) || '';
+        if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+        if (e.key === 'ArrowRight' && nextSlug) window.location.href = '/idea/' + nextSlug;
+        if (e.key === 'ArrowLeft' && prevSlug) window.location.href = '/idea/' + prevSlug;
+      });
+    })();
+  </script>
 </Base>

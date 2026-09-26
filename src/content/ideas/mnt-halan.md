@@ -49,12 +49,3 @@ Lending to thin-file borrowers means constant credit-risk tuning; a banking or e
 - September 2026: strategic capital increase led by Al Ahly Capital Holding at a $1.4bn valuation (first closing; second closing expected) — Launch Base Africa.
 - Valuation: $1.4B (September 2026 round). Earlier $1B+ (company statement, 2023).
 
-## Sources
-
-- [Egypt's MNT-Halan raises $157.5 million to propel expansion plans](http://wamda.com/2024/07/egypt-mnt-halan-raises-157-5-million-propel-expansion-plans)
-- [GB Corp Retains Controlling Grip on MNT-Halan After $1.4bn Valuation Funding Round](https://launchbaseafrica.com/2026/09/11/mnt-halan-gb-corp/)
-- [Valued at $1.4B, Egypt's MNT-Halan Starts Six-Month Countdown to Cairo IPO](https://www.europesays.com/africa/427139/)
-
-## ملخص عربي
-
-منصة «إم إن تي-حالًا» المالية تخدم ملايين المصريين خارج المنظومة المصرفية عبر الإقراض متناهي الصغر والمدفوعات الرقمية.

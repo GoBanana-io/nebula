@@ -42,11 +42,3 @@ Door-to-door collection is logistics-heavy with thin margins; informal collector
 - Raised: $765K seed led by Madica with Catalyst Fund and Jambaar Capital for engineering, Bekia Next rollout and a second-market pilot (FinSMEs 21 Sep 2026; Techparley Sep 2026).
 - Valuation: MISSING.
 
-## Sources
-
-- [Bekia Raises USD765K in Seed Funding](https://www.finsmes.com/2026/09/bekia-raises-usd765k-in-seed-funding.html)
-- [Bekia Raises $765,000 to Digitise Egypt's Recycling Economy and Expand Across Africa](https://techparley.com/bekia-raises-765000-to-digitise-egypts-recycling-economy-and-expand-across-africa/)
-
-## ملخص عربي
-
-شركة «بيكيا» المصرية لتدوير المخلفات جمعت ٧٦٥ ألف دولار لإطلاق منتج للشركات والتوسع أفريقيًا.
