@@ -15,9 +15,10 @@ const ideas = (await getCollection('ideas'))
   .filter((i) => i.data.tags.includes(tag))
   .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
 
-import { tagArMap, countryTags, countryFlagMap } from '../../lib/tagAr';
+import { tagArMap, countryTags, countryFlagMap, countryEnMap } from '../../lib/tagAr';
 
 const arName = tagArMap[tag] || '';
+const enName = countryEnMap[tag] || tag;
 const isCountry = countryTags.has(tag);
 const flag = countryFlagMap[tag] || '';
 ---
@@ -57,7 +58,7 @@ const flag = countryFlagMap[tag] || '';
       </h1>
       <p style="font-size: 1.125rem;">
         {isCountry
-          ? `Showing ${ideas.length} startup sparks and playbooks from ${arName || tag}.`
+          ? `Showing ${ideas.length} startup sparks and playbooks from ${enName}.`
           : `Showing ${ideas.length} startup sparks and playbooks for #${tag}.`}
       </p>
     </div>
