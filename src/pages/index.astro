@@ -11,6 +11,32 @@ const ideas = (await getCollection('ideas')).sort(
 
 const featured = ideas.find((i) => i.data.featured) ?? ideas[0];
 
+// Dynamic filter pills: top sectors by idea count, recomputed every build so
+// new batches update the homepage automatically. Keys stay lowercase for the
+// client-side substring match on each card's data-sector; labels keep the
+// most common raw form so casing like "AI/SaaS" survives.
+const sectorGroups = new Map();
+for (const idea of ideas) {
+  const raw = (idea.data.sector || '').trim();
+  if (!raw) continue;
+  const key = raw.toLowerCase();
+  let g = sectorGroups.get(key);
+  if (!g) {
+    g = { count: 0, labels: {} };
+    sectorGroups.set(key, g);
+  }
+  g.count++;
+  g.labels[raw] = (g.labels[raw] || 0) + 1;
+}
+const topSectors = [...sectorGroups.entries()]
+  .map(([key, g]) => ({
+    key,
+    count: g.count,
+    label: Object.entries(g.labels).sort((a, b) => b[1] - a[1])[0][0],
+  }))
+  .sort((a, b) => b.count - a.count || a.key.localeCompare(b.key))
+  .slice(0, 5);
+
 // Prepare serializable ideas array for client-side Flashcard mode
 const flashcards = ideas.map((idea) => ({
   slug: idea.id.replace(/\.md$/, ''),
@@ -70,21 +96,20 @@ const flashcards = ideas.map((idea) => ({
       <button class="filter-btn is-active" data-filter="all" type="button">
         ✦ All ({ideas.length})
       </button>
+      {topSectors.map((s) => (
+        <button class="filter-btn" data-filter={s.key} type="button" title={`${s.count} sparks`}>
+          {s.label} ({s.count})
+        </button>
+      ))}
       <button class="filter-btn" data-filter="unicorn" type="button">
         🦄 Unicorns
-      </button>
-      <button class="filter-btn" data-filter="fintech" type="button">
-        💳 Fintech
-      </button>
-      <button class="filter-btn" data-filter="agritech" type="button">
-        🥑 Agritech
-      </button>
-      <button class="filter-btn" data-filter="logistics" type="button">
-        🚚 Logistics
       </button>
       <button class="filter-btn" data-filter="failure" type="button">
         💥 Failed
       </button>
+      <a class="filter-btn" href="/tags" rel="prefetch" style="text-decoration: none;" title="Browse all countries and sectors">
+        🧭 All categories →
+      </a>
     </div>
   </section>
 
