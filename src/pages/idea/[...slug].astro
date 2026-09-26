@@ -24,7 +24,9 @@ const randomSlug = randomNext ? randomNext.id.replace(/\.md$/, '') : '';
 const isFailure = idea.data.status === 'closed' || idea.data.tags.includes('failure');
 const isUnicorn = idea.data.tags.includes('unicorn');
 
-const playbookCopyText = `${idea.data.title}\n\nEnglish: ${idea.data.summary}\n\nعربي: ${idea.data.summaryAr || ''}\n\nProblem: ${idea.data.coreProblem || ''}\n\nThe Move: ${idea.data.whyItWorked || ''}\n\nThe Trap: ${idea.data.challenges || ''}\n\nFunding: ${idea.data.amountRaised || ''} | Valuation: ${idea.data.valuation || ''}`;
+const ideaLine = idea.data.idea || idea.data.summary;
+const ideaArLine = idea.data.ideaAr || idea.data.summaryAr || '';
+const playbookCopyText = `${idea.data.title}\n\nThe idea: ${ideaLine}\n\nالفكرة: ${ideaArLine}\n\nHow it works: ${idea.data.howItWorks || ''}\n\nWho pays: ${idea.data.whoPays || ''}\n\nSteal this: ${idea.data.remix || ''}\n\nTrap: ${idea.data.challenges || ''}`;
 ---
 
 <Base
@@ -45,7 +47,7 @@ const playbookCopyText = `${idea.data.title}\n\nEnglish: ${idea.data.summary}\n\
         data-text={playbookCopyText}
         onclick="navigator.clipboard.writeText(this.getAttribute('data-text')).then(() => window.showSparkToast && window.showSparkToast('Playbook copied! Go build.'))"
       >
-        📋 Copy Playbook
+        📋 Copy Idea
       </button>
 
       {randomSlug && (
@@ -93,24 +95,68 @@ const playbookCopyText = `${idea.data.title}\n\nEnglish: ${idea.data.summary}\n\
 
     <h1 class="idea-detail-title">{idea.data.title}</h1>
 
-    <!-- First-Class Bilingual Summary Split -->
+    <!-- IDEA FIRST: the stealable core, bilingual -->
     <div class="idea-bilingual-lead">
       <div class="lead-box-en">
         <strong style="font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; color: var(--color-coral-700); display: block; margin-bottom: 4px;">
-          English Summary
+          💡 The Idea — steal this
         </strong>
-        <p style="margin: 0; color: var(--text-primary);">{idea.data.summary}</p>
+        <p style="margin: 0; color: var(--text-primary);">{ideaLine}</p>
       </div>
 
-      {idea.data.summaryAr && (
+      {ideaArLine && (
         <div class="lead-box-ar">
           <strong style="font-family: var(--font-arabic); font-size: 0.8125rem; font-weight: 900; color: var(--color-violet-700); display: block; margin-bottom: 4px;">
-            الملخص العربي
+            💡 الفكرة — اسرقها
           </strong>
-          <p style="margin: 0;">{idea.data.summaryAr}</p>
+          <p style="margin: 0;">{ideaArLine}</p>
         </div>
       )}
     </div>
+
+    <!-- IDEA MECHANICS: how it works / who pays / remix -->
+    {(idea.data.howItWorks || idea.data.whoPays || idea.data.remix) && (
+      <section class="teardown-grid" aria-label="Idea mechanics">
+        {idea.data.howItWorks && (
+          <div class="teardown-card teardown-card--why">
+            <span class="teardown-badge" style="background-color: var(--color-teal-200); color: var(--color-teal-950);">
+              ⚙️ How it works
+            </span>
+            <h3>The Machine</h3>
+            <p>{idea.data.howItWorks}</p>
+            {idea.data.howItWorksAr && (
+              <p dir="rtl" lang="ar" style="font-family: var(--font-arabic); font-weight: 700;">{idea.data.howItWorksAr}</p>
+            )}
+          </div>
+        )}
+
+        {idea.data.whoPays && (
+          <div class="teardown-card teardown-card--problem">
+            <span class="teardown-badge" style="background-color: var(--color-amber-200); color: var(--color-amber-950);">
+              💰 Who pays
+            </span>
+            <h3>The Money</h3>
+            <p>{idea.data.whoPays}</p>
+            {idea.data.whoPaysAr && (
+              <p dir="rtl" lang="ar" style="font-family: var(--font-arabic); font-weight: 700;">{idea.data.whoPaysAr}</p>
+            )}
+          </div>
+        )}
+
+        {idea.data.remix && (
+          <div class="teardown-card teardown-card--challenges">
+            <span class="teardown-badge" style="background-color: var(--color-coral-200); color: var(--color-coral-950);">
+              🧪 Steal this
+            </span>
+            <h3>Remix It</h3>
+            <p>{idea.data.remix}</p>
+            {idea.data.remixAr && (
+              <p dir="rtl" lang="ar" style="font-family: var(--font-arabic); font-weight: 700;">{idea.data.remixAr}</p>
+            )}
+          </div>
+        )}
+      </section>
+    )}
 
     <!-- Tags -->
     {idea.data.tags.length > 0 && (
@@ -121,7 +167,10 @@ const playbookCopyText = `${idea.data.title}\n\nEnglish: ${idea.data.summary}\n\
       </ul>
     )}
 
-    <!-- Bento KPI Grid -->
+    <!-- Context strip: numbers are background, not the story -->
+    <p style="font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); margin: var(--space-6) 0 var(--space-2);">
+      Context — numbers, not the story
+    </p>
     <div class="idea-kpi-grid">
       {idea.data.amountRaised && (
         <div class="idea-kpi-cell">
@@ -201,8 +250,11 @@ const playbookCopyText = `${idea.data.title}\n\nEnglish: ${idea.data.summary}\n\
   {idea.data.sources.length > 0 && (
     <section class="sources-card" aria-label="Reporting Sources">
       <h2 style="font-size: 1.2rem; margin-bottom: var(--space-2);">
-        📚 Verification Sources
+        📰 News & verification — context only
       </h2>
+      <p style="font-size: 0.875rem; color: var(--text-secondary); margin: 0 0 var(--space-2);">
+        The idea above is the point. These links just prove the traction signals are real.
+      </p>
       <ul class="sources-list">
         {idea.data.sources.map((s) => (
           <li class="source-item">
