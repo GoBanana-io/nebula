@@ -14,9 +14,6 @@ interface Props {
   status?: string;
   coreProblem?: string;
   whyItWorked?: string;
-  idea?: string;
-  ideaAr?: string;
-  remix?: string;
   country?: string;
   index?: number;
 }
@@ -36,9 +33,6 @@ const {
   status = 'operating',
   coreProblem,
   whyItWorked,
-  idea,
-  ideaAr,
-  remix,
   country = 'Egypt',
   index = 0,
 } = Astro.props;
@@ -56,10 +50,7 @@ const assignedShape = shapeVariants[index % shapeVariants.length];
 const isFailure = status === 'closed' || tags.includes('failure');
 const isUnicorn = tags.includes('unicorn');
 
-const ideaLine = idea || summary;
-const ideaArLine = ideaAr || summaryAr || '';
-const remixLine = remix || whyItWorked || coreProblem || '';
-const copyText = `${title}\n\nThe idea: ${ideaLine}\n\nالفكرة: ${ideaArLine}\n\nSteal this: ${remixLine}`;
+const copyText = `${title}\n\nSummary: ${summary}\n\nعربي: ${summaryAr || ''}\n\nThe Move: ${whyItWorked || coreProblem || ''}`;
 ---
 
 <div
@@ -84,24 +75,24 @@ const copyText = `${title}\n\nThe idea: ${ideaLine}\n\nالفكرة: ${ideaArLin
     ) : null}
   </div>
 
-  <!-- Idea first: title + stealable core -->
+  <!-- English Title & Short Summary -->
   <a href={`/idea/${slug}`} style="text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: var(--space-2);">
     <h2>{title}</h2>
-    <p class="card-summary">💡 {ideaLine}</p>
+    <p class="card-summary">{summary}</p>
   </a>
 
-  <!-- Arabic Idea Box (Content - shown in Dual, hidden in EN) -->
-  {ideaArLine && (
+  <!-- Arabic Core Summary Box (Content - shown in Dual, hidden in EN) -->
+  {summaryAr && (
     <div class="card-arabic-box" dir="rtl">
-      <p>💡 {ideaArLine}</p>
+      <p>{summaryAr}</p>
     </div>
   )}
 
-  <!-- Remix Hook (Steal this) -->
-  {remixLine && (
+  <!-- Playbook Hook (The Move) -->
+  {(whyItWorked || coreProblem) && (
     <div class="card-pitch-hook">
-      <strong>Steal this</strong>
-      <span>{remixLine}</span>
+      <strong>The Move</strong>
+      <span>{whyItWorked || coreProblem}</span>
     </div>
   )}
 

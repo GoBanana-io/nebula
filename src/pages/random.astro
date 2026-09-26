@@ -6,14 +6,14 @@ const ideas = await getCollection('ideas');
 const sparksData = ideas.map((idea) => ({
   slug: idea.id.replace(/\.md$/, ''),
   title: idea.data.title,
-  summary: idea.data.idea || idea.data.summary,
-  summaryAr: idea.data.ideaAr || idea.data.summaryAr || '',
+  summary: idea.data.summary,
+  summaryAr: idea.data.summaryAr || '',
   sector: idea.data.sector || '',
   stage: idea.data.stage || '',
   valuation: idea.data.valuation || '',
   amountRaised: idea.data.amountRaised || '',
   status: idea.data.status || 'operating',
-  whyItWorked: idea.data.remix || idea.data.whyItWorked || idea.data.coreProblem || '',
+  whyItWorked: idea.data.whyItWorked || idea.data.coreProblem || '',
   isFailure: idea.data.status === 'closed' || idea.data.tags.includes('failure'),
   isUnicorn: idea.data.tags.includes('unicorn'),
 }));
@@ -103,7 +103,7 @@ const initialSpark = sparksData[initialIndex];
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-4);">
           <div class="lead-box-en" style="background-color: var(--surface-2); border: 1.5px solid var(--border-dark); border-radius: var(--shape-sm); padding: var(--space-4);">
             <strong style="font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; color: var(--color-coral-700); display: block; margin-bottom: 3px;">
-              💡 The Idea
+              English Summary
             </strong>
             <p id="spark-summary" style="font-size: 1rem; color: var(--text-primary); margin: 0;">
               {initialSpark.summary}
@@ -112,7 +112,7 @@ const initialSpark = sparksData[initialIndex];
 
           <div class="lead-box-ar" style="background-color: oklch(95% 0.02 65); border: 1.5px solid var(--border-dark); border-radius: var(--shape-sm); padding: var(--space-4); direction: rtl;">
             <strong style="font-family: var(--font-arabic); font-size: 0.8125rem; font-weight: 900; color: var(--color-violet-700); display: block; margin-bottom: 3px;">
-              💡 الفكرة
+              الملخص العربي
             </strong>
             <p id="spark-summary-ar" style="font-family: var(--font-arabic); font-size: 1.0625rem; font-weight: 700; color: var(--text-primary); margin: 0; line-height: 1.6;">
               {initialSpark.summaryAr}
@@ -122,7 +122,7 @@ const initialSpark = sparksData[initialIndex];
 
         {initialSpark.whyItWorked && (
           <div class="card-pitch-hook" id="spark-hook">
-            <strong>Steal this</strong>
+            <strong>The Move</strong>
             <span id="spark-hook-text">{initialSpark.whyItWorked}</span>
           </div>
         )}
@@ -231,10 +231,10 @@ const initialSpark = sparksData[initialIndex];
 
     btnCopy?.addEventListener('click', () => {
       const item = allSparks[currentIndex];
-      const text = `${item.title}\n\nThe idea: ${item.summary}\n\nالفكرة: ${item.summaryAr}\n\nSteal this: ${item.whyItWorked}`;
+      const text = `${item.title}\n\nSummary: ${item.summary}\n\nعربي: ${item.summaryAr}\n\nThe Move: ${item.whyItWorked}`;
       navigator.clipboard.writeText(text).then(() => {
         if (window.showSparkToast) {
-          window.showSparkToast('Idea copied! Go build · تم نسخ الفكرة');
+          window.showSparkToast('Playbook copied! Go build.');
         }
       });
     });

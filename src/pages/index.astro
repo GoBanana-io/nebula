@@ -10,15 +10,12 @@ const ideas = (await getCollection('ideas')).sort(
 
 const featured = ideas.find((i) => i.data.featured) ?? ideas[0];
 
-// Prepare serializable ideas array for client-side Flashcard mode (idea-first)
+// Prepare serializable ideas array for client-side Flashcard mode
 const flashcards = ideas.map((idea) => ({
   slug: idea.id.replace(/\.md$/, ''),
   title: idea.data.title,
   summary: idea.data.summary,
   summaryAr: idea.data.summaryAr || '',
-  idea: idea.data.idea || idea.data.summary,
-  ideaAr: idea.data.ideaAr || idea.data.summaryAr || '',
-  remix: idea.data.remix || idea.data.whyItWorked || '',
   sector: idea.data.sector || '',
   stage: idea.data.stage || '',
   valuation: idea.data.valuation || '',
@@ -102,29 +99,29 @@ const flashcards = ideas.map((idea) => ({
       </h3>
 
       <div class="flashcard-body-bilingual">
-        <!-- English Idea Pane -->
+        <!-- English Spark Pane -->
         <div class="flashcard-pane-en">
           <strong style="font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; color: var(--color-coral-700); display: block; margin-bottom: 4px;">
-            💡 The Idea
+            English Pitch
           </strong>
           <p id="fc-summary-en" style="font-size: 1.125rem; color: var(--text-primary); font-weight: 500; margin-bottom: var(--space-3);">
-            {flashcards[0].idea}
+            {flashcards[0].summary}
           </p>
           <div style="font-size: 0.9375rem; color: var(--text-secondary);" id="fc-hook-en">
-            {flashcards[0].remix ? `Steal this: ${flashcards[0].remix}` : flashcards[0].coreProblem}
+            {flashcards[0].whyItWorked ? `The Move: ${flashcards[0].whyItWorked}` : flashcards[0].coreProblem}
           </div>
         </div>
 
-        <!-- Arabic Idea Pane -->
+        <!-- Arabic Spark Pane -->
         <div class="flashcard-pane-ar">
           <strong style="font-family: var(--font-arabic); font-size: 0.8125rem; font-weight: 900; color: var(--color-violet-700); display: block; margin-bottom: 4px;">
-            💡 الفكرة
+            الفكرة بالعربي
           </strong>
           <p id="fc-summary-ar" style="font-family: var(--font-arabic); font-size: 1.1875rem; color: var(--text-primary); font-weight: 800; margin-bottom: var(--space-3); line-height: 1.6;">
-            {flashcards[0].ideaAr}
+            {flashcards[0].summaryAr}
           </p>
           <div style="font-family: var(--font-arabic); font-size: 0.9375rem; color: var(--text-secondary); font-weight: 700;" id="fc-hook-ar">
-            {flashcards[0].remix}
+            {flashcards[0].whyItWorked ? `سر النجاح: ${flashcards[0].whyItWorked}` : flashcards[0].coreProblem}
           </div>
         </div>
       </div>
@@ -173,9 +170,6 @@ const flashcards = ideas.map((idea) => ({
         status={idea.data.status}
         coreProblem={idea.data.coreProblem}
         whyItWorked={idea.data.whyItWorked}
-        idea={idea.data.idea}
-        ideaAr={idea.data.ideaAr}
-        remix={idea.data.remix}
         country={idea.data.country}
         index={idx}
       />
@@ -215,12 +209,12 @@ const flashcards = ideas.map((idea) => ({
 
       const item = allCards[fcIndex];
       if (fcTitle) fcTitle.textContent = item.title;
-      if (fcSummaryEn) fcSummaryEn.textContent = item.idea || item.summary;
-      if (fcSummaryAr) fcSummaryAr.textContent = item.ideaAr || item.summaryAr || item.summary;
+      if (fcSummaryEn) fcSummaryEn.textContent = item.summary;
+      if (fcSummaryAr) fcSummaryAr.textContent = item.summaryAr || item.summary;
 
-      const hookText = item.remix || item.whyItWorked || item.coreProblem || '';
-      if (fcHookEn) fcHookEn.textContent = hookText ? `Steal this: ${hookText}` : '';
-      if (fcHookAr) fcHookAr.textContent = hookText ? `${hookText}` : '';
+      const hookText = item.whyItWorked || item.coreProblem || '';
+      if (fcHookEn) fcHookEn.textContent = hookText ? `The Move: ${hookText}` : '';
+      if (fcHookAr) fcHookAr.textContent = hookText ? `الاستراتيجية: ${hookText}` : '';
 
       if (fcBadge) {
         if (item.isFailure) {
@@ -262,10 +256,10 @@ const flashcards = ideas.map((idea) => ({
 
     fcBtnCopy?.addEventListener('click', () => {
       const item = allCards[fcIndex];
-      const text = `${item.title}\n\nThe idea: ${item.idea || item.summary}\n\nالفكرة: ${item.ideaAr || item.summaryAr}\n\nSteal this: ${item.remix || item.whyItWorked || item.coreProblem}`;
+      const text = `${item.title}\n\nEnglish: ${item.summary}\n\nعربي: ${item.summaryAr}\n\nPlaybook: ${item.whyItWorked || item.coreProblem}`;
       navigator.clipboard.writeText(text).then(() => {
         if (window.showSparkToast) {
-          window.showSparkToast('Idea copied! Go build · تم نسخ الفكرة');
+          window.showSparkToast('Playbook copied! Go build · تم نسخ الفكرة');
         }
       });
     });

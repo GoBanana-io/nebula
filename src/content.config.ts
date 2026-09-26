@@ -23,14 +23,6 @@ const ideas = defineCollection({
     coreProblem: z.string().default(''),
     whyItWorked: z.string().default(''),
     challenges: z.string().default(''),
-    idea: z.string().default(''),
-    ideaAr: z.string().default(''),
-    howItWorks: z.string().default(''),
-    howItWorksAr: z.string().default(''),
-    whoPays: z.string().default(''),
-    whoPaysAr: z.string().default(''),
-    remix: z.string().default(''),
-    remixAr: z.string().default(''),
     sources: z
       .array(z.object({ title: z.string(), url: z.string().url() }))
       .default([]),
