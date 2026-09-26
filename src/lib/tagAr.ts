@@ -23,6 +23,7 @@ export const tagArMap: Record<string, string> = {
   saas: 'برمجيات خدمية',
   payments: 'مدفوعات إلكترونية',
   egypt: 'مصر',
+  syria: 'سوريا',
   ksa: 'السعودية',
   'saudi arabia': 'السعودية',
   contech: 'تكنولوجيا الإنشاءات',
@@ -44,10 +45,40 @@ export const tagArMap: Record<string, string> = {
   'retail-tech': 'تكنولوجيا التجزئة',
   enablement: 'تمكين التجارة',
   qatar: 'قطر',
+  media: 'إعلام',
+  turkey: 'تركيا',
+  gaming: 'ألعاب إلكترونية',
   'sports-tech': 'تكنولوجيا الرياضة',
   'assistive-tech': 'تقنية مساعدة',
   aviation: 'الطيران',
   climatetech: 'تكنولوجيا المناخ',
   'food-security': 'أمن غذائي',
   idea: 'مرحلة الفكرة',
+  japan: 'اليابان',
+  uae: 'الإمارات',
+};
+
+// Tags that denote a country, not a sector/theme. The /tags index renders
+// these in a separate "Countries" section with its own shape so they never
+// share the sector sticker-cloud look.
+export const countryTags = new Set([
+  'egypt',
+  'syria',
+  'ksa',
+  'saudi arabia',
+  'qatar',
+  'turkey',
+  'uae',
+  'japan',
+]);
+
+export const countryFlagMap: Record<string, string> = {
+  egypt: '🇪🇬',
+  syria: '🇸🇾',
+  ksa: '🇸🇦',
+  'saudi arabia': '🇸🇦',
+  qatar: '🇶🇦',
+  turkey: '🇹🇷',
+  uae: '🇦🇪',
+  japan: '🇯🇵',
 };
