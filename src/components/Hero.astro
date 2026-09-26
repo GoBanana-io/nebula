@@ -1,52 +1,20 @@
 ---
-interface Props {
-  title?: string;
-  summary?: string;
-}
-
-const {
-  title = 'Startup sparks. Steal the playbook.',
-  summary = 'Real startup opportunities, playbooks, and failure lessons. 100% real numbers, zero corporate fluff.',
-} = Astro.props;
 ---
 
-<section class="hero" aria-labelledby="hero-title">
-  <div class="hero-tag-kicker">
-    <span>⚡️</span>
-    <span>Real Sparks</span>
-    <span>✦</span>
-    <span>Funk 11</span>
+<section class="hero hero-slim" aria-labelledby="hero-title">
+  <div class="hero-slim-main">
+    <p class="hero-slim-kicker">
+      <span aria-hidden="true">⚡️</span>
+      <span>Ideas worth stealing</span>
+    </p>
+    <h1 id="hero-title">Startup sparks. Steal the playbook.</h1>
+    <p class="hero-slim-lede">
+      Real numbers, playbooks, and failure lessons — pick a spark and go build.
+    </p>
   </div>
 
-  <h1 id="hero-title">{title}</h1>
-  <p class="hero-lead">{summary}</p>
-
-  <div class="hero-actions">
-    <a class="btn btn-primary btn-lg" href="#sparks">
-      🔥 Browse Sparks
-    </a>
-    <a class="btn btn-violet btn-lg" href="/random">
-      🎲 Random Spark
-    </a>
-  </div>
-
-  <!-- Hero Kinetic Stats Grid -->
-  <div class="hero-stats-grid" aria-label="Quick Highlights">
-    <div class="hero-stat-card">
-      <span class="hero-stat-num">12</span>
-      <span class="hero-stat-label">Sparks Mapped</span>
-    </div>
-    <div class="hero-stat-card">
-      <span class="hero-stat-num">~$4.8B</span>
-      <span class="hero-stat-label">Tracked Value</span>
-    </div>
-    <div class="hero-stat-card">
-      <span class="hero-stat-num">1 Unicorn</span>
-      <span class="hero-stat-label">MNT-Halan</span>
-    </div>
-    <div class="hero-stat-card">
-      <span class="hero-stat-num">1 Failure</span>
-      <span class="hero-stat-label">Capiter Lesson</span>
-    </div>
+  <div class="hero-slim-side">
+    <a class="hero-slim-link" href="#sparks">↓ Browse</a>
+    <a class="hero-slim-link hero-slim-link--accent" href="/random">🎲 Shuffle</a>
   </div>
 </section>
