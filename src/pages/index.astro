@@ -39,7 +39,7 @@ const flashcards = ideas.map((idea) => ({
         Sparks
       </h2>
       <span class="section-counter" id="spark-count" aria-live="polite">
-        {ideas.length} Sparks Live
+        <span class="live-dot" aria-hidden="true"></span><span id="spark-count-num">{ideas.length}</span>
       </span>
     </div>
 
@@ -324,7 +324,6 @@ const flashcards = ideas.map((idea) => ({
     // Category Filter Buttons Logic
     const filterBtns = document.querySelectorAll('.filter-btn');
     const cards = document.querySelectorAll('#ideas-grid .card');
-    const countDisplay = document.getElementById('spark-count');
 
     filterBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
@@ -357,8 +356,9 @@ const flashcards = ideas.map((idea) => ({
           }
         });
 
-        if (countDisplay) {
-          countDisplay.textContent = `${visibleCount} Sparks Live`;
+        const countNum = document.getElementById('spark-count-num');
+        if (countNum) {
+          countNum.textContent = String(visibleCount);
         }
       });
     });

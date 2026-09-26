@@ -789,15 +789,37 @@ main {
 }
 
 .section-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   font-family: var(--font-mono);
-  font-size: 0.875rem;
-  font-weight: 800;
-  padding: 4px 10px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  padding: 4px 12px;
   background-color: var(--surface-1);
   border: 1.5px solid var(--border-dark);
   border-radius: var(--shape-pill);
   box-shadow: 2px 2px 0 var(--border-dark);
   color: var(--text-secondary);
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #16a34a;
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .live-dot {
+    animation: live-pulse 2s ease-in-out infinite;
+  }
+}
+
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
 }
 
 .view-mode-toggle {
