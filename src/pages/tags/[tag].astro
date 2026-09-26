@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Card from '../../components/Card.astro';
+import LoadMore from '../../components/LoadMore.astro';
 
 export async function getStaticPaths() {
   const ideas = await getCollection('ideas');
@@ -61,8 +62,8 @@ const flag = countryFlagMap[tag] || '';
       </p>
     </div>
 
-    <!-- Filtered Grid -->
-    <div class="grid">
+    <!-- Filtered Grid (paginated client-side; full list stays in HTML for SEO/no-JS) -->
+    <div class="grid" id="tag-grid" data-paginate-grid data-page-size="12">
       {ideas.map((idea, idx) => (
         <Card
           slug={idea.id.replace(/\.md$/, '')}
@@ -83,5 +84,7 @@ const flag = countryFlagMap[tag] || '';
         />
       ))}
     </div>
+
+    <LoadMore gridId="tag-grid" pageSize={12} total={ideas.length} />
   </div>
 </Base>

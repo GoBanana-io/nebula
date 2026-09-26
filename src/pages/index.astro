@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import Card from '../components/Card.astro';
+import LoadMore from '../components/LoadMore.astro';
 
 const ideas = (await getCollection('ideas')).sort(
   (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime()
@@ -160,8 +161,8 @@ const flashcards = ideas.map((idea) => ({
     </div>
   </section>
 
-  <!-- Sparks Grid -->
-  <div class="grid" id="ideas-grid">
+  <!-- Sparks Grid (paginated client-side; full list stays in HTML for SEO/no-JS) -->
+  <div class="grid" id="ideas-grid" data-paginate-grid data-page-size="12" data-total-target="spark-count-num">
     {ideas.map((idea, idx) => (
       <Card
         slug={idea.id.replace(/\.md$/, '')}
@@ -183,6 +184,8 @@ const flashcards = ideas.map((idea) => ({
       />
     ))}
   </div>
+
+  <LoadMore gridId="ideas-grid" pageSize={12} total={ideas.length} />
 
   <!-- Interactive Client-Side Script: Filter & Flashcard Controller -->
   <script define:vars={{ flashcards }}>
@@ -277,12 +280,14 @@ const flashcards = ideas.map((idea) => ({
       });
     });
 
-    // View Mode Switching
+    // View Mode Switching (pagination controls follow the grid's visibility)
+    const paginateControls = document.querySelector('[data-paginate-controls-for="ideas-grid"]');
     btnViewGrid?.addEventListener('click', () => {
       btnViewGrid.classList.add('is-active');
       btnViewFlash.classList.remove('is-active');
       flashStage.classList.remove('is-active');
       gridContainer.classList.remove('is-hidden');
+      if (paginateControls) paginateControls.hidden = false;
     });
 
     btnViewFlash?.addEventListener('click', () => {
@@ -290,6 +295,7 @@ const flashcards = ideas.map((idea) => ({
       btnViewGrid.classList.remove('is-active');
       flashStage.classList.add('is-active');
       gridContainer.classList.add('is-hidden');
+      if (paginateControls) paginateControls.hidden = true;
       renderFlashcard(fcIndex);
     });
 
@@ -316,14 +322,16 @@ const flashcards = ideas.map((idea) => ({
       else applyShuffle();
       btnOrderShuffle?.classList.toggle('is-active', mode !== 'date');
       btnOrderDate?.classList.toggle('is-active', mode === 'date');
+      // Re-apply pagination visibility in the new DOM order (keeps the page).
+      gridEl?.dispatchEvent(new CustomEvent('bn:order'));
     }
     btnOrderShuffle?.addEventListener('click', () => setOrder('shuffle'));
     btnOrderDate?.addEventListener('click', () => setOrder('date'));
     setOrder('date');
 
-    // Category Filter Buttons Logic
+    // Category Filter Buttons Logic (pagination-aware: the paginator owns
+    // show/hide; we only declare the active filter and reset to page 1).
     const filterBtns = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('#ideas-grid .card');
 
     filterBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
@@ -331,34 +339,9 @@ const flashcards = ideas.map((idea) => ({
         btn.classList.add('is-active');
 
         const filter = btn.getAttribute('data-filter') || 'all';
-        let visibleCount = 0;
-
-        cards.forEach((card) => {
-          const sector = card.getAttribute('data-sector') || '';
-          const status = card.getAttribute('data-status') || '';
-          let match = false;
-
-          if (filter === 'all') {
-            match = true;
-          } else if (filter === 'unicorn') {
-            match = status === 'unicorn';
-          } else if (filter === 'failure') {
-            match = status === 'failure';
-          } else {
-            match = sector.includes(filter);
-          }
-
-          if (match) {
-            card.style.display = 'flex';
-            visibleCount++;
-          } else {
-            card.style.display = 'none';
-          }
-        });
-
-        const countNum = document.getElementById('spark-count-num');
-        if (countNum) {
-          countNum.textContent = String(visibleCount);
+        if (gridEl) {
+          gridEl.dataset.activeFilter = filter;
+          gridEl.dispatchEvent(new CustomEvent('bn:filter'));
         }
       });
     });

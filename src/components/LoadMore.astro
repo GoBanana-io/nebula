@@ -1,0 +1,223 @@
+---
+// Reusable client-side pagination for idea grids (progressive enhancement).
+//
+// Usage (see src/pages/index.astro):
+//   <div class="grid" id="ideas-grid" data-paginate-grid data-page-size="12"
+//        data-total-target="spark-count-num"> ...cards... </div>
+//   <LoadMore gridId="ideas-grid" pageSize={12} total={ideas.length} />
+//
+// Contract:
+// - No-JS / crawlers see every card: the grid server-renders fully and this
+//   bar starts `hidden`. The inline script unhides it and collapses the grid
+//   to the first page. SEO and no-JS behavior are unchanged.
+// - Matching reuses the card's own `data-status` / `data-sector` attributes
+//   (see Card.astro), so any page filter just sets
+//   `grid.dataset.activeFilter = '<value>'` and dispatches `bn:filter` on the
+//   grid (resets to page 1). After DOM re-ordering, dispatch `bn:order`
+//   (keeps the current page). The paginator owns ALL show/hide decisions.
+// - Optional live total: `data-total-target="<element-id>"` on the grid points
+//   at an element whose text becomes the matched-total (e.g. the Sparks pill).
+
+interface Props {
+  gridId: string;
+  pageSize?: number;
+  total: number;
+}
+
+const { gridId, pageSize = 12, total } = Astro.props;
+---
+
+<div class="load-more" data-paginate-controls-for={gridId} hidden>
+  <p class="load-more-status" aria-live="polite" data-paginate-status>
+    Showing <strong data-paginate-visible>{Math.min(pageSize, total)}</strong>
+    of <span data-paginate-total>{total}</span> sparks
+  </p>
+  <div class="load-more-track" aria-hidden="true">
+    <div class="load-more-fill" data-paginate-fill></div>
+  </div>
+  <div class="load-more-actions">
+    <button class="btn btn-primary btn-lg" type="button" data-paginate-more>
+      Load more sparks ↓
+    </button>
+    <button class="btn btn-secondary btn-sm" type="button" data-paginate-less hidden>
+      Show less ↑
+    </button>
+  </div>
+  <div data-paginate-sentinel aria-hidden="true"></div>
+</div>
+
+<script is:inline>
+  (function () {
+    function countMatches(grid) {
+      var filter = grid.dataset.activeFilter || 'all';
+      var n = 0;
+      var kids = grid.children;
+      for (var i = 0; i < kids.length; i++) {
+        if (gridMatches(kids[i], filter)) n++;
+      }
+      return { total: n, filter: filter };
+    }
+
+    function gridMatches(card, filter) {
+      if (!filter || filter === 'all') return true;
+      var status = card.getAttribute('data-status') || '';
+      var sector = card.getAttribute('data-sector') || '';
+      if (filter === 'unicorn') return status === 'unicorn';
+      if (filter === 'failure') return status === 'failure';
+      return sector.indexOf(filter) !== -1;
+    }
+
+    function applyGrid(grid) {
+      var limit = grid._bnLimit || 12;
+      var seen = countMatches(grid);
+      var shown = 0;
+      var matchedIdx = 0;
+      var kids = grid.children;
+      for (var i = 0; i < kids.length; i++) {
+        var card = kids[i];
+        if (!gridMatches(card, seen.filter)) {
+          card.style.display = 'none';
+          continue;
+        }
+        var show = matchedIdx < limit;
+        matchedIdx++;
+        var wasHidden = card.style.display === 'none';
+        card.style.display = show ? '' : 'none';
+        if (show) {
+          shown++;
+          // Animate only cards transitioning hidden -> shown. Cards already
+          // visible keep no class, so DOM re-ordering never replays it.
+          if (wasHidden) {
+            card.classList.add('card-enter');
+            (function (el) {
+              setTimeout(function () {
+                el.classList.remove('card-enter');
+              }, 450);
+            })(card);
+          }
+        }
+      }
+
+      var controls = grid._bnControls;
+      if (controls) {
+        var vis = controls.querySelector('[data-paginate-visible]');
+        var tot = controls.querySelector('[data-paginate-total]');
+        var fill = controls.querySelector('[data-paginate-fill]');
+        var more = controls.querySelector('[data-paginate-more]');
+        var less = controls.querySelector('[data-paginate-less]');
+        var status = controls.querySelector('[data-paginate-status]');
+        if (vis) vis.textContent = String(shown);
+        if (tot) tot.textContent = String(seen.total);
+        if (fill) {
+          var pct = seen.total > 0 ? Math.round((shown / seen.total) * 100) : 0;
+          fill.style.width = pct + '%';
+        }
+        if (status && seen.total === 0) {
+          status.innerHTML = 'No sparks here yet — try another filter ✦';
+        }
+        if (more) {
+          var left = seen.total - shown;
+          if (left > 0) {
+            more.hidden = false;
+            more.textContent = 'Load more sparks ↓ · ' + left + ' left';
+          } else {
+            more.hidden = true;
+          }
+        }
+        if (less) {
+          less.hidden = !(shown > (grid._bnPageSize || 12) && seen.total > 0);
+        }
+      }
+
+      var totalTarget = grid.dataset.totalTarget;
+      if (totalTarget) {
+        var pill = document.getElementById(totalTarget);
+        if (pill) pill.textContent = String(seen.total);
+      }
+    }
+
+    function initGrid(grid) {
+      if (grid.dataset.bnPaginated) {
+        applyGrid(grid);
+        return;
+      }
+      grid.dataset.bnPaginated = '1';
+      var size = parseInt(grid.dataset.pageSize || '12', 10) || 12;
+      grid._bnPageSize = size;
+      grid._bnLimit = size;
+
+      var controls = document.querySelector(
+        '[data-paginate-controls-for="' + grid.id + '"]'
+      );
+      grid._bnControls = controls || null;
+
+      if (controls) {
+        controls.hidden = false;
+        var more = controls.querySelector('[data-paginate-more]');
+        var less = controls.querySelector('[data-paginate-less]');
+        var sentinel = controls.querySelector('[data-paginate-sentinel]');
+
+        if (more) {
+          more.addEventListener('click', function () {
+            grid._bnLimit += grid._bnPageSize;
+            applyGrid(grid);
+          });
+        }
+        if (less) {
+          less.addEventListener('click', function () {
+            grid._bnLimit = grid._bnPageSize;
+            applyGrid(grid);
+            var top = document.getElementById(grid.id);
+            if (top && top.scrollIntoView) {
+              top.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          });
+        }
+
+        // Infinite scroll: pre-load the next page before the user reaches
+        // the bottom. The explicit button stays as the accessible fallback.
+        // Skipped while the grid itself is hidden (e.g. Flashcard view).
+        if (sentinel && 'IntersectionObserver' in window) {
+          var io = new IntersectionObserver(
+            function (entries) {
+              for (var i = 0; i < entries.length; i++) {
+                if (!entries[i].isIntersecting) continue;
+                if (grid.offsetParent === null) continue;
+                var seen = countMatches(grid);
+                if (grid._bnLimit < seen.total) {
+                  grid._bnLimit += grid._bnPageSize;
+                  applyGrid(grid);
+                }
+              }
+            },
+            { rootMargin: '600px 0px' }
+          );
+          io.observe(sentinel);
+        }
+      }
+
+      grid.addEventListener('bn:filter', function () {
+        grid._bnLimit = grid._bnPageSize;
+        applyGrid(grid);
+      });
+      grid.addEventListener('bn:order', function () {
+        applyGrid(grid);
+      });
+
+      applyGrid(grid);
+    }
+
+    function initAllPaginate() {
+      var grids = document.querySelectorAll('[data-paginate-grid]');
+      for (var i = 0; i < grids.length; i++) initGrid(grids[i]);
+    }
+
+    // First paint plus every client-side navigation (View Transitions).
+    document.addEventListener('astro:page-load', initAllPaginate);
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAllPaginate);
+    } else {
+      initAllPaginate();
+    }
+  })();
+</script>

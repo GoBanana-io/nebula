@@ -1222,6 +1222,103 @@ main {
   display: none !important;
 }
 
+/* Paginated grids hand their bottom rhythm to the Load More bar. */
+.grid[data-paginate-grid] {
+  padding-bottom: var(--space-8);
+}
+
+/* --------------------------------------------------------------------------
+   LOAD MORE / PAGINATION BAR
+   -------------------------------------------------------------------------- */
+.load-more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  margin: 0 0 var(--space-16);
+  padding: var(--space-6) var(--space-5);
+  background-color: var(--surface-1);
+  border: 3px solid var(--border-dark);
+  border-radius: var(--shape-lg);
+  box-shadow: var(--elevation-2);
+  text-align: center;
+}
+
+.load-more[hidden] {
+  display: none;
+}
+
+.load-more-status {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.load-more-status strong {
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.load-more-track {
+  width: min(420px, 100%);
+  height: 14px;
+  border: 2px solid var(--border-dark);
+  border-radius: var(--shape-pill);
+  background-color: var(--surface-3);
+  overflow: hidden;
+  box-shadow: var(--elevation-1);
+}
+
+.load-more-fill {
+  height: 100%;
+  width: 0;
+  border-radius: var(--shape-pill);
+  background: linear-gradient(90deg, var(--color-coral-500), var(--color-amber-400));
+  transition: width 250ms var(--ease-spring-quick);
+}
+
+.load-more-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* Skip rendering work for far off-screen cards (161 sparks, one page). */
+.card {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 420px;
+}
+
+/* One-shot entrance for cards revealed by Load More / filtering. */
+@keyframes bn-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.card-enter {
+  animation: bn-card-in 320ms var(--ease-spring-quick);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-enter {
+    animation: none;
+  }
+
+  .load-more-fill {
+    transition: none;
+  }
+}
+
 .card {
   background-color: var(--surface-2);
   border: 2.5px solid var(--border-dark);
