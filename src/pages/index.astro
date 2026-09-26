@@ -55,11 +55,11 @@ const flashcards = ideas.map((idea) => ({
       </div>
 
       <div class="view-mode-toggle view-mode-toggle--order" role="group" aria-label="Order">
-        <button class="view-btn is-active" id="order-shuffle" type="button" title="Random order">
-          🎲 Shuffle
-        </button>
-        <button class="view-btn" id="order-date" type="button" title="Newest first">
+        <button class="view-btn is-active" id="order-date" type="button" title="Newest first">
           📅 Newest
+        </button>
+        <button class="view-btn" id="order-shuffle" type="button" title="Random order">
+          🔀 Random
         </button>
       </div>
     </div>
@@ -143,8 +143,8 @@ const flashcards = ideas.map((idea) => ({
           <button class="btn btn-primary btn-sm" id="fc-btn-next" type="button">
             Next →
           </button>
-          <button class="btn btn-violet btn-sm" id="fc-btn-rand" type="button">
-            🎲 Shuffle
+          <button class="btn btn-violet btn-sm" id="fc-btn-rand" type="button" title="Show a random spark">
+            🎲 Surprise me
           </button>
         </div>
 
@@ -293,7 +293,7 @@ const flashcards = ideas.map((idea) => ({
       renderFlashcard(fcIndex);
     });
 
-    // Grid Order: Shuffle (default) / Newest first (keeps filter visibility)
+    // Grid Order: Newest first (default) / Random (keeps filter visibility)
     const gridEl = document.getElementById('ideas-grid');
     const btnOrderShuffle = document.getElementById('order-shuffle');
     const btnOrderDate = document.getElementById('order-date');
@@ -319,7 +319,7 @@ const flashcards = ideas.map((idea) => ({
     }
     btnOrderShuffle?.addEventListener('click', () => setOrder('shuffle'));
     btnOrderDate?.addEventListener('click', () => setOrder('date'));
-    setOrder('shuffle');
+    setOrder('date');
 
     // Category Filter Buttons Logic
     const filterBtns = document.querySelectorAll('.filter-btn');

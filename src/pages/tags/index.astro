@@ -45,8 +45,6 @@ const countrySparkTotal = countryEntries.reduce((n, e) => n + e.count, 0);
       <div class="hero-tag-kicker">
         <span>🧭</span>
         <span>Explore the Library</span>
-        <span>✦</span>
-        <span>{countryEntries.length} Countries · {sectorEntries.length} Sectors & Themes</span>
       </div>
       <h1 style="font-size: var(--type-display-xl); margin-bottom: var(--space-2);">
         Explore
@@ -54,10 +52,14 @@ const countrySparkTotal = countryEntries.reduce((n, e) => n + e.count, 0);
       <p style="font-size: 1.125rem;">
         Pick a country to browse its startups, or a market sector to filter playbooks and lessons.
       </p>
+      <div class="explore-jump">
+        <a class="btn btn-secondary" href="#countries">🌍 Countries</a>
+        <a class="btn btn-violet" href="#sectors">🏷️ Sectors</a>
+      </div>
     </div>
 
     <!-- Countries: passport-style cards, not sticker pills -->
-    <div class="country-head">
+    <div class="country-head" id="countries">
       <h2 class="country-title">🌍 Browse by Country</h2>
       <span class="country-total">
         {countryEntries.length} COUNTRIES · {countrySparkTotal} SPARKS
@@ -104,7 +106,7 @@ const countrySparkTotal = countryEntries.reduce((n, e) => n + e.count, 0);
     </div>
 
     <!-- Sectors & Themes: funky sticker tag cloud -->
-    <h2 style="font-size: 1.375rem; margin-bottom: var(--space-4);">
+    <h2 id="sectors" style="font-size: 1.375rem; margin-bottom: var(--space-4);">
       🏷 Sectors & Themes
     </h2>
     <div
@@ -220,6 +222,20 @@ const countrySparkTotal = countryEntries.reduce((n, e) => n + e.count, 0);
     margin-bottom: var(--space-5);
   }
 
+  /* Jump buttons under the Explore header */
+  .explore-jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+  }
+
+  /* Anchor offset so the sticky nav never covers a jumped-to section */
+  #countries,
+  #sectors {
+    scroll-margin-top: 110px;
+  }
+
   .country-panel {
     background-color: var(--surface-2);
     background-image: radial-gradient(var(--border-default) 1.2px, transparent 1.2px);
@@ -233,11 +249,15 @@ const countrySparkTotal = countryEntries.reduce((n, e) => n + e.count, 0);
 
   .country-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
     gap: var(--space-4);
     list-style: none;
     padding: 0;
     margin: 0;
+  }
+
+  .country-grid > li {
+    min-width: 0;
   }
 
   .country-card {
@@ -246,6 +266,7 @@ const countrySparkTotal = countryEntries.reduce((n, e) => n + e.count, 0);
     flex-direction: column;
     gap: var(--space-1);
     height: 100%;
+    min-width: 0;
     background-color: var(--surface-3);
     border: 3px solid var(--border-dark);
     border-radius: var(--shape-lg);
@@ -284,6 +305,7 @@ const countrySparkTotal = countryEntries.reduce((n, e) => n + e.count, 0);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: var(--space-3);
     margin-top: var(--space-2);
     margin-bottom: var(--space-2);
@@ -321,6 +343,7 @@ const countrySparkTotal = countryEntries.reduce((n, e) => n + e.count, 0);
     letter-spacing: -0.03em;
     line-height: 1.1;
     color: var(--text-primary);
+    overflow-wrap: break-word;
   }
 
   .country-ar {
@@ -335,6 +358,7 @@ const countrySparkTotal = countryEntries.reduce((n, e) => n + e.count, 0);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: var(--space-2);
     margin-top: var(--space-3);
     padding-top: var(--space-3);
     border-top: 2px dashed var(--border-default);
@@ -345,11 +369,14 @@ const countrySparkTotal = countryEntries.reduce((n, e) => n + e.count, 0);
     font-size: var(--type-mono-sm);
     font-weight: 700;
     color: var(--text-muted);
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   .country-go {
     display: grid;
     place-items: center;
+    flex-shrink: 0;
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -370,18 +397,30 @@ const countrySparkTotal = countryEntries.reduce((n, e) => n + e.count, 0);
     }
 
     .country-grid {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: var(--space-3);
     }
 
     .country-card {
       padding: var(--space-4) var(--space-4) var(--space-3);
+      /* No tilt in the tight 2-up grid: rotated corners poked past the panel. */
+      transform: none;
+    }
+
+    .country-card-top {
+      gap: var(--space-2);
     }
 
     .country-flag {
-      width: 46px;
-      height: 46px;
-      font-size: 1.5rem;
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      font-size: 1.3rem;
+    }
+
+    .country-count {
+      font-size: 0.6875rem;
+      padding: 2px 8px;
     }
 
     .country-en {

@@ -390,6 +390,13 @@ main {
 
 /* (nav-cta removed: it duplicated the Sparks link) */
 
+/* Mobile-menu-only chrome: section labels, link subtitles, row chevrons. */
+.menu-heading,
+.nav-sub,
+.nav-chevron {
+  display: none;
+}
+
 /* Mobile: slim 60px bar, links live in a full-page overlay */
 @media (max-width: 859.98px) {
   .nav-inner {
@@ -437,8 +444,11 @@ main {
     background-color: oklch(22% 0.025 55 / 0.45);
   }
 
-  /* Floating menu card docked under the pill — opaque, in space, not a sheet */
-  body.is-menu-open .nav-links {
+  /* Floating menu card docked under the pill — opaque, in space, not a sheet.
+     The closing state reuses the exact open layout so the exit animation
+     plays before the card detaches (see setMenuState in Base.astro). */
+  body.is-menu-open .nav-links,
+  body.is-menu-closing .nav-links {
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -451,49 +461,107 @@ main {
     max-height: calc(100dvh - 92px);
     padding: var(--space-2) var(--space-4) calc(var(--space-6) + env(safe-area-inset-bottom));
     overflow-y: auto;
+    overscroll-behavior: contain;
     background-color: var(--surface-2);
     border: 3px solid var(--border-dark);
     border-radius: 24px;
     box-shadow: 10px 10px 0 var(--border-dark);
-    animation: menu-rise 200ms var(--ease-spring-quick);
   }
 
-  /* Restrained list rows: hairline separators, single accent on the active page */
-  body.is-menu-open .nav-link {
-    font-size: 1.25rem;
-    min-height: 56px;
-    padding: 12px 8px;
+  body.is-menu-open .nav-links {
+    animation: menu-rise 260ms var(--ease-spring-bouncy);
+  }
+
+  /* Gentle exit: card settles down + fades, rows fade together, scrim fades */
+  body.is-menu-closing .nav-links {
+    animation: menu-exit 200ms ease-in forwards;
+    pointer-events: none;
+  }
+
+  body.is-menu-closing .nav-links > * {
+    animation: menu-item-out 150ms ease-in both;
+  }
+
+  body.is-menu-closing::before {
+    animation: scrim-out 200ms ease-in forwards;
+  }
+
+  /* Staggered row entrance — each menu row pops in after the previous one */
+  body.is-menu-open .nav-links > * {
+    animation: menu-item-in 240ms var(--ease-spring-quick) both;
+  }
+
+  body.is-menu-open .nav-links > *:nth-child(2) {
+    animation-delay: 35ms;
+  }
+
+  body.is-menu-open .nav-links > *:nth-child(3) {
+    animation-delay: 70ms;
+  }
+
+  body.is-menu-open .nav-links > *:nth-child(4) {
+    animation-delay: 105ms;
+  }
+
+  body.is-menu-open .nav-links > *:nth-child(5) {
+    animation-delay: 140ms;
+  }
+
+  body.is-menu-open .nav-links > *:nth-child(6) {
+    animation-delay: 175ms;
+  }
+
+  /* Section label: tiny mono kicker above each menu group */
+  body.is-menu-open .menu-heading {
+    display: flex;
     align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    padding: var(--space-2) var(--space-1) 0;
+    margin-bottom: var(--space-2);
+  }
+
+  body.is-menu-open .menu-heading:not(:first-child) {
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1.5px solid var(--border-default);
+  }
+
+  /* Chunky link cards: icon tile + title/sub stack + chevron disc */
+  body.is-menu-open .nav-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 72px;
+    padding: 10px 12px;
+    margin-bottom: var(--space-2);
+    font-size: 1rem;
     color: var(--text-primary);
-    background: transparent;
-    border: none;
-    border-bottom: 1.5px solid var(--border-default);
-    border-radius: 0;
-    box-shadow: none;
+    background-color: var(--surface-3);
+    border: 2.5px solid var(--border-dark);
+    border-radius: 20px;
+    box-shadow: var(--elevation-2);
   }
 
   body.is-menu-open .nav-link:hover {
-    background-color: var(--surface-1);
-    transform: none;
-    box-shadow: none;
+    background-color: var(--surface-3);
+    transform: translate(-2px, -2px);
+    box-shadow: var(--elevation-3);
     color: var(--text-primary);
   }
 
   body.is-menu-open .nav-link:active {
     transform: scale(0.97);
     background-color: var(--surface-1);
-    box-shadow: none;
+    box-shadow: var(--elevation-pressed);
   }
 
-  body.is-menu-open .nav-link--active {
-    background-color: var(--color-amber-200);
-    border: 2.5px solid var(--border-dark);
-    border-radius: var(--shape-pill);
-    box-shadow: var(--elevation-1);
-    padding: 12px 18px;
-  }
-
-  /* Active row keeps its section accent, matching desktop */
+  /* Active card keeps its section accent, matching desktop */
   body.is-menu-open .nav-link--sparks.nav-link--active {
     background-color: var(--color-coral-100);
   }
@@ -506,18 +574,89 @@ main {
     background-color: var(--color-teal-100);
   }
 
-  /* Row affordance: chevron pinned right */
-  body.is-menu-open .nav-link::after {
-    content: '→';
-    margin-left: auto;
-    padding-left: var(--space-3);
-    font-weight: 800;
-    color: var(--text-muted);
+  body.is-menu-open .nav-icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    font-size: 1.5rem;
+    line-height: 1;
+    border: 2.5px solid var(--border-dark);
+    border-radius: 16px;
+    box-shadow: 2px 2px 0 var(--border-dark);
   }
 
+  body.is-menu-open .nav-link--sparks .nav-icon {
+    background-color: var(--color-coral-200);
+  }
+
+  body.is-menu-open .nav-link--roulette .nav-icon {
+    background-color: var(--color-violet-200);
+  }
+
+  body.is-menu-open .nav-link--explore .nav-icon {
+    background-color: var(--color-teal-200);
+  }
+
+  body.is-menu-open .nav-text {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    line-height: 1.25;
+  }
+
+  body.is-menu-open .nav-title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+  }
+
+  body.is-menu-open .nav-sub {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+  }
+
+  body.is-menu-open .nav-chevron {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    background-color: var(--surface-1);
+    border: 2px solid var(--border-dark);
+    border-radius: 50%;
+    transition: transform 150ms var(--ease-spring-quick), background-color 150ms ease;
+  }
+
+  body.is-menu-open .nav-link:hover .nav-chevron {
+    transform: translateX(3px);
+  }
+
+  body.is-menu-open .nav-link--active .nav-chevron {
+    background-color: var(--color-amber-300);
+  }
+
+  /* Language: full-width segmented control closing the menu */
   body.is-menu-open .lang-switch-box {
-    align-self: flex-start;
-    margin-top: var(--space-4);
+    align-self: stretch;
+    display: flex;
+    margin-top: var(--space-2);
+  }
+
+  body.is-menu-open .lang-btn {
+    flex: 1;
+    min-height: 48px;
+    font-size: 0.9375rem;
   }
 
   /* Hamburger morphs to X while the menu is open */
@@ -537,7 +676,49 @@ main {
 @keyframes menu-rise {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(14px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes menu-exit {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+}
+
+@keyframes menu-item-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@keyframes scrim-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes menu-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -546,7 +727,11 @@ main {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  body.is-menu-open .nav-links {
+  body.is-menu-open .nav-links,
+  body.is-menu-open .nav-links > *,
+  body.is-menu-closing .nav-links,
+  body.is-menu-closing .nav-links > *,
+  body.is-menu-closing::before {
     animation: none;
   }
 }

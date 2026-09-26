@@ -83,15 +83,21 @@ const {
           <span class="nav-toggle-text" id="nav-toggle-text">Menu</span>
         </button>
 
-        <!-- Navigation Links: inline on desktop, full-page overlay on mobile -->
+        <!-- Navigation Links: inline on desktop, chunky link cards on mobile -->
         <nav class="nav-links" id="primary-nav" aria-label="Primary Navigation">
+          <p class="menu-heading" aria-hidden="true"><span aria-hidden="true">✦</span> Jump to</p>
           <a
             class={`nav-link nav-link--sparks ${activePath === '/' ? 'nav-link--active' : ''}`}
             href="/#sparks"
             rel="prefetch"
             aria-current={activePath === '/' ? 'page' : undefined}
           >
-            🔥 Sparks
+            <span class="nav-icon" aria-hidden="true">🔥</span>
+            <span class="nav-text">
+              <span class="nav-title">Sparks</span>
+              <span class="nav-sub">Startup ideas & playbooks</span>
+            </span>
+            <span class="nav-chevron" aria-hidden="true">→</span>
           </a>
           <a
             class={`nav-link nav-link--roulette ${activePath === '/random' ? 'nav-link--active' : ''}`}
@@ -99,7 +105,12 @@ const {
             rel="prefetch"
             aria-current={activePath === '/random' ? 'page' : undefined}
           >
-            🎲 Roulette
+            <span class="nav-icon" aria-hidden="true">🎲</span>
+            <span class="nav-text">
+              <span class="nav-title">Roulette</span>
+              <span class="nav-sub">One random spark</span>
+            </span>
+            <span class="nav-chevron" aria-hidden="true">→</span>
           </a>
           <a
             class={`nav-link nav-link--explore ${activePath.startsWith('/tags') ? 'nav-link--active' : ''}`}
@@ -107,13 +118,19 @@ const {
             rel="prefetch"
             aria-current={activePath.startsWith('/tags') ? 'page' : undefined}
           >
-            🧭 Explore
+            <span class="nav-icon" aria-hidden="true">🧭</span>
+            <span class="nav-text">
+              <span class="nav-title">Explore</span>
+              <span class="nav-sub">Browse by country & sector</span>
+            </span>
+            <span class="nav-chevron" aria-hidden="true">→</span>
           </a>
 
+          <p class="menu-heading" aria-hidden="true"><span aria-hidden="true">◐</span> Language</p>
           <!-- Interactive Language Switcher: Dual & English only -->
           <div class="lang-switch-box" role="group" aria-label="Content Language Selector">
-            <button class="lang-btn is-active" id="lang-dual" data-lang="dual" type="button" title="Dual view (English UI + Arabic summaries)">
-              Dual
+            <button class="lang-btn is-active" id="lang-dual" data-lang="dual" type="button" title="Bilingual view (English UI + Arabic summaries)">
+              EN+AR
             </button>
             <button class="lang-btn" id="lang-en" data-lang="en" type="button" title="English only view">
               EN
@@ -202,15 +219,47 @@ const {
 
         window.setBananaLang = applyLang;
 
-        function setMenuState(open) {
+        // Animated open/close: closing holds the open layout under
+        // .is-menu-closing so the exit animation plays, then detaches.
+        var menuCloseTimer = null;
+
+        function prefersReducedMotion() {
+          return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        }
+
+        function syncMenuChrome(open) {
           var toggle = document.getElementById('nav-toggle');
           var label = document.getElementById('nav-toggle-text');
-          document.body.classList.toggle('is-menu-open', open);
           if (toggle) {
             toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
             toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
           }
           if (label) label.textContent = open ? 'Close' : 'Menu';
+        }
+
+        function setMenuState(open) {
+          if (open) {
+            if (menuCloseTimer) {
+              clearTimeout(menuCloseTimer);
+              menuCloseTimer = null;
+            }
+            document.body.classList.remove('is-menu-closing');
+            document.body.classList.add('is-menu-open');
+            syncMenuChrome(true);
+            return;
+          }
+          if (!document.body.classList.contains('is-menu-open')) return;
+          syncMenuChrome(false);
+          if (prefersReducedMotion()) {
+            document.body.classList.remove('is-menu-open', 'is-menu-closing');
+            return;
+          }
+          document.body.classList.add('is-menu-closing');
+          if (menuCloseTimer) clearTimeout(menuCloseTimer);
+          menuCloseTimer = setTimeout(function () {
+            document.body.classList.remove('is-menu-open', 'is-menu-closing');
+            menuCloseTimer = null;
+          }, 220);
         }
 
         function initBananaChrome() {
