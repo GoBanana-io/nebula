@@ -1066,6 +1066,14 @@ main {
   margin-bottom: 2px;
 }
 
+/* Stretched card link: anywhere on the card navigates, except real controls */
+.card-stretched-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
 /* Card Action Bar with 1-Click Copy */
 .card-action-bar {
   display: flex;
@@ -1074,6 +1082,8 @@ main {
   padding-top: var(--space-2);
   border-top: 1.5px dashed var(--border-default);
   margin-top: auto;
+  position: relative;
+  z-index: 1;
 }
 
 .btn-copy-spark {

@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
   title?: string;
@@ -23,6 +24,7 @@ const {
     <meta name="theme-color" content="#FDF6EE" />
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <ClientRouter />
 
     <!-- Google Fonts: Cairo (for Arabic content) + JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -57,7 +59,7 @@ const {
     <!-- Compact Funk Header: slim bar on mobile, full-page menu on demand -->
     <header class="nav" id="site-nav">
       <div class="nav-inner">
-        <a class="brand-group" href="/" aria-label="Banana Nebula Homepage">
+        <a class="brand-group" href="/" rel="prefetch" aria-label="Banana Nebula Homepage">
           <span class="brand-mark" aria-hidden="true">✦</span>
           <div class="brand-text-block">
             <span class="brand-name">Banana Nebula</span>
@@ -86,6 +88,7 @@ const {
           <a
             class={`nav-link ${activePath === '/' ? 'nav-link--active' : ''}`}
             href="/#sparks"
+            rel="prefetch"
             aria-current={activePath === '/' ? 'page' : undefined}
           >
             🔥 Sparks
@@ -93,6 +96,7 @@ const {
           <a
             class={`nav-link ${activePath === '/random' ? 'nav-link--active' : ''}`}
             href="/random"
+            rel="prefetch"
             aria-current={activePath === '/random' ? 'page' : undefined}
           >
             🎲 Roulette
@@ -100,6 +104,7 @@ const {
           <a
             class={`nav-link ${activePath.startsWith('/tags') ? 'nav-link--active' : ''}`}
             href="/tags"
+            rel="prefetch"
             aria-current={activePath.startsWith('/tags') ? 'page' : undefined}
           >
             🏷 Sectors
@@ -140,18 +145,18 @@ const {
         <nav class="footer-col" aria-label="Explore">
           <h4 class="footer-heading">Explore</h4>
           <ul class="footer-link-list">
-            <li><a class="footer-link" href="/#sparks">🔥 All Sparks</a></li>
-            <li><a class="footer-link" href="/random">🎲 Roulette</a></li>
-            <li><a class="footer-link" href="/tags">🏷 Sectors</a></li>
+            <li><a class="footer-link" href="/#sparks" rel="prefetch">🔥 All Sparks</a></li>
+            <li><a class="footer-link" href="/random" rel="prefetch">🎲 Roulette</a></li>
+            <li><a class="footer-link" href="/tags" rel="prefetch">🏷 Sectors</a></li>
           </ul>
         </nav>
 
         <nav class="footer-col" aria-label="Top playbooks">
           <h4 class="footer-heading">Top Playbooks</h4>
           <ul class="footer-link-list">
-            <li><a class="footer-link" href="/tags/fintech">💳 Fintech</a></li>
-            <li><a class="footer-link" href="/tags/unicorn">🦄 Unicorns</a></li>
-            <li><a class="footer-link" href="/tags/failure">💥 Failed</a></li>
+            <li><a class="footer-link" href="/tags/fintech" rel="prefetch">💳 Fintech</a></li>
+            <li><a class="footer-link" href="/tags/unicorn" rel="prefetch">🦄 Unicorns</a></li>
+            <li><a class="footer-link" href="/tags/failure" rel="prefetch">💥 Failed</a></li>
           </ul>
         </nav>
 
@@ -166,6 +171,14 @@ const {
     <!-- Bulletproof Language Switcher Script (Dual & EN) -->
     <script is:inline>
       (function () {
+        function currentMode() {
+          try {
+            return localStorage.getItem('bn_lang_mode') === 'en' ? 'en' : 'dual';
+          } catch (e) {
+            return 'dual';
+          }
+        }
+
         function applyLang(mode) {
           var m = mode === 'en' ? 'en' : 'dual';
           document.documentElement.setAttribute('data-lang-mode', m);
@@ -189,84 +202,83 @@ const {
 
         window.setBananaLang = applyLang;
 
-        // Instant click handling via event delegation
-        document.addEventListener('click', function (e) {
-          var target = e.target;
-          var btn = target && target.closest ? target.closest('.lang-btn') : null;
-          if (!btn) return;
-          e.preventDefault();
-          var mode = btn.getAttribute('data-lang') || (btn.id ? btn.id.replace('lang-', '') : 'dual');
-          applyLang(mode);
-        });
-
-        // Initialize from storage or default
-        function initLang() {
-          var current = 'dual';
-          try {
-            var saved = localStorage.getItem('bn_lang_mode');
-            if (saved === 'en') current = 'en';
-            else current = 'dual';
-          } catch (e) {}
-          applyLang(current);
-        }
-
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', initLang);
-        } else {
-          initLang();
-        }
-
-        // Compact header: full-page mobile menu (closes on link, ESC, resize)
-        (function () {
+        function setMenuState(open) {
           var toggle = document.getElementById('nav-toggle');
-          var nav = document.getElementById('primary-nav');
           var label = document.getElementById('nav-toggle-text');
-          if (!toggle || !nav) return;
-
-          function setMenu(open) {
-            document.body.classList.toggle('is-menu-open', open);
+          document.body.classList.toggle('is-menu-open', open);
+          if (toggle) {
             toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
             toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-            if (label) label.textContent = open ? 'Close' : 'Menu';
+          }
+          if (label) label.textContent = open ? 'Close' : 'Menu';
+        }
+
+        function initBananaChrome() {
+          // Document-level handlers: bind exactly once per session.
+          if (!window.__bnChromeDoc) {
+            window.__bnChromeDoc = true;
+
+            document.addEventListener('click', function (e) {
+              var target = e.target;
+              var btn = target && target.closest ? target.closest('.lang-btn') : null;
+              if (!btn) return;
+              e.preventDefault();
+              var mode = btn.getAttribute('data-lang') || (btn.id ? btn.id.replace('lang-', '') : 'dual');
+              applyLang(mode);
+            });
+
+            document.addEventListener('keydown', function (e) {
+              if (e.key === 'Escape' && document.body.classList.contains('is-menu-open')) {
+                setMenuState(false);
+                var t = document.getElementById('nav-toggle');
+                if (t) t.focus();
+              }
+            });
+
+            window.addEventListener('resize', function () {
+              if (window.innerWidth >= 860 && document.body.classList.contains('is-menu-open')) {
+                setMenuState(false);
+              }
+            });
           }
 
-          function isOpen() {
-            return document.body.classList.contains('is-menu-open');
-          }
-
-          toggle.addEventListener('click', function () {
-            setMenu(!isOpen());
-          });
-
-          nav.addEventListener('click', function (e) {
-            var link = e.target && e.target.closest ? e.target.closest('a') : null;
-            if (link) setMenu(false);
-          });
-
-          document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && isOpen()) {
-              setMenu(false);
-              toggle.focus();
+          // Toast helper always targets the current document.
+          window.showSparkToast = function (msg) {
+            var toast = document.getElementById('spark-toast');
+            var text = document.getElementById('toast-text');
+            if (toast && text) {
+              if (msg) text.textContent = msg;
+              toast.classList.add('is-visible');
+              setTimeout(function () {
+                toast.classList.remove('is-visible');
+              }, 2400);
             }
-          });
+          };
 
-          window.addEventListener('resize', function () {
-            if (window.innerWidth >= 860 && isOpen()) setMenu(false);
-          });
-        })();
-
-        // Global Toast Helper
-        window.showSparkToast = function (msg) {
-          var toast = document.getElementById('spark-toast');
-          var text = document.getElementById('toast-text');
-          if (toast && text) {
-            if (msg) text.textContent = msg;
-            toast.classList.add('is-visible');
-            setTimeout(function () {
-              toast.classList.remove('is-visible');
-            }, 2400);
+          // Element handlers: fresh nodes after every navigation; skip repeats.
+          var toggle = document.getElementById('nav-toggle');
+          var nav = document.getElementById('primary-nav');
+          if (toggle && nav && !toggle.dataset.bnBound) {
+            toggle.dataset.bnBound = '1';
+            toggle.addEventListener('click', function () {
+              setMenuState(!document.body.classList.contains('is-menu-open'));
+            });
+            nav.addEventListener('click', function (e) {
+              var link = e.target && e.target.closest ? e.target.closest('a') : null;
+              if (link) setMenuState(false);
+            });
           }
-        };
+
+          applyLang(currentMode());
+        }
+
+        // First paint plus every client-side navigation (View Transitions).
+        document.addEventListener('astro:page-load', initBananaChrome);
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initBananaChrome);
+        } else {
+          initBananaChrome();
+        }
       })();
     </script>
   </body>

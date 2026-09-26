@@ -90,6 +90,7 @@ const sortedTags = Object.entries(tagCountMap)
             <li>
               <a
                 class="chip"
+                rel="prefetch"
                 href={`/tags/${tag}`}
                 style={`
                   transform: rotate(${rot}deg);
@@ -136,10 +137,10 @@ const sortedTags = Object.entries(tagCountMap)
 
     <!-- Quick Return -->
     <div style="margin-top: var(--space-10); display: flex; gap: var(--space-3);">
-      <a class="btn btn-secondary" href="/#sparks">
+      <a class="btn btn-secondary" href="/#sparks" rel="prefetch">
         ← All Sparks
       </a>
-      <a class="btn btn-violet" href="/random">
+      <a class="btn btn-violet" href="/random" rel="prefetch">
         🎲 Random Spark
       </a>
     </div>

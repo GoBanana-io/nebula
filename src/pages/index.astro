@@ -141,7 +141,7 @@ const flashcards = ideas.map((idea) => ({
           <button class="btn btn-secondary btn-sm" id="fc-btn-copy" type="button">
             📋 Copy Spark
           </button>
-          <a class="btn btn-primary btn-sm" id="fc-btn-open" href={`/idea/${flashcards[0].slug}`}>
+          <a class="btn btn-primary btn-sm" id="fc-btn-open" rel="prefetch" href={`/idea/${flashcards[0].slug}`}>
             Full Teardown ➔
           </a>
         </div>
@@ -175,8 +175,13 @@ const flashcards = ideas.map((idea) => ({
 
   <!-- Interactive Client-Side Script: Filter & Flashcard Controller -->
   <script define:vars={{ flashcards }}>
-    const allCards = flashcards;
-    let fcIndex = 0;
+    function initSparks() {
+      const gridRoot = document.getElementById('ideas-grid');
+      if (!gridRoot || gridRoot.dataset.bnBound) return;
+      gridRoot.dataset.bnBound = '1';
+
+      const allCards = flashcards;
+      let fcIndex = 0;
 
     // View Switcher Elements
     const btnViewGrid = document.getElementById('view-mode-grid');
@@ -318,5 +323,14 @@ const flashcards = ideas.map((idea) => ({
         }
       });
     });
+    }
+
+    // First paint plus every client-side navigation (View Transitions).
+    document.addEventListener('astro:page-load', initSparks);
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initSparks);
+    } else {
+      initSparks();
+    }
   </script>
 </Base>

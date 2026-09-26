@@ -136,7 +136,7 @@ const initialSpark = sparksData[initialIndex];
         <button class="btn btn-secondary btn-lg" id="btn-copy-roulette" type="button">
           📋 Copy Spark
         </button>
-        <a class="btn btn-violet btn-lg" id="btn-open" href={`/idea/${initialSpark.slug}`}>
+        <a class="btn btn-violet btn-lg" id="btn-open" rel="prefetch" href={`/idea/${initialSpark.slug}`}>
           🚀 Full Story ➔
         </a>
       </div>
@@ -144,7 +144,7 @@ const initialSpark = sparksData[initialIndex];
 
     <!-- Quick Return Link -->
     <div style="text-align: center; margin-top: var(--space-10);">
-      <a class="btn btn-secondary" href="/#sparks">
+      <a class="btn btn-secondary" href="/#sparks" rel="prefetch">
         ← Back to All Sparks
       </a>
     </div>
@@ -152,8 +152,13 @@ const initialSpark = sparksData[initialIndex];
 
   <!-- Interactive Slot Script -->
   <script define:vars={{ sparksData, initialIndex }}>
-    const allSparks = sparksData;
-    let currentIndex = initialIndex;
+    function initRoulette() {
+      const stage = document.getElementById('roulette-box');
+      if (!stage || stage.dataset.bnBound) return;
+      stage.dataset.bnBound = '1';
+
+      const allSparks = sparksData;
+      let currentIndex = initialIndex;
 
     const btnSpin = document.getElementById('btn-spin');
     const btnOpen = document.getElementById('btn-open');
@@ -238,5 +243,14 @@ const initialSpark = sparksData[initialIndex];
         }
       });
     });
+    }
+
+    // First paint plus every client-side navigation (View Transitions).
+    document.addEventListener('astro:page-load', initRoulette);
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initRoulette);
+    } else {
+      initRoulette();
+    }
   </script>
 </Base>

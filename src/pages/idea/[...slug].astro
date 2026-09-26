@@ -113,10 +113,10 @@ const pillars = [
 >
   <!-- Breadcrumb bar -->
   <nav class="iv2-crumb" aria-label="Breadcrumb">
-    <a class="btn btn-secondary btn-sm" href="/#sparks">← All Sparks</a>
+    <a class="btn btn-secondary btn-sm" href="/#sparks" rel="prefetch">← All Sparks</a>
     <div class="iv2-crumb-mid">
-      {hasSector && <a class="chip chip-sector" href={`/tags/${idea.data.sector.split('/')[0].toLowerCase()}`}>{idea.data.sector}</a>}
-      {hasCountry && <a class="iv2-crumb-loc iv2-crumb-loc--link" href={`/tags/${idea.data.country.toLowerCase()}`}>{idea.data.country}</a>}
+      {hasSector && <a class="chip chip-sector" rel="prefetch" href={`/tags/${idea.data.sector.split('/')[0].toLowerCase()}`}>{idea.data.sector}</a>}
+      {hasCountry && <a class="iv2-crumb-loc iv2-crumb-loc--link" rel="prefetch" href={`/tags/${idea.data.country.toLowerCase()}`}>{idea.data.country}</a>}
       <span class="iv2-crumb-meta">{readingMinutes} min · {publishedStr}</span>
     </div>
     <button class="btn btn-violet btn-sm" id="iv2-shuffle" type="button" title="Jump to a random spark">
@@ -163,7 +163,7 @@ const pillars = [
         Share
       </button>
       {nextSlug && (
-        <a class="btn btn-violet btn-sm iv2-actions-next" href={`/idea/${nextSlug}`}>
+        <a class="btn btn-violet btn-sm iv2-actions-next" rel="prefetch" href={`/idea/${nextSlug}`}>
           Next →
         </a>
       )}
@@ -227,7 +227,7 @@ const pillars = [
           <h2 class="iv2-card-title">Tags</h2>
           <ul class="chips" aria-label="Tags">
             {idea.data.tags.map((tag) => (
-              <li><a class="chip" href={`/tags/${tag}`}>#{tag}</a></li>
+              <li><a class="chip" rel="prefetch" href={`/tags/${tag}`}>#{tag}</a></li>
             ))}
           </ul>
         </section>
@@ -256,18 +256,18 @@ const pillars = [
   <section class="iv2-explore" aria-label="Keep exploring">
     <div class="iv2-upnext">
       {prevSlug && (
-        <a class="iv2-upnext-card" href={`/idea/${prevSlug}`}>
+        <a class="iv2-upnext-card" rel="prefetch" href={`/idea/${prevSlug}`}>
           <span class="iv2-upnext-kicker">← Previous</span>
           <span class="iv2-upnext-title">{prev.data.title}</span>
         </a>
       )}
       {nextSlug ? (
-        <a class="iv2-upnext-card iv2-upnext-card--next" href={`/idea/${nextSlug}`}>
+        <a class="iv2-upnext-card iv2-upnext-card--next" rel="prefetch" href={`/idea/${nextSlug}`}>
           <span class="iv2-upnext-kicker">Up next →</span>
           <span class="iv2-upnext-title">{next.data.title}</span>
         </a>
       ) : (
-        <a class="iv2-upnext-card iv2-upnext-card--next" href="/random">
+        <a class="iv2-upnext-card iv2-upnext-card--next" rel="prefetch" href="/random">
           <span class="iv2-upnext-kicker">Up next →</span>
           <span class="iv2-upnext-title">Spin the Roulette for one more spark</span>
         </a>
@@ -302,8 +302,8 @@ const pillars = [
     )}
 
     <div class="iv2-explore-actions">
-      <a class="btn btn-secondary" href="/#sparks">All Sparks</a>
-      <a class="btn btn-violet" href="/random">Spin Roulette</a>
+      <a class="btn btn-secondary" href="/#sparks" rel="prefetch">All Sparks</a>
+      <a class="btn btn-violet" href="/random" rel="prefetch">Spin Roulette</a>
     </div>
   </section>
 
@@ -316,37 +316,67 @@ const pillars = [
           });
         }
       }
-      ['iv2-copy', 'iv2-copy-take'].forEach(function (id) {
-        var el = document.getElementById(id);
-        if (el) el.addEventListener('click', function () {
-          copyText(el.getAttribute('data-text') || '');
-        });
-      });
 
-      var shareBtn = document.getElementById('iv2-share');
-      if (shareBtn) shareBtn.addEventListener('click', function () {
-        var data = { title: document.title, text: document.title, url: window.location.href };
-        if (navigator.share) {
-          navigator.share(data).catch(function () {});
-        } else {
-          copyText(window.location.href, 'Link copied! Send it to a founder.');
+      function bindOnce(el, fn) {
+        if (el && !el.dataset.bnBound) {
+          el.dataset.bnBound = '1';
+          el.addEventListener('click', fn);
         }
-      });
+      }
 
-      var shuffle = document.getElementById('iv2-shuffle');
-      if (shuffle) shuffle.addEventListener('click', function () {
-        var pool = (allSlugs || []).filter(function (s) { return s !== currentSlug; });
-        if (!pool.length) return;
-        var pick = pool[Math.floor(Math.random() * pool.length)];
-        window.location.href = '/idea/' + pick;
-      });
+      function initIdea() {
+        // Current page's neighbors for the session-wide arrow-key handler.
+        window.__bnIdeaPrev = prevSlug;
+        window.__bnIdeaNext = nextSlug;
 
-      document.addEventListener('keydown', function (e) {
-        var tag = (e.target && e.target.tagName) || '';
-        if (tag === 'INPUT' || tag === 'TEXTAREA') return;
-        if (e.key === 'ArrowRight' && nextSlug) window.location.href = '/idea/' + nextSlug;
-        if (e.key === 'ArrowLeft' && prevSlug) window.location.href = '/idea/' + prevSlug;
-      });
+        ['iv2-copy', 'iv2-copy-take'].forEach(function (id) {
+          var el = document.getElementById(id);
+          bindOnce(el, function () {
+            copyText(el.getAttribute('data-text') || '');
+          });
+        });
+
+        bindOnce(document.getElementById('iv2-share'), function () {
+          var data = { title: document.title, text: document.title, url: window.location.href };
+          if (navigator.share) {
+            navigator.share(data).catch(function () {});
+          } else {
+            copyText(window.location.href, 'Link copied! Send it to a founder.');
+          }
+        });
+
+        bindOnce(document.getElementById('iv2-shuffle'), function () {
+          var pool = (allSlugs || []).filter(function (s) { return s !== currentSlug; });
+          if (!pool.length) return;
+          document.body.classList.remove('is-menu-open');
+          var pick = pool[Math.floor(Math.random() * pool.length)];
+          window.location.href = '/idea/' + pick;
+        });
+
+        if (!window.__bnIdeaKeys) {
+          window.__bnIdeaKeys = true;
+          document.addEventListener('keydown', function (e) {
+            var tag = (e.target && e.target.tagName) || '';
+            if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+            if (e.key === 'ArrowRight' && window.__bnIdeaNext) {
+              document.body.classList.remove('is-menu-open');
+              window.location.href = '/idea/' + window.__bnIdeaNext;
+            }
+            if (e.key === 'ArrowLeft' && window.__bnIdeaPrev) {
+              document.body.classList.remove('is-menu-open');
+              window.location.href = '/idea/' + window.__bnIdeaPrev;
+            }
+          });
+        }
+      }
+
+      // First paint plus every client-side navigation (View Transitions).
+      document.addEventListener('astro:page-load', initIdea);
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initIdea);
+      } else {
+        initIdea();
+      }
     })();
   </script>
 </Base>

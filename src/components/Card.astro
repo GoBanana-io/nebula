@@ -75,8 +75,8 @@ const copyText = `${title}\n\nSummary: ${summary}\n\nعربي: ${summaryAr || ''
     ) : null}
   </div>
 
-  <!-- English Title & Short Summary -->
-  <a href={`/idea/${slug}`} style="text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: var(--space-2);">
+  <!-- English Title & Short Summary (stretched: whole card clicks through) -->
+  <a href={`/idea/${slug}`} rel="prefetch" class="card-stretched-link" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: var(--space-2);">
     <h2>{title}</h2>
     <p class="card-summary">{summary}</p>
   </a>
@@ -119,7 +119,7 @@ const copyText = `${title}\n\nSummary: ${summary}\n\nعربي: ${summaryAr || ''
       <span>Copy</span>
     </button>
 
-    <a href={`/idea/${slug}`} class="btn-copy-spark" style="text-decoration: none;">
+    <a href={`/idea/${slug}`} rel="prefetch" class="btn-copy-spark" style="text-decoration: none;">
       Read Story ➔
     </a>
   </div>
