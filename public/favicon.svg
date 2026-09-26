@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect x="6" y="6" width="54" height="54" rx="18" fill="#2A2118"/>
+  <rect x="2" y="2" width="54" height="54" rx="18" fill="#FF6B35" stroke="#2A2118" stroke-width="2.5"/>
+  <text x="29" y="39" font-size="32" font-weight="900" text-anchor="middle" fill="#FFFDF9">✦</text>
+</svg>
