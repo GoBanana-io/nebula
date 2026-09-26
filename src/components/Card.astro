@@ -1,0 +1,126 @@
+---
+interface Props {
+  slug: string;
+  title: string;
+  summary: string;
+  summaryAr?: string;
+  tags?: string[];
+  featured?: boolean;
+  date?: string;
+  sector?: string;
+  stage?: string;
+  amountRaised?: string;
+  valuation?: string;
+  status?: string;
+  coreProblem?: string;
+  whyItWorked?: string;
+  country?: string;
+  index?: number;
+}
+
+const {
+  slug,
+  title,
+  summary,
+  summaryAr,
+  tags = [],
+  featured = false,
+  date,
+  sector,
+  stage,
+  amountRaised,
+  valuation,
+  status = 'operating',
+  coreProblem,
+  whyItWorked,
+  country = 'Egypt',
+  index = 0,
+} = Astro.props;
+
+// Asymmetric shapes
+const shapeVariants = [
+  'card-shape-leaf',
+  'card-shape-wave',
+  'card-shape-shield',
+  'card-shape-leaf-rev',
+  'card-shape-flag',
+];
+const assignedShape = shapeVariants[index % shapeVariants.length];
+
+const isFailure = status === 'closed' || tags.includes('failure');
+const isUnicorn = tags.includes('unicorn');
+
+const copyText = `${title}\n\nSummary: ${summary}\n\nعربي: ${summaryAr || ''}\n\nThe Move: ${whyItWorked || coreProblem || ''}`;
+---
+
+<div
+  class={`card ${assignedShape} ${featured ? 'card-featured' : ''}`}
+  data-sector={sector ? sector.toLowerCase() : ''}
+  data-status={isFailure ? 'failure' : isUnicorn ? 'unicorn' : 'operating'}
+>
+  <!-- Card Header Row -->
+  <div class="card-header-row">
+    <span class={`card-badge-status ${isFailure ? 'card-badge-status--failure' : isUnicorn ? 'card-badge-status--unicorn' : 'card-badge-status--operating'}`}>
+      {isFailure ? '💥 Failed' : isUnicorn ? '🦄 Unicorn' : `⚡️ ${stage ? stage.toUpperCase() : 'OPERATING'}`}
+    </span>
+
+    {valuation && valuation !== 'MISSING' ? (
+      <span class="card-kpi-pill">
+        Val: {valuation}
+      </span>
+    ) : amountRaised ? (
+      <span class="card-kpi-pill">
+        {amountRaised}
+      </span>
+    ) : null}
+  </div>
+
+  <!-- English Title & Short Summary -->
+  <a href={`/idea/${slug}`} style="text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: var(--space-2);">
+    <h2>{title}</h2>
+    <p class="card-summary">{summary}</p>
+  </a>
+
+  <!-- Arabic Core Summary Box (Content - shown in Dual, hidden in EN) -->
+  {summaryAr && (
+    <div class="card-arabic-box" dir="rtl">
+      <p>{summaryAr}</p>
+    </div>
+  )}
+
+  <!-- Playbook Hook (The Move) -->
+  {(whyItWorked || coreProblem) && (
+    <div class="card-pitch-hook">
+      <strong>The Move</strong>
+      <span>{whyItWorked || coreProblem}</span>
+    </div>
+  )}
+
+  <!-- Tags Ribbon -->
+  <ul class="chips" aria-label="Tags">
+    {sector && (
+      <li><span class="chip chip-sector">{sector}</span></li>
+    )}
+    {tags.slice(0, 2).map((tag) => (
+      <li><span class="chip">#{tag}</span></li>
+    ))}
+  </ul>
+
+  <!-- Card Action Bar: Direct Link + 1-Click Copy -->
+  <div class="card-action-bar">
+    <a href={`/idea/${slug}`} class="btn-copy-spark" style="text-decoration: none;">
+      Read Story ➔
+    </a>
+
+    <button
+      class="btn-copy-spark"
+      type="button"
+      data-copy={copyText}
+      onclick="navigator.clipboard.writeText(this.getAttribute('data-copy')).then(() => window.showSparkToast && window.showSparkToast('Playbook copied! Go build.'))"
+      title="Copy spark playbook to clipboard"
+    >
+      <span>📋</span>
+      <span>Copy</span>
+    </button>
+  </div>
+</div>

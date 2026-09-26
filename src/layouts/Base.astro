@@ -1,0 +1,197 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  activePath?: string;
+}
+
+const {
+  title = 'Banana Nebula — Real Startup Sparks & Playbooks',
+  description = 'Real startup sparks, numbers, and playbooks. Steal the ideas. Go build.',
+  activePath = Astro.url.pathname,
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en" data-lang-mode="dual" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#FDF6EE" />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Google Fonts: Cairo (for Arabic content) + JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=JetBrains+Mono:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Satoshi Variable Font -->
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link
+      href="https://api.fontshare.com/v2/css?f[]=satoshi@700,800,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Early Language Script to Prevent FOUC -->
+    <script is:inline>
+      try {
+        var m = localStorage.getItem('bn_lang_mode');
+        if (m === 'en') {
+          document.documentElement.setAttribute('data-lang-mode', 'en');
+        } else {
+          document.documentElement.setAttribute('data-lang-mode', 'dual');
+        }
+      } catch (e) {}
+    </script>
+  </head>
+  <body data-funky-mode="funk" data-funky-palette="sunlit">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- Opaque Funk Header -->
+    <header class="nav">
+      <div class="nav-inner">
+        <a class="brand-group" href="/" aria-label="Banana Nebula Homepage">
+          <span class="brand-mark" aria-hidden="true">✦</span>
+          <div class="brand-text-block">
+            <span class="brand-name">Banana Nebula</span>
+            <span class="brand-kicker">Startup Sparks</span>
+          </div>
+        </a>
+
+        <!-- Navigation Links -->
+        <nav class="nav-links" aria-label="Primary Navigation">
+          <a
+            class={`nav-link ${activePath === '/' || activePath.startsWith('/#') ? 'nav-link--active' : ''}`}
+            href="/#sparks"
+          >
+            🔥 Sparks
+          </a>
+          <a
+            class={`nav-link ${activePath === '/random' ? 'nav-link--active' : ''}`}
+            href="/random"
+          >
+            🎲 Roulette
+          </a>
+          <a
+            class={`nav-link ${activePath.startsWith('/tags') ? 'nav-link--active' : ''}`}
+            href="/tags"
+          >
+            🏷 Sectors
+          </a>
+
+          <!-- Interactive Language Switcher: Dual & English only -->
+          <div class="lang-switch-box" role="group" aria-label="Content Language Selector">
+            <button class="lang-btn is-active" id="lang-dual" data-lang="dual" type="button" title="Dual view (English UI + Arabic summaries)">
+              Dual
+            </button>
+            <button class="lang-btn" id="lang-en" data-lang="en" type="button" title="English only view">
+              EN
+            </button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="container">
+      <slot />
+    </main>
+
+    <!-- Global Toast Notification Container for 1-Click Copy -->
+    <div id="spark-toast" class="spark-toast" role="status" aria-live="polite">
+      <span class="toast-icon">⚡️</span>
+      <span id="toast-text">Spark playbook copied! Go build.</span>
+    </div>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div class="footer-brand-summary">
+          <h3 style="font-size: 1.25rem;">Banana Nebula</h3>
+          <p style="font-size: 0.9375rem; max-width: 44ch;">
+            Real startup sparks to inspire founders and builders. Not a company. Just raw inspiration.
+          </p>
+        </div>
+
+        <div class="footer-stickers">
+          <span class="footer-sticker">🎸 FUNK 11</span>
+          <span class="footer-sticker">⚡️ RAW INSPIRATION</span>
+          <span class="footer-sticker">💡 ZERO FLUFF</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bulletproof Language Switcher Script (Dual & EN) -->
+    <script is:inline>
+      (function () {
+        function applyLang(mode) {
+          var m = mode === 'en' ? 'en' : 'dual';
+          document.documentElement.setAttribute('data-lang-mode', m);
+
+          try {
+            localStorage.setItem('bn_lang_mode', m);
+          } catch (e) {}
+
+          var btns = document.querySelectorAll('.lang-btn');
+          for (var i = 0; i < btns.length; i++) {
+            var b = btns[i];
+            var targetMode = b.getAttribute('data-lang') || (b.id ? b.id.replace('lang-', '') : '');
+            b.classList.toggle('is-active', targetMode === m);
+          }
+
+          // Broadcast custom event for dynamic components
+          try {
+            window.dispatchEvent(new CustomEvent('banana-lang-change', { detail: { mode: m } }));
+          } catch (e) {}
+        }
+
+        window.setBananaLang = applyLang;
+
+        // Instant click handling via event delegation
+        document.addEventListener('click', function (e) {
+          var target = e.target;
+          var btn = target && target.closest ? target.closest('.lang-btn') : null;
+          if (!btn) return;
+          e.preventDefault();
+          var mode = btn.getAttribute('data-lang') || (btn.id ? btn.id.replace('lang-', '') : 'dual');
+          applyLang(mode);
+        });
+
+        // Initialize from storage or default
+        function initLang() {
+          var current = 'dual';
+          try {
+            var saved = localStorage.getItem('bn_lang_mode');
+            if (saved === 'en') current = 'en';
+            else current = 'dual';
+          } catch (e) {}
+          applyLang(current);
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initLang);
+        } else {
+          initLang();
+        }
+
+        // Global Toast Helper
+        window.showSparkToast = function (msg) {
+          var toast = document.getElementById('spark-toast');
+          var text = document.getElementById('toast-text');
+          if (toast && text) {
+            if (msg) text.textContent = msg;
+            toast.classList.add('is-visible');
+            setTimeout(function () {
+              toast.classList.remove('is-visible');
+            }, 2400);
+          }
+        };
+      })();
+    </script>
+  </body>
+</html>
