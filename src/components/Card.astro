@@ -73,11 +73,11 @@ const copyText = `${title}\n\nSummary: ${summary}\n\nعربي: ${summaryAr || ''
     </span>
 
     {valuation && valuation !== 'MISSING' ? (
-      <span class="card-kpi-pill">
+      <span class="card-kpi-pill" title={`Val: ${valuation}`}>
         Val: {valuation}
       </span>
     ) : amountRaised ? (
-      <span class="card-kpi-pill">
+      <span class="card-kpi-pill" title={amountRaised}>
         {amountRaised}
       </span>
     ) : null}

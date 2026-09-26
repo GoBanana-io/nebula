@@ -1011,9 +1011,10 @@ main {
 
 .card-header-row {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: var(--space-2);
+  flex-wrap: wrap;
 }
 
 .card-badge-status {
@@ -1027,6 +1028,8 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 5px;
+  flex-shrink: 0;
+  max-width: 100%;
 }
 
 .card-badge-status--operating {
@@ -1054,6 +1057,11 @@ main {
   border-radius: var(--shape-pill);
   padding: 2px 8px;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  flex: 0 1 auto;
+  min-width: 0;
 }
 
 .card h2 {
