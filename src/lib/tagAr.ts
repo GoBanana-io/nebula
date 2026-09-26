@@ -59,6 +59,7 @@ export const tagArMap: Record<string, string> = {
   jordan: 'الأردن',
   china: 'الصين',
   'south-korea': 'كوريا الجنوبية',
+  singapore: 'سنغافورة',
   biotech: 'تكنولوجيا حيوية',
   semiconductors: 'أشباه الموصلات',
   ev: 'سيارات كهربائية',
@@ -79,6 +80,7 @@ export const countryTags = new Set([
   'jordan',
   'china',
   'south-korea',
+  'singapore',
 ]);
 
 export const countryFlagMap: Record<string, string> = {
@@ -93,6 +95,7 @@ export const countryFlagMap: Record<string, string> = {
   jordan: '🇯🇴',
   china: '🇨🇳',
   'south-korea': '🇰🇷',
+  singapore: '🇸🇬',
 };
 
 // Display English name per country tag (tags use short codes like ksa/uae).
@@ -108,6 +111,7 @@ export const countryEnMap: Record<string, string> = {
   jordan: 'Jordan',
   china: 'China',
   'south-korea': 'South Korea',
+  singapore: 'Singapore',
 };
 
 // Per-country accent pair for the /tags country cards: soft wash behind the
@@ -126,4 +130,5 @@ export const countryAccentMap: Record<string, { wash: string; bar: string }> = {
   jordan: { wash: 'var(--color-slate-100)', bar: 'var(--color-slate-500)' },
   china: { wash: 'var(--color-coral-50)', bar: 'var(--color-coral-700)' },
   'south-korea': { wash: 'var(--color-coral-100)', bar: 'var(--color-coral-600)' },
+  singapore: { wash: 'var(--color-coral-50)', bar: 'var(--color-coral-600)' },
 };
