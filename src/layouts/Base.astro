@@ -127,18 +127,103 @@ const {
           </a>
 
           <p class="menu-heading" aria-hidden="true"><span aria-hidden="true">◐</span> Language</p>
-          <!-- Interactive Language Switcher: Dual & English only -->
-          <div class="lang-switch-box" role="group" aria-label="Content Language Selector">
-            <button class="lang-btn is-active" id="lang-dual" data-lang="dual" type="button" title="Bilingual view (English UI + Arabic summaries)">
-              EN+AR
+          <!-- Mobile menu copy of the AR switch (desktop copy lives by search) -->
+          <div class="lang-row">
+            <button class="ar-toggle" data-ar-toggle type="button" role="switch" aria-checked="true" title="Toggle Arabic summaries">
+              <span class="ar-toggle-track" aria-hidden="true"><span class="ar-toggle-inside">AR</span><span class="ar-toggle-knob"></span></span>
             </button>
-            <button class="lang-btn" id="lang-en" data-lang="en" type="button" title="English only view">
-              EN
-            </button>
+            <span class="lang-row-hint">Arabic summaries</span>
           </div>
         </nav>
+
+        <!-- Right cluster: AR switch + search sit side by side on desktop -->
+        <div class="nav-side">
+          <button class="ar-toggle ar-toggle--nav" data-ar-toggle type="button" role="switch" aria-checked="true" title="Toggle Arabic summaries">
+            <span class="ar-toggle-track" aria-hidden="true"><span class="ar-toggle-inside">AR</span><span class="ar-toggle-knob"></span></span>
+          </button>
+          <!-- Global search trigger: reads as a search field, opens the palette -->
+          <button
+            class="nav-search-trigger"
+            id="nav-search-trigger"
+            type="button"
+            aria-label="Search sparks"
+            title="Search sparks ( ⌘K or / )"
+          >
+            <svg class="nav-search-mag" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <circle cx="7" cy="7" r="5.2" stroke="currentColor" stroke-width="2.2" />
+              <line x1="11.2" y1="11.2" x2="14.6" y2="14.6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+            </svg>
+            <span class="nav-search-text">Search sparks…</span>
+            <kbd class="nav-search-kbd" aria-hidden="true">⌘K</kbd>
+          </button>
+        </div>
       </div>
+
+      <!-- Mobile-only full-width search bar: thumb-reachable, impossible to miss -->
+      <button
+        class="nav-searchbar"
+        id="nav-searchbar"
+        type="button"
+        aria-label="Search sparks"
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <circle cx="7" cy="7" r="5.2" stroke="currentColor" stroke-width="2.2" />
+          <line x1="11.2" y1="11.2" x2="14.6" y2="14.6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+        </svg>
+        <span>Search ideas, sectors, countries…</span>
+      </button>
     </header>
+
+    <!-- Global ⌘K palette: top sheet on desktop, bottom sheet on mobile -->
+    <div class="pal-scrim" id="pal-scrim" hidden>
+      <div class="pal" role="dialog" aria-modal="true" aria-label="Search sparks">
+        <span class="pal-grab" aria-hidden="true"></span>
+        <div class="pal-top">
+          <p class="pal-eyebrow"><span aria-hidden="true">✦</span> Search sparks</p>
+          <button class="pal-shuffle" id="pal-shuffle" type="button" title="Shuffle fresh picks">
+            ↻ Shuffle
+          </button>
+        </div>
+        <div class="pal-searchrow">
+          <div class="pal-field">
+            <svg class="pal-mag" width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <circle cx="7" cy="7" r="5.2" stroke="currentColor" stroke-width="2.2" />
+              <line x1="11.2" y1="11.2" x2="14.6" y2="14.6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+            </svg>
+            <input
+              class="pal-input"
+              id="pal-input"
+              type="search"
+              autocomplete="off"
+              autocapitalize="off"
+              spellcheck="false"
+              dir="auto"
+              placeholder="Try “fintech Egypt” or “توصيل”…"
+              aria-label="Search sparks"
+              role="combobox"
+              aria-expanded="false"
+              aria-controls="pal-list"
+              aria-autocomplete="list"
+              enterkeyhint="search"
+            />
+            <button class="pal-clear" id="pal-clear" type="button" aria-label="Clear search">
+              ✕
+            </button>
+          </div>
+          <button class="pal-cancel" id="pal-cancel" type="button">
+            Close
+          </button>
+        </div>
+        <p class="pal-status" id="pal-status" role="status" aria-live="polite">Fresh picks</p>
+        <ul class="pal-list" id="pal-list" role="listbox" aria-label="Matching sparks"></ul>
+        <div class="pal-empty" id="pal-empty" hidden>
+          <p class="pal-empty-title" id="pal-empty-title">No sparks found</p>
+          <p class="pal-empty-sub">Try one of these instead:</p>
+          <div class="pal-chips" id="pal-chips"></div>
+        </div>
+        <p class="pal-foot" aria-hidden="true"><kbd>↑↓</kbd> move · <kbd>↵</kbd> open · <kbd>esc</kbd> close</p>
+      </div>
+    </div>
 
     <main id="main" class="container">
       <slot />
@@ -204,11 +289,11 @@ const {
             localStorage.setItem('bn_lang_mode', m);
           } catch (e) {}
 
-          var btns = document.querySelectorAll('.lang-btn');
-          for (var i = 0; i < btns.length; i++) {
-            var b = btns[i];
-            var targetMode = b.getAttribute('data-lang') || (b.id ? b.id.replace('lang-', '') : '');
-            b.classList.toggle('is-active', targetMode === m);
+          // One switch, two homes (desktop cluster + mobile menu): keep
+          // every copy in sync via the shared role=switch state.
+          var switches = document.querySelectorAll('[data-ar-toggle]');
+          for (var i = 0; i < switches.length; i++) {
+            switches[i].setAttribute('aria-checked', m === 'dual' ? 'true' : 'false');
           }
 
           // Broadcast custom event for dynamic components
@@ -269,11 +354,10 @@ const {
 
             document.addEventListener('click', function (e) {
               var target = e.target;
-              var btn = target && target.closest ? target.closest('.lang-btn') : null;
-              if (btn) {
+              var arSwitch = target && target.closest ? target.closest('[data-ar-toggle]') : null;
+              if (arSwitch) {
                 e.preventDefault();
-                var mode = btn.getAttribute('data-lang') || (btn.id ? btn.id.replace('lang-', '') : 'dual');
-                applyLang(mode);
+                applyLang(currentMode() === 'dual' ? 'en' : 'dual');
                 return;
               }
               // Scrim tap: close the mobile menu when tapping outside the nav dock.
@@ -334,6 +418,528 @@ const {
           document.addEventListener('DOMContentLoaded', initBananaChrome);
         } else {
           initBananaChrome();
+        }
+      })();
+    </script>
+
+    <!-- Global ⌘K palette: lazy build-time index, bilingual AND-match -->
+    <script is:inline>
+      (function () {
+        var indexCache = null;
+        var indexFailed = false;
+        var activeIndex = -1;
+        var currentItems = [];
+        var lastQuery = '';
+        var closeTimer = null;
+        var chipsBuilt = false;
+
+        function isOpen() {
+          var scrim = document.getElementById('pal-scrim');
+          return !!(scrim && !scrim.hidden);
+        }
+
+        function isTypingTarget(t) {
+          return !!(
+            t &&
+            (t.tagName === 'INPUT' ||
+              t.tagName === 'TEXTAREA' ||
+              t.tagName === 'SELECT' ||
+              t.isContentEditable)
+          );
+        }
+
+        function ensureIndex(cb) {
+          if (indexCache) {
+            cb(indexCache);
+            return;
+          }
+          if (indexFailed) {
+            cb([]);
+            return;
+          }
+          window
+            .fetch('/search-index.json')
+            .then(function (r) {
+              if (!r.ok) throw new Error('index ' + r.status);
+              return r.json();
+            })
+            .then(function (d) {
+              indexCache = Array.isArray(d) ? d : [];
+              cb(indexCache);
+            })
+            .catch(function () {
+              indexFailed = true;
+              cb([]);
+            });
+        }
+
+        // Arabic-aware normalization: case-fold, strip diacritics/tatweel,
+        // unify alef/hamza + ta marbuta/ha + alef maqsura/ya so "أحمد",
+        // "احمد", "فاطمة" and "فاطمه" all match each other.
+        function norm(s) {
+          return (s || '')
+            .toLowerCase()
+            .replace(/[ً-ٰٟـ]/g, '')
+            .replace(/[أإآ]/g, 'ا')
+            .replace(/ة/g, 'ه')
+            .replace(/ى/g, 'ي');
+        }
+
+        function hayFields(item) {
+          return {
+            title: norm(item.title),
+            tags: norm((item.tags || []).join(' ')),
+            locale: norm([item.country, item.sector, item.stage].filter(Boolean).join(' ')),
+            body: norm([item.summary, item.summaryAr].filter(Boolean).join(' ')),
+          };
+        }
+
+        function tokensOf(q) {
+          return norm(q || '')
+            .split(/\s+/)
+            .filter(Boolean);
+        }
+
+        // AND-match every token somewhere, then rank: title hits first,
+        // tags/locale next, summary body last. Ties keep index order.
+        function searchIndex(items, q) {
+          var toks = tokensOf(q);
+          if (!toks.length) return [];
+          var scored = [];
+          for (var i = 0; i < items.length; i++) {
+            var hay = hayFields(items[i]);
+            var score = 0;
+            var ok = true;
+            for (var t = 0; t < toks.length; t++) {
+              var tok = toks[t];
+              var hit = 0;
+              if (hay.title.indexOf(tok) !== -1) hit += 5;
+              if (hay.tags.indexOf(tok) !== -1) hit += 3;
+              if (hay.locale.indexOf(tok) !== -1) hit += 2;
+              if (hay.body.indexOf(tok) !== -1) hit += 1;
+              if (!hit) {
+                ok = false;
+                break;
+              }
+              score += hit;
+            }
+            if (ok) scored.push({ item: items[i], score: score, order: i });
+          }
+          scored.sort(function (a, b) {
+            return b.score - a.score || a.order - b.order;
+          });
+          return scored.map(function (s) {
+            return s.item;
+          });
+        }
+
+        function setStatus(text) {
+          var status = document.getElementById('pal-status');
+          if (status) status.textContent = text;
+        }
+
+        function rowBadge(item) {
+          if (item.status === 'closed' || item.status === 'failed') return '💥 Failed';
+          if ((item.tags || []).indexOf('unicorn') !== -1) return '🦄 Unicorn';
+          if (item.status === 'acquired') return '✓ Acquired';
+          if (item.status === 'idea') return '🌱 Idea';
+          return item.stage ? item.stage : item.status;
+        }
+
+        // Wrap verbatim query tokens in <mark> inside the row title so the
+        // user sees WHY this result matched. Tokens that only hit the
+        // normalized form (e.g. Arabic alef variants) are skipped safely.
+        function highlightTitle(el, title, toks) {
+          var lower = (title || '').toLowerCase();
+          var ranges = [];
+          for (var t = 0; t < toks.length; t++) {
+            var tok = toks[t];
+            if (!tok || tok.length < 2) continue;
+            var from = 0;
+            while (true) {
+              var at = lower.indexOf(tok, from);
+              if (at === -1) break;
+              ranges.push([at, at + tok.length]);
+              from = at + tok.length;
+            }
+          }
+          if (!ranges.length) {
+            el.textContent = title;
+            return;
+          }
+          ranges.sort(function (a, b) {
+            return a[0] - b[0];
+          });
+          var pos = 0;
+          for (var r = 0; r < ranges.length; r++) {
+            var s = Math.max(ranges[r][0], pos);
+            var e = ranges[r][1];
+            if (e <= pos) continue;
+            if (s > pos) el.appendChild(document.createTextNode(title.slice(pos, s)));
+            var mark = document.createElement('mark');
+            mark.className = 'pal-mark';
+            mark.textContent = title.slice(s, e);
+            el.appendChild(mark);
+            pos = e;
+          }
+          if (pos < title.length) el.appendChild(document.createTextNode(title.slice(pos)));
+        }
+
+        function paintActive() {
+          var list = document.getElementById('pal-list');
+          var input = document.getElementById('pal-input');
+          if (!list || !input) return;
+          var rows = list.querySelectorAll('.pal-row');
+          for (var i = 0; i < rows.length; i++) {
+            var on = i === activeIndex;
+            rows[i].classList.toggle('is-active', on);
+            rows[i].setAttribute('aria-selected', on ? 'true' : 'false');
+          }
+          if (activeIndex >= 0) {
+            input.setAttribute('aria-activedescendant', 'pal-opt-' + activeIndex);
+          } else {
+            input.removeAttribute('aria-activedescendant');
+          }
+        }
+
+        // Suggestion chips for the no-results state: top sectors in the
+        // index plus two outcome shortcuts. Built once, reused every miss.
+        function buildChips() {
+          if (chipsBuilt) return;
+          chipsBuilt = true;
+          var wrap = document.getElementById('pal-chips');
+          if (!wrap || !indexCache || !indexCache.length) return;
+          var freq = {};
+          var label = {};
+          for (var i = 0; i < indexCache.length; i++) {
+            var raw = (indexCache[i].sector || '').trim();
+            if (!raw) continue;
+            var key = raw.toLowerCase();
+            freq[key] = (freq[key] || 0) + 1;
+            label[key] = raw;
+          }
+          var top = Object.keys(freq)
+            .sort(function (a, b) {
+              return freq[b] - freq[a];
+            })
+            .slice(0, 4);
+          top.push('unicorn', 'fintech');
+          var seen = {};
+          top.forEach(function (term) {
+            var key = term.toLowerCase();
+            if (seen[key]) return;
+            seen[key] = true;
+            var b = document.createElement('button');
+            b.className = 'pal-chip';
+            b.type = 'button';
+            b.textContent = label[key] || term;
+            b.setAttribute('data-chip', label[key] || term);
+            wrap.appendChild(b);
+          });
+        }
+
+        function syncChrome(q) {
+          var shuffle = document.getElementById('pal-shuffle');
+          var clear = document.getElementById('pal-clear');
+          var input = document.getElementById('pal-input');
+          if (shuffle) shuffle.hidden = !!((q || '').trim());
+          if (clear && input) {
+            var hasText = !!(input.value || '').length;
+            clear.setAttribute('aria-label', hasText ? 'Clear search' : 'Close search');
+            clear.classList.toggle('is-dim', !hasText);
+          }
+        }
+
+        function render(items, q) {
+          var list = document.getElementById('pal-list');
+          var input = document.getElementById('pal-input');
+          var empty = document.getElementById('pal-empty');
+          var emptyTitle = document.getElementById('pal-empty-title');
+          if (!list || !input) return;
+          list.innerHTML = '';
+          input.removeAttribute('aria-activedescendant');
+          var toks = tokensOf(q);
+          var cap = items.slice(0, 8);
+          currentItems = cap;
+          // First result pre-highlighted so ↵ opens instantly.
+          activeIndex = cap.length ? 0 : -1;
+          for (var i = 0; i < cap.length; i++) {
+            (function (item, idx) {
+              var li = document.createElement('li');
+              li.className = 'pal-row';
+              li.style.setProperty('animation-delay', Math.min(idx * 28, 168) + 'ms');
+              li.setAttribute('role', 'option');
+              li.id = 'pal-opt-' + idx;
+              li.setAttribute('aria-selected', idx === activeIndex ? 'true' : 'false');
+              if (idx === activeIndex) li.classList.add('is-active');
+              var a = document.createElement('a');
+              a.className = 'pal-link';
+              a.setAttribute('href', '/idea/' + item.slug);
+              a.setAttribute('rel', 'prefetch');
+              a.setAttribute('tabindex', '-1');
+              var rowtop = document.createElement('span');
+              rowtop.className = 'pal-rowtop';
+              var title = document.createElement('strong');
+              title.className = 'pal-title';
+              highlightTitle(title, item.title || '', toks);
+              var go = document.createElement('span');
+              go.className = 'pal-go';
+              go.setAttribute('aria-hidden', 'true');
+              go.textContent = '→';
+              rowtop.appendChild(title);
+              rowtop.appendChild(go);
+              a.appendChild(rowtop);
+              if (item.summary) {
+                var snip = document.createElement('span');
+                snip.className = 'pal-snippet';
+                snip.textContent = item.summary;
+                a.appendChild(snip);
+              }
+              var sub = document.createElement('span');
+              sub.className = 'pal-sub';
+              var badge = document.createElement('span');
+              badge.className = 'pal-badge';
+              badge.textContent = rowBadge(item);
+              var meta = document.createElement('span');
+              meta.className = 'pal-meta';
+              meta.textContent = [item.country, item.sector].filter(Boolean).join(' · ');
+              sub.appendChild(badge);
+              sub.appendChild(meta);
+              a.appendChild(sub);
+              li.appendChild(a);
+              list.appendChild(li);
+            })(cap[i], i);
+          }
+          input.setAttribute('aria-expanded', cap.length ? 'true' : 'false');
+          var query = (q || '').trim();
+          if (empty) {
+            var showEmpty = !!query && !cap.length && !indexFailed;
+            empty.hidden = !showEmpty;
+            if (showEmpty) {
+              if (emptyTitle) emptyTitle.textContent = 'No sparks for "' + query + '"';
+              buildChips();
+            }
+          }
+          if (indexFailed) {
+            setStatus('Search is offline — browse Explore instead');
+          } else if (!query) {
+            setStatus(cap.length ? 'Fresh picks · shuffles every open' : 'No sparks yet');
+          } else if (!cap.length) {
+            setStatus('0 sparks — try a chip below');
+          } else {
+            setStatus(cap.length + (cap.length === 1 ? ' spark' : ' sparks') + ' for "' + query + '"');
+          }
+          syncChrome(query);
+        }
+
+        // Empty query = surprise mix: a fresh random 10 on every open or
+        // clear, matching the site's Roulette/Shuffle spirit. A typed (or
+        // restored) query always filters deterministically instead.
+        function shufflePick(items, n) {
+          var pool = items.slice();
+          for (var i = pool.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var t = pool[i];
+            pool[i] = pool[j];
+            pool[j] = t;
+          }
+          return pool.slice(0, n);
+        }
+
+        function applyQuery(q) {
+          lastQuery = q || '';
+          ensureIndex(function (items) {
+            var query = (q || '').trim();
+            if (!query) {
+              render(shufflePick(items, 8), '');
+              return;
+            }
+            render(searchIndex(items, query), query);
+          });
+        }
+
+        function reshuffle() {
+          ensureIndex(function (items) {
+            var input = document.getElementById('pal-input');
+            if (input) {
+              input.value = '';
+              lastQuery = '';
+            }
+            render(shufflePick(items, 8), '');
+            if (input) input.focus();
+          });
+        }
+
+        function openPalette() {
+          var scrim = document.getElementById('pal-scrim');
+          var input = document.getElementById('pal-input');
+          var trigger = document.getElementById('nav-search-trigger');
+          if (!scrim || !input || isOpen()) return;
+          // The mobile menu and the palette never share the screen.
+          var toggle = document.getElementById('nav-toggle');
+          if (toggle && document.body.classList.contains('is-menu-open')) toggle.click();
+          if (closeTimer) {
+            clearTimeout(closeTimer);
+            closeTimer = null;
+          }
+          scrim.hidden = false;
+          void scrim.offsetWidth;
+          scrim.classList.add('is-open');
+          document.body.classList.add('is-pal-open');
+          input.value = lastQuery;
+          applyQuery(lastQuery);
+          input.focus();
+        }
+
+        function closePalette(refocus) {
+          var scrim = document.getElementById('pal-scrim');
+          var trigger = document.getElementById('nav-search-trigger');
+          if (!scrim || !isOpen()) return;
+          scrim.classList.remove('is-open');
+          document.body.classList.remove('is-pal-open');
+          var hide = function () {
+            scrim.hidden = true;
+            closeTimer = null;
+          };
+          var reduceMotion =
+            window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (reduceMotion) {
+            hide();
+          } else {
+            if (closeTimer) clearTimeout(closeTimer);
+            closeTimer = setTimeout(hide, 220);
+          }
+          if (refocus) {
+            // Return focus to whichever opener is visible (searchbar on
+            // mobile, pill trigger on desktop — never a hidden node).
+            var bar = document.getElementById('nav-searchbar');
+            var dest = bar && bar.offsetParent ? bar : trigger;
+            if (dest) dest.focus();
+          }
+        }
+
+        function moveActive(delta) {
+          var list = document.getElementById('pal-list');
+          if (!list || !currentItems.length) return;
+          if (activeIndex < 0) activeIndex = delta > 0 ? 0 : currentItems.length - 1;
+          else activeIndex = (activeIndex + delta + currentItems.length) % currentItems.length;
+          paintActive();
+          var rows = list.querySelectorAll('.pal-row');
+          var active = rows[activeIndex];
+          if (active && active.scrollIntoView) {
+            active.scrollIntoView({ block: 'nearest' });
+          }
+        }
+
+        function goActive() {
+          var pick = currentItems[activeIndex] || currentItems[0];
+          if (pick) window.location.href = '/idea/' + pick.slug;
+        }
+
+        function initPalette() {
+          if (!window.__bnPalDoc) {
+            window.__bnPalDoc = true;
+
+            document.addEventListener('click', function (e) {
+              var target = e.target;
+              if (!target || !target.closest) return;
+              if (target.closest('#nav-search-trigger') || target.closest('#nav-searchbar')) {
+                e.preventDefault();
+                if (isOpen()) closePalette(true);
+                else openPalette();
+                return;
+              }
+              // Explicit exits: Close button + tapping the grabber.
+              if (target.closest('#pal-cancel') || target.closest('.pal-grab')) {
+                closePalette(false);
+                return;
+              }
+              // Clear button doubles as close: text present → clear the
+              // query, empty → close the palette.
+              if (target.closest('#pal-clear')) {
+                var input = document.getElementById('pal-input');
+                if (input && (input.value || '').length) {
+                  input.value = '';
+                  applyQuery('');
+                  input.focus();
+                } else {
+                  closePalette(true);
+                }
+                return;
+              }
+              if (target.closest('#pal-shuffle')) {
+                e.preventDefault();
+                reshuffle();
+                return;
+              }
+              var chip = target.closest ? target.closest('[data-chip]') : null;
+              if (chip) {
+                var q = chip.getAttribute('data-chip') || '';
+                var box = document.getElementById('pal-input');
+                if (box) {
+                  box.value = q;
+                  applyQuery(q);
+                  box.focus();
+                }
+                return;
+              }
+              if (target.id === 'pal-scrim') closePalette(false);
+            });
+
+            document.addEventListener('keydown', function (e) {
+              if (e.key === 'Escape' && isOpen()) {
+                e.stopPropagation();
+                closePalette(true);
+                return;
+              }
+              if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')) {
+                e.preventDefault();
+                if (isOpen()) closePalette(true);
+                else openPalette();
+                return;
+              }
+              if (e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey && !isTypingTarget(e.target)) {
+                if (!isOpen()) {
+                  e.preventDefault();
+                  openPalette();
+                }
+              }
+            });
+          }
+
+          // Trigger + close-button clicks are handled by the document-level
+          // delegation above (one path only — no double-toggle). The input
+          // needs direct listeners, guarded for re-init after navigation.
+          var input = document.getElementById('pal-input');
+          if (input && !input.dataset.bnPalBound) {
+            input.dataset.bnPalBound = '1';
+            input.addEventListener('input', function () {
+              applyQuery(input.value);
+            });
+            input.addEventListener('keydown', function (e) {
+              if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                moveActive(1);
+              } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                moveActive(-1);
+              } else if (e.key === 'Enter') {
+                // Enter follows the highlighted row (or the first row) even
+                // with an empty query — e.g. arrows through Fresh sparks.
+                if (activeIndex >= 0 || currentItems.length) {
+                  e.preventDefault();
+                  goActive();
+                }
+              }
+            });
+          }
+        }
+
+        document.addEventListener('astro:page-load', initPalette);
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initPalette);
+        } else {
+          initPalette();
         }
       })();
     </script>

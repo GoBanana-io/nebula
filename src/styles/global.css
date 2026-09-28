@@ -243,9 +243,35 @@ main {
 .nav-links {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-2);
   list-style: none;
   flex-wrap: wrap;
+}
+
+/* Wide screens: links sit dead-center of the pill regardless of how wide
+   the brand and the AR+search cluster are. */
+@media (min-width: 1100px) {
+  .nav-inner {
+    position: relative;
+  }
+
+  .nav-links {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    flex-wrap: nowrap;
+  }
+}
+
+/* Mid screens: the pill wraps to two lines — every line centers instead
+   of the second row hanging left. */
+@media (min-width: 860px) and (max-width: 1099.98px) {
+  .nav-inner {
+    justify-content: center;
+    row-gap: 10px;
+  }
 }
 
 .nav-link {
@@ -305,43 +331,114 @@ main {
   background-color: var(--color-teal-100);
 }
 
-/* Language Switcher Control Box */
-.lang-switch-box {
+/* Right cluster: AR switch parked beside search on desktop. */
+.nav-side {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* AR toggle: the label lives INSIDE the track — knob snaps side to side
+   over it. ON = coral track, paper AR left, paper knob right. OFF = paper
+   track, muted AR right, muted knob left. role=switch + aria-checked sync
+   the desktop cluster copy with the mobile menu copy via the chrome script. */
+.ar-toggle {
   display: inline-flex;
   align-items: center;
-  background-color: var(--surface-1);
-  border: 2.5px solid var(--surface-3);
-  border-radius: var(--shape-pill);
-  padding: 3px;
-  box-shadow: 2px 2px 0 var(--color-amber-500);
-  gap: 2px;
-}
-
-.lang-btn {
-  font-family: var(--font-arabic);
-  font-weight: 800;
-  font-size: 0.8125rem;
-  padding: 4px 12px;
-  min-height: 32px;
-  border-radius: var(--shape-pill);
-  border: none;
+  min-height: 44px;
+  padding: 4px 6px;
   background: transparent;
-  color: var(--text-secondary);
+  border: none;
   cursor: pointer;
   touch-action: manipulation;
-  transition: background-color 120ms ease, color 120ms ease, transform 120ms var(--ease-spring-quick);
 }
 
-.lang-btn:hover {
-  color: var(--text-primary);
-  transform: scale(1.05);
+.ar-toggle-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 78px;
+  height: 32px;
+  flex-shrink: 0;
+  background-color: var(--surface-1);
+  border: 2.5px solid var(--border-dark);
+  border-radius: var(--shape-pill);
+  box-shadow: 2px 2px 0 var(--border-dark);
+  transition: background-color 150ms ease;
 }
 
-.lang-btn.is-active {
-  background-color: var(--color-coral-500);
-  color: var(--surface-3);
+.ar-toggle-inside {
+  font-family: var(--font-display);
   font-weight: 900;
-  box-shadow: 1.5px 1.5px 0 var(--border-dark);
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  color: var(--text-muted);
+  padding: 0 4px;
+  margin-left: auto;
+  transition: color 150ms ease;
+}
+
+.ar-toggle-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  z-index: 1;
+  width: 21px;
+  height: 21px;
+  background-color: var(--text-muted);
+  border: 2px solid var(--border-dark);
+  border-radius: 9999px;
+  transition: transform 220ms var(--ease-spring-snappy), background-color 150ms ease;
+}
+
+/* ON: knob snaps right, AR re-docks left in paper on coral. */
+.ar-toggle[aria-checked="true"] .ar-toggle-track {
+  background-color: var(--color-coral-500);
+}
+
+.ar-toggle[aria-checked="true"] .ar-toggle-inside {
+  color: var(--surface-3);
+  margin-left: 0;
+  margin-right: auto;
+  padding-left: 10px;
+}
+
+.ar-toggle[aria-checked="true"] .ar-toggle-knob {
+  transform: translateX(46px);
+  background-color: var(--surface-3);
+}
+
+/* OFF: AR docks right so the left-parked knob never covers it. */
+.ar-toggle[aria-checked="false"] .ar-toggle-inside {
+  padding-right: 10px;
+}
+
+.ar-toggle:hover .ar-toggle-track {
+  transform: translateY(-1px);
+}
+
+.ar-toggle:active .ar-toggle-track {
+  transform: scale(var(--press-scale));
+  box-shadow: var(--elevation-pressed);
+}
+
+.ar-toggle:focus-visible {
+  outline: 3px solid var(--color-amber-300);
+  outline-offset: 2px;
+  border-radius: var(--shape-pill);
+}
+
+/* Mobile menu copy: hidden on desktop, revealed with the menu card. */
+.lang-row {
+  display: none;
+}
+
+.lang-row-hint {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
 }
 
 /* --------------------------------------------------------------------------
@@ -536,6 +633,21 @@ main {
     margin-top: var(--space-3);
     padding-top: var(--space-3);
     border-top: 1.5px solid var(--border-default);
+  }
+
+  /* Menu copy of the AR switch: chunky row under the Language heading. */
+  body.is-menu-open .lang-row,
+  body.is-menu-closing .lang-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 56px;
+    padding: 6px var(--space-1);
+  }
+
+  body.is-menu-open .lang-row .ar-toggle,
+  body.is-menu-closing .lang-row .ar-toggle {
+    min-height: 48px;
   }
 
   /* Chunky link cards: icon tile + title/sub stack + chevron disc */
@@ -1129,6 +1241,732 @@ main {
   box-shadow: 3px 3px 0 var(--border-dark);
 }
 
+.filter-btn:focus-visible {
+  outline: 3px solid var(--color-violet-500);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   GLOBAL ⌘K PALETTE (nav trigger + overlay, all pages)
+   -------------------------------------------------------------------------- */
+body.is-pal-open {
+  overflow: hidden;
+}
+
+/* Nav trigger: a miniature search field — paper chip on the dark pill so
+   its purpose reads at a glance, not a ghost button. */
+.nav-search-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  min-width: 190px;
+  padding: 6px 8px 6px 14px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  background-color: var(--surface-3);
+  border: 2.5px solid var(--surface-3);
+  border-radius: var(--shape-pill);
+  box-shadow: 2px 2px 0 var(--color-amber-500);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform 150ms var(--ease-spring-bouncy), box-shadow 150ms var(--ease-spring-bouncy), color 120ms ease;
+}
+
+.nav-search-mag {
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+.nav-search-text {
+  flex: 1;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.nav-search-trigger:hover {
+  color: var(--text-primary);
+  box-shadow: var(--elevation-1);
+  transform: translateY(-2px);
+}
+
+.nav-search-trigger:hover .nav-search-mag {
+  color: var(--color-coral-600);
+}
+
+.nav-search-trigger:active {
+  transform: scale(var(--press-scale));
+  box-shadow: var(--elevation-pressed);
+}
+
+.nav-search-trigger:focus-visible {
+  outline: 3px solid var(--color-amber-300);
+  outline-offset: 2px;
+}
+
+.nav-search-kbd {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  color: var(--text-secondary);
+  background-color: var(--surface-1);
+  border: 1.5px solid var(--border-default);
+  border-radius: 6px;
+  padding: 1px 7px;
+  white-space: nowrap;
+}
+
+/* Full-width mobile search bar: hidden on desktop, painted in the
+   mobile breakpoint below. */
+.nav-searchbar {
+  display: none;
+}
+
+/* Search row: field + explicit Close (iOS-style). Close is mobile-only;
+   desktop keeps the in-field ✕ + esc hints. */
+.pal-searchrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pal-searchrow .pal-field {
+  flex: 1;
+  min-width: 0;
+}
+
+.pal-cancel {
+  display: none;
+}
+
+/* Overlay scrim: opaque warm veil (no blur — funk surfaces stay opaque) */
+.pal-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: calc(10vh + env(safe-area-inset-top)) var(--space-4) var(--space-4);
+  background-color: oklch(22% 0.025 55 / 0.55);
+  opacity: 0;
+  transition: opacity 160ms ease;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.pal-scrim.is-open {
+  opacity: 1;
+}
+
+.pal-scrim[hidden] {
+  display: none;
+}
+
+/* Panel: light paper card floating on the dark veil */
+.pal {
+  width: 100%;
+  max-width: 660px;
+  background-color: var(--surface-2);
+  border: 3px solid var(--border-dark);
+  border-radius: var(--shape-lg);
+  box-shadow: var(--elevation-3), 0 24px 60px oklch(22% 0.025 55 / 0.35);
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  opacity: 0;
+  transform: translateY(14px) scale(0.98);
+  transition: transform 300ms var(--ease-spring-bouncy), opacity 200ms ease;
+}
+
+.pal-scrim.is-open .pal {
+  transform: none;
+  opacity: 1;
+}
+
+/* Drag handle: mobile sheet affordance only, hidden on desktop. */
+.pal-grab {
+  display: none;
+}
+
+/* Header row: eyebrow title + shuffle action for the fresh-picks state. */
+.pal-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin: 0 var(--space-2) var(--space-2);
+}
+
+.pal-eyebrow {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  max-width: none;
+}
+
+.pal-shuffle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 32px;
+  padding: 2px 12px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--color-coral-700);
+  background-color: var(--color-coral-100);
+  border: 2px solid var(--border-dark);
+  border-radius: var(--shape-pill);
+  box-shadow: 2px 2px 0 var(--border-dark);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform 120ms var(--ease-spring-quick), background-color 120ms ease;
+}
+
+.pal-shuffle:hover {
+  background-color: var(--surface-3);
+  transform: translateY(-1px);
+}
+
+.pal-shuffle:active {
+  transform: scale(var(--press-scale));
+  box-shadow: var(--elevation-pressed);
+}
+
+.pal-shuffle:focus-visible {
+  outline: 3px solid var(--color-coral-500);
+  outline-offset: 2px;
+}
+
+.pal-shuffle[hidden] {
+  display: none;
+}
+
+.pal-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--surface-3);
+  border: 2.5px solid var(--border-dark);
+  border-radius: var(--shape-pill);
+  box-shadow: 3px 3px 0 var(--border-dark);
+  padding: 6px 6px 6px 18px;
+}
+
+.pal-field:focus-within {
+  border-color: var(--color-coral-500);
+  box-shadow: 4px 4px 0 var(--color-coral-500);
+}
+
+.pal-mag {
+  flex-shrink: 0;
+  color: var(--color-coral-600);
+}
+
+.pal-input {
+  flex: 1;
+  min-width: 0;
+  min-height: 46px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  color: var(--text-primary);
+}
+
+.pal-input:focus {
+  outline: none;
+}
+
+.pal-input::placeholder {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Our own ✕ button owns clearing; hide the native duplicate. */
+.pal-input::-webkit-search-cancel-button {
+  display: none;
+}
+
+/* ✕ clears the query when text is present, closes when empty (see
+   syncChrome: .is-dim marks the "will close" state). */
+.pal-clear {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  font-size: 0.9375rem;
+  font-weight: 900;
+  color: var(--surface-3);
+  background-color: var(--text-primary);
+  border: 2px solid var(--border-dark);
+  border-radius: var(--shape-pill);
+  box-shadow: 2px 2px 0 var(--border-dark);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform 120ms var(--ease-spring-quick), background-color 120ms ease, opacity 120ms ease;
+}
+
+.pal-clear:hover {
+  background-color: var(--color-coral-600);
+}
+
+.pal-clear:active {
+  transform: scale(var(--press-scale));
+}
+
+.pal-clear:focus-visible {
+  outline: 3px solid var(--color-coral-500);
+  outline-offset: 2px;
+}
+
+.pal-clear.is-dim {
+  background-color: var(--surface-1);
+  color: var(--text-muted);
+  box-shadow: none;
+}
+
+.pal-status {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin: var(--space-3) var(--space-2) var(--space-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pal-list {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-height: min(52vh, 430px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+.pal-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.pal-list::-webkit-scrollbar-thumb {
+  background-color: var(--border-strong);
+  border-radius: 9999px;
+}
+
+.pal-link {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  padding: var(--space-3) var(--space-4);
+  text-decoration: none;
+  background-color: var(--surface-3);
+  border: 2px solid var(--border-default);
+  border-radius: var(--shape-md);
+  transition: transform 150ms var(--ease-spring-quick), border-color 120ms ease, box-shadow 150ms var(--ease-spring-quick), background-color 120ms ease;
+}
+
+.pal-link:hover {
+  border-color: var(--border-dark);
+  box-shadow: var(--elevation-1);
+  transform: translateY(-1px);
+}
+
+.pal-link:hover .pal-go {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Instant press feedback on pointer-down; springs back on release. */
+.pal-link:active {
+  transform: scale(0.98);
+  box-shadow: var(--elevation-pressed);
+  transition-duration: 100ms;
+}
+
+/* Result rows cascade in on every render — capped stagger so fast
+   typing never queues motion behind input. */
+.pal-row {
+  animation: pal-row-in 180ms var(--ease-spring-snappy) backwards;
+}
+
+@keyframes pal-row-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.pal-row.is-active .pal-link {
+  border-color: var(--border-dark);
+  background-color: var(--color-amber-100);
+  box-shadow: var(--elevation-1);
+}
+
+.pal-row.is-active .pal-go {
+  transform: translateX(0);
+  opacity: 1;
+  color: var(--color-coral-700);
+}
+
+/* Title row: name left, open-arrow right (reveals on hover/active). */
+.pal-rowtop {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+}
+
+.pal-title {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pal-mark {
+  background-color: var(--color-amber-300);
+  color: inherit;
+  border-radius: 4px;
+  padding: 0 1px;
+}
+
+.pal-row.is-active .pal-mark {
+  background-color: var(--surface-3);
+  outline: 1.5px solid var(--border-dark);
+}
+
+.pal-go {
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-weight: 900;
+  color: var(--text-muted);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: transform 150ms var(--ease-spring-quick), opacity 120ms ease;
+}
+
+/* One-line pitch under the title — the row now answers "what is it". */
+.pal-snippet {
+  display: block;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pal-badge {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-violet-800);
+  background-color: var(--color-violet-100);
+  border: 1.5px solid var(--border-dark);
+  border-radius: var(--shape-pill);
+  padding: 2px 9px;
+  white-space: nowrap;
+}
+
+/* Third line: badge first, then locale — wraps instead of squeezing. */
+.pal-sub {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  margin-top: 2px;
+}
+
+.pal-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* No-results state: headline + tappable sector shortcuts. */
+.pal-empty {
+  padding: var(--space-5) var(--space-4) var(--space-4);
+  text-align: center;
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--shape-md);
+  background-color: var(--surface-1);
+}
+
+.pal-empty[hidden] {
+  display: none;
+}
+
+.pal-empty-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.0625rem;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  max-width: none;
+}
+
+.pal-empty-sub {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.pal-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: var(--space-3);
+}
+
+.pal-chip {
+  min-height: 36px;
+  padding: 4px 14px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  background-color: var(--surface-3);
+  border: 2px solid var(--border-dark);
+  border-radius: var(--shape-pill);
+  box-shadow: 2px 2px 0 var(--border-dark);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform 120ms var(--ease-spring-quick), background-color 120ms ease;
+}
+
+.pal-chip:hover {
+  background-color: var(--color-amber-100);
+  transform: translateY(-1px);
+}
+
+.pal-chip:active {
+  transform: scale(var(--press-scale));
+  box-shadow: var(--elevation-pressed);
+}
+
+.pal-chip:focus-visible {
+  outline: 3px solid var(--color-coral-500);
+  outline-offset: 2px;
+}
+
+.pal-foot {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin: var(--space-2) 0 0;
+  padding-top: var(--space-2);
+  border-top: 2px dashed var(--border-default);
+}
+
+.pal-foot kbd {
+  border: 1.5px solid var(--border-default);
+  border-radius: 6px;
+  padding: 0 6px;
+  background-color: var(--surface-1);
+}
+
+/* Mobile: full-width search bar under the pill, bottom sheet results */
+@media (max-width: 859.98px) {
+  /* The pill keeps brand + Menu only — search + AR live outside it. */
+  .nav-side {
+    display: none;
+  }
+
+  /* Big thumb-friendly bar docked under the pill, part of the sticky
+     header so it is always one tap away. */
+  .nav-searchbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 48px;
+    margin-top: 8px;
+    padding: 8px 16px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    background-color: var(--surface-3);
+    border: 2.5px solid var(--border-dark);
+    border-radius: var(--shape-pill);
+    box-shadow: 3px 3px 0 var(--border-dark);
+    cursor: pointer;
+    touch-action: manipulation;
+    text-align: left;
+  }
+
+  .nav-searchbar:active {
+    transform: scale(0.99);
+    box-shadow: var(--elevation-pressed);
+  }
+
+  .nav-searchbar:focus-visible {
+    outline: 3px solid var(--color-coral-500);
+    outline-offset: 2px;
+  }
+
+  /* Menu open replaces the bar — no crowding, card keeps its slot. */
+  body.is-menu-open .nav-searchbar,
+  body.is-menu-closing .nav-searchbar {
+    display: none;
+  }
+
+  /* iOS-style explicit exit next to the field: always closes. */
+  .pal-cancel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    min-height: 44px;
+    padding: 6px 14px;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.9375rem;
+    color: var(--surface-3);
+    background-color: var(--text-primary);
+    border: 2px solid var(--border-dark);
+    border-radius: var(--shape-pill);
+    box-shadow: 2px 2px 0 var(--border-dark);
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  .pal-cancel:active {
+    transform: scale(var(--press-scale));
+    box-shadow: var(--elevation-pressed);
+  }
+
+  .pal-scrim {
+    padding: 12px 12px calc(12px + env(safe-area-inset-bottom));
+    align-items: flex-end;
+  }
+
+  .pal {
+    max-width: none;
+    max-height: calc(100dvh - 24px);
+    display: flex;
+    flex-direction: column;
+    border-radius: 24px;
+    padding-top: 8px;
+    overflow: hidden;
+  }
+
+  /* Sheet affordance: short grab bar above the header row.
+     Tapping it dismisses the sheet (wired in the palette script). */
+  .pal-grab {
+    display: block;
+    width: 68px;
+    height: 22px;
+    margin: 0 auto var(--space-1);
+    padding: 8px 12px;
+    background-color: var(--border-strong);
+    background-clip: content-box;
+    border-radius: 9999px;
+    flex-shrink: 0;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  .pal-field {
+    flex-shrink: 0;
+  }
+
+  .pal-input {
+    /* 16px floors iOS auto-zoom on focus. */
+    font-size: 1rem;
+  }
+
+  .pal-list {
+    max-height: none;
+    flex: 1 1 auto;
+    min-height: 0;
+    margin: 0 calc(var(--space-1) * -1);
+  }
+
+  .pal-link {
+    padding: var(--space-4);
+  }
+
+  /* Touch has no hover: always show the open arrow. */
+  .pal-go {
+    opacity: 1;
+    transform: none;
+  }
+
+  .pal-snippet {
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .pal-chip {
+    min-height: 40px;
+    padding: 6px 16px;
+  }
+
+  .pal-foot {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pal-scrim,
+  .pal-scrim .pal,
+  .pal-link,
+  .pal-go,
+  .pal-chip,
+  .pal-shuffle,
+  .nav-search-trigger,
+  .ar-toggle-inside,
+  .ar-toggle-track,
+  .ar-toggle-knob {
+    transition: none;
+  }
+  .pal-scrim .pal {
+    transform: none;
+    opacity: 1;
+  }
+  .pal-row {
+    animation: none;
+  }
+}
 /* --------------------------------------------------------------------------
    FLASHCARD FOCUS STAGE
    -------------------------------------------------------------------------- */

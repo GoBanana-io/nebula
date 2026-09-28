@@ -91,7 +91,7 @@ const flashcards = ideas.map((idea) => ({
       </div>
     </div>
 
-    <!-- Category Filter Buttons -->
+    <!-- Category Filter Buttons (keyword search lives in the nav palette) -->
     <div class="filter-pills" role="toolbar" aria-label="Filter sparks">
       <button class="filter-btn is-active" data-filter="all" type="button">
         ✦ All ({ideas.length})
@@ -286,13 +286,30 @@ const flashcards = ideas.map((idea) => ({
       if (fcBtnOpen) {
         fcBtnOpen.setAttribute('href', `/idea/${item.slug}`);
       }
+
+      // Every shown card joins the surprise-me history (declared below;
+      // renderFlashcard only runs on user clicks, after init completes).
+      noteSlug(item.slug);
     }
 
     fcBtnNext?.addEventListener('click', () => renderFlashcard(fcIndex + 1));
     fcBtnPrev?.addEventListener('click', () => renderFlashcard(fcIndex - 1));
+
+    // Surprise streak: in-memory history of the last 5 shown slugs so
+    // 🎲 never repeats itself within the session (no localStorage).
+    // Seeded with the SSR-painted first card so the first surprise is fresh.
+    const recentSlugs = allCards.length ? [allCards[0].slug] : [];
+    function noteSlug(slug) {
+      if (!slug) return;
+      recentSlugs.push(slug);
+      while (recentSlugs.length > 5) recentSlugs.shift();
+    }
     fcBtnRand?.addEventListener('click', () => {
-      const nextRand = Math.floor(Math.random() * allCards.length);
-      renderFlashcard(nextRand);
+      if (!allCards.length) return;
+      const fresh = allCards.filter((c) => !recentSlugs.includes(c.slug));
+      const pool = fresh.length ? fresh : allCards;
+      const pick = pool[Math.floor(Math.random() * pool.length)];
+      renderFlashcard(allCards.indexOf(pick));
     });
 
     fcBtnCopy?.addEventListener('click', () => {
@@ -358,18 +375,56 @@ const flashcards = ideas.map((idea) => ({
     // show/hide; we only declare the active filter and reset to page 1).
     const filterBtns = document.querySelectorAll('.filter-btn');
 
+    // Single painter for pill state (visual + aria-pressed). Anchors without
+    // data-filter (e.g. the "All categories" link) are left alone.
+    function paintPills(filter) {
+      filterBtns.forEach((b) => {
+        if (!b.hasAttribute('data-filter')) return;
+        const on = b.getAttribute('data-filter') === filter;
+        b.classList.toggle('is-active', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    }
+    paintPills('all');
+
+    // Shareable sector state: ?sector= via replaceState (no history spam).
+    // Keyword search lives in the global nav palette now; stale ?q= params
+    // from old links are cleaned here.
+    function syncUrl(sector) {
+      try {
+        const url = new URL(window.location.href);
+        if (sector && sector !== 'all') url.searchParams.set('sector', sector);
+        else url.searchParams.delete('sector');
+        url.searchParams.delete('q');
+        history.replaceState(null, '', url);
+      } catch (err) {}
+    }
+
     filterBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
-        filterBtns.forEach((b) => b.classList.remove('is-active'));
-        btn.classList.add('is-active');
-
         const filter = btn.getAttribute('data-filter') || 'all';
+        paintPills(filter);
         if (gridEl) {
           gridEl.dataset.activeFilter = filter;
           gridEl.dispatchEvent(new CustomEvent('bn:filter'));
         }
+        syncUrl(filter);
       });
     });
+
+    // Restore shareable sector on load (?sector=). Unknown values fall back
+    // to All; the trailing bn:filter re-applies paginator + counts.
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const s0 = (params.get('sector') || 'all').toLowerCase();
+      const known = s0 === 'all' || Array.from(filterBtns).some((b) => b.getAttribute('data-filter') === s0);
+      const sector0 = known ? s0 : 'all';
+      if (sector0 !== 'all' && gridEl) {
+        gridEl.dataset.activeFilter = sector0;
+        paintPills(sector0);
+        gridEl.dispatchEvent(new CustomEvent('bn:filter'));
+      }
+    } catch (err) {}
     }
 
     // First paint plus every client-side navigation (View Transitions).
