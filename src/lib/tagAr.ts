@@ -65,6 +65,7 @@ export const tagArMap: Record<string, string> = {
   ev: 'سيارات كهربائية',
   palestine: 'فلسطين',
   'occupied-palestine': 'فلسطين المحتلة',
+  indonesia: 'إندونيسيا',
 };
 
 // Tags that denote a country, not a sector/theme. The /tags index renders
@@ -85,6 +86,7 @@ export const countryTags = new Set([
   'singapore',
   'palestine',
   'occupied-palestine',
+  'indonesia',
 ]);
 
 export const countryFlagMap: Record<string, string> = {
@@ -102,6 +104,7 @@ export const countryFlagMap: Record<string, string> = {
   singapore: '🇸🇬',
   palestine: '🇵🇸',
   'occupied-palestine': '🇵🇸',
+  indonesia: '🇮🇩',
 };
 
 // Display English name per country tag (tags use short codes like ksa/uae).
@@ -120,6 +123,7 @@ export const countryEnMap: Record<string, string> = {
   palestine: 'Palestine',
   'occupied-palestine': 'Occupied Palestine',
   singapore: 'Singapore',
+  indonesia: 'Indonesia',
 };
 
 // Per-country accent pair for the /tags country cards: soft wash behind the
@@ -141,4 +145,5 @@ export const countryAccentMap: Record<string, { wash: string; bar: string }> = {
   singapore: { wash: 'var(--color-coral-50)', bar: 'var(--color-coral-600)' },
   palestine: { wash: 'var(--color-teal-50)', bar: 'var(--color-teal-500)' },
   'occupied-palestine': { wash: 'var(--color-violet-200)', bar: 'var(--color-violet-600)' },
+  indonesia: { wash: 'var(--color-coral-50)', bar: 'var(--color-coral-600)' },
 };
