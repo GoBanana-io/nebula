@@ -1,4 +1,9 @@
 ---
+interface Props {
+  count?: number;
+}
+
+const { count = 0 } = Astro.props;
 ---
 
 <section class="hero hero-slim" aria-labelledby="hero-title">
@@ -6,15 +11,46 @@
     <p class="hero-slim-kicker">
       <span aria-hidden="true">⚡️</span>
       <span>Ideas worth stealing</span>
+      {count > 0 && (
+        <>
+          <span aria-hidden="true">·</span>
+          <span>{count} sparks</span>
+        </>
+      )}
     </p>
-    <h1 id="hero-title">Startup sparks. Steal the playbook.</h1>
+    <h1 id="hero-title"><span class="hero-mark">Steal the <span class="hero-rotate" id="hero-rotate">playbook</span>.</span></h1>
     <p class="hero-slim-lede">
-      Real numbers, playbooks, and failure lessons — pick a spark and go build.
+      Wins, numbers, and failure lessons from real startups. Steal the spark worth building.
     </p>
   </div>
 
   <div class="hero-slim-side">
     <a class="hero-slim-link" href="#sparks">↓ Browse</a>
-    <a class="hero-slim-link hero-slim-link--accent" href="/random" rel="prefetch">🎲 Shuffle</a>
+    <a class="hero-slim-link hero-slim-link--accent" href="/random" rel="prefetch"><span class="shuffle-dice" aria-hidden="true">🎲</span> Shuffle</a>
   </div>
 </section>
+
+<script is:inline>
+  // Hero rotating word: playbook -> spark -> blueprint -> shortcut.
+  // Static "playbook" without JS; skipped entirely under reduced motion.
+  (function () {
+    function initHeroRotate() {
+      var el = document.getElementById('hero-rotate');
+      if (!el) return;
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (window.__bnHeroTimer) clearInterval(window.__bnHeroTimer);
+      var words = ['playbook', 'spark', 'blueprint', 'shortcut', 'moat', 'edge', 'flywheel', 'idea'];
+      var i = 0;
+      window.__bnHeroTimer = setInterval(function () {
+        i = (i + 1) % words.length;
+        el.classList.add('is-swapping');
+        setTimeout(function () {
+          el.textContent = words[i];
+          el.classList.remove('is-swapping');
+        }, 220);
+      }, 3200);
+    }
+    document.addEventListener('astro:page-load', initHeroRotate);
+    initHeroRotate();
+  })();
+</script>

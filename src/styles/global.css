@@ -954,29 +954,140 @@ main {
 /* --------------------------------------------------------------------------
    HERO SLIM STRIP (idea-first: one line, then the sparks)
    -------------------------------------------------------------------------- */
+/* Blended editorial hero: no box, no border, no shadow — the type carries
+   it. A dashed rule below separates the hero from the Sparks toolbar. */
 .hero-slim {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: var(--space-4) var(--space-6);
   flex-wrap: wrap;
-  margin: var(--space-6) 0 var(--space-6);
-  padding: var(--space-5) var(--space-6);
-  background:
-    radial-gradient(60% 120% at 0% 0%, oklch(85% 0.14 85 / 0.5), transparent 55%),
-    var(--surface-1);
-  border: 3px solid var(--border-dark);
-  border-radius: var(--shape-lg);
-  box-shadow: var(--elevation-2);
+  margin: var(--space-8) 0 var(--space-8);
+  padding: 0 0 var(--space-6);
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px dashed var(--border-default);
+  border-radius: 0;
+  box-shadow: none;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 @media (min-width: 768px) {
   .hero-slim {
-    padding: var(--space-5) var(--space-8);
+    margin-top: var(--space-12);
+    padding-bottom: var(--space-8);
     flex-wrap: nowrap;
   }
+}
+
+/* Marker highlight on the action half of the headline — Funk accent
+   without a container. Solid amber, not gradient text. */
+.hero-mark {
+  background-image: linear-gradient(to top, var(--color-amber-300) 36%, transparent 36%);
+  background-repeat: no-repeat;
+  padding: 0 0.08em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Blended Shuffle: violet text link next to coral Browse; the dice shakes
+   on hover instead of a button lifting. */
+.hero-slim-side {
+  gap: var(--space-4);
+}
+
+.shuffle-dice {
+  display: inline-block;
+  margin-right: 2px;
+}
+
+/* Shuffle is the hero's one real CTA: violet button next to the quiet
+   coral Browse link. Dice shakes on hover. */
+.hero-slim-link--accent {
+  background-color: var(--color-violet-500);
+  color: var(--surface-3);
+  padding: 8px 20px;
+  min-height: 44px;
+  border: 1.5px solid var(--border-dark);
+  border-radius: var(--shape-pill);
+  box-shadow: var(--elevation-soft-1);
+}
+
+.hero-slim-link--accent:hover {
+  background-color: var(--color-violet-600);
+  color: var(--surface-3);
+  text-decoration: none;
+}
+
+.hero-slim-link--accent:hover .shuffle-dice {
+  animation: dice-shake 450ms var(--ease-spring-snappy);
+}
+
+@keyframes dice-shake {
+  0% { transform: rotate(0); }
+  25% { transform: rotate(-16deg) translateY(-2px); }
+  55% { transform: rotate(12deg); }
+  80% { transform: rotate(-6deg); }
+  100% { transform: none; }
+}
+
+/* Hero entrance: staggered rise on first paint + marker draw. Motion only
+   (reduced-motion kills it globally); springs stay reserved for moments
+   like this one. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-slim-main > * {
+    animation: hero-rise 600ms var(--ease-spring-gentle) both;
+  }
+
+  .hero-slim-main > *:nth-child(2) {
+    animation-delay: 90ms;
+  }
+
+  .hero-slim-main > *:nth-child(3) {
+    animation-delay: 180ms;
+  }
+
+  .hero-slim-side {
+    animation: hero-rise 600ms var(--ease-spring-gentle) 270ms both;
+  }
+
+  .hero-mark {
+    animation: mark-draw 700ms ease 450ms both;
+  }
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes mark-draw {
+  from {
+    background-size: 0% 100%;
+  }
+  to {
+    background-size: 100% 100%;
+  }
+}
+
+/* Rotating headline word: fixed width (longest word) so the swap never
+   reflows the line; quick fade-dip between words. */
+.hero-rotate {
+  display: inline-block;
+  min-width: 9ch;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.hero-rotate.is-swapping {
+  opacity: 0;
+  transform: translateY(6px);
 }
 
 .hero-slim-main {
@@ -1023,11 +1134,12 @@ main {
 }
 
 .hero-slim h1 {
-  font-size: clamp(1.6rem, 3.4vw, 2.4rem);
-  margin-bottom: 2px;
-  line-height: 1.08;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  margin-bottom: var(--space-2);
+  line-height: 1.04;
   letter-spacing: -0.035em;
 }
+
 
 .hero-slim-lede {
   font-size: 1rem;
@@ -1045,37 +1157,34 @@ main {
   padding-bottom: 2px;
 }
 
+/* Both hero links read as quiet text links (coral Browse, violet
+   Shuffle); the dice shake is Shuffle's spotlight. */
 .hero-slim-link {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   text-decoration: none;
-  color: var(--text-primary);
-  padding: 8px 16px;
-  min-height: 40px;
+  color: var(--color-coral-700);
+  padding: 8px 4px;
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
-  border: 1.5px solid var(--border-dark);
-  border-radius: var(--shape-pill);
-  background-color: var(--surface-2);
-  box-shadow: var(--elevation-soft-1);
-  transition: background-color 120ms ease;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transition: color 120ms ease;
 }
 
 .hero-slim-link:hover {
-  background-color: var(--surface-1);
-  color: var(--text-primary);
+  background: transparent;
+  color: var(--color-coral-800);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
 }
 
-.hero-slim-link--accent {
-  background-color: var(--color-violet-500);
-  color: var(--surface-3);
-}
-
-.hero-slim-link--accent:hover {
-  background-color: var(--color-violet-600);
-  color: var(--surface-3);
-}
+/* (Blended Shuffle lives with the dice rules above; no button here.) */
 
 /* --------------------------------------------------------------------------
    VIEW SWITCHER TOOLBAR (GRID VS FLASHCARD FOCUS)
