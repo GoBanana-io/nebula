@@ -47,3 +47,11 @@ Lede rule: `title` + `summary` state THE IDEA in English (what the company does/
 2. Each writer-agent READS `AGENTS.md` + this brief + `src/content.config.ts` + one good example (e.g. `src/content/ideas/foodics.md`), then researches (search + OPEN every cited source body) AND writes its own files.
 3. Replacement policy: if a candidate won't verify (no openable source, unprovable closure), swap it for a citable alternative in the same slot and record the swap — never stall the batch. Quotas enforced by the parent at the end.
 4. Parent verify: file conventions, tag discipline, `npm run build` green (repo has NO test harness — build is the gate), file-count check, 2–3 lede spot-checks. Never commit/push unless asked.
+
+## 8. Result (2026-09-28, user accepted)
+
+- Shipped 15/16: 12 operating + 2 acquired + 1 closed (Wataniya Airways).
+- Deviation from §2 Group C: second closed/failed slot unfilled — writer round + dedicated gap-fill research found no second verifiable Kuwaiti shutdown; recorded as unresolved rather than invented (user chose "ship 15 as-is").
+- `stage` omitted on boutiqaat/myfatoorah/tap-payments (no citable stage found; schema default applies).
+- Sector normalizations by parent: carriage Foodtech→foodtech, li3ib SportsTech→sports-tech, justclean→e-commerce/marketplace, myfatoorah fintech→payments (keeps max 2 per exact sector string).
+- `kuwait` tag-map entry added to `src/lib/tagAr.ts` (all 5 maps) in the same change window.
