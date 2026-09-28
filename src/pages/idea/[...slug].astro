@@ -168,25 +168,27 @@ const pillars = [
       )}
     </div>
 
-    <div class="iv2-actions">
-      <button
-        class="btn btn-amber btn-sm"
-        type="button"
-        id="iv2-copy"
-        data-text={playbookCopyText}
-      >
-        Copy Playbook
-      </button>
-      <button class="btn btn-secondary btn-sm" type="button" id="iv2-share">
-        Share
-      </button>
-      {nextSlug && (
-        <a class="btn btn-violet btn-sm iv2-actions-next" rel="prefetch" href={`/idea/${nextSlug}`}>
-          Next →
-        </a>
-      )}
-    </div>
   </header>
+
+  <!-- Sticky action bar: direct child of <main> so it stays docked while reading -->
+  <div class="iv2-actions">
+    <button
+      class="btn btn-amber btn-sm"
+      type="button"
+      id="iv2-copy"
+      data-text={playbookCopyText}
+    >
+      Copy Playbook
+    </button>
+    <button class="btn btn-secondary btn-sm" type="button" id="iv2-share">
+      Share
+    </button>
+    {nextSlug && (
+      <a class="btn btn-primary btn-sm iv2-actions-next" rel="prefetch" href={`/idea/${nextSlug}`}>
+        Next →
+      </a>
+    )}
+  </div>
 
   <!-- Full-width teardown band -->
   {pillars.length > 0 && (

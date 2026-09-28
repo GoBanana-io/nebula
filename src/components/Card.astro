@@ -37,16 +37,8 @@ const {
   index = 0,
 } = Astro.props;
 
-// Asymmetric shapes
-const shapeVariants = [
-  'card-shape-leaf',
-  'card-shape-wave',
-  'card-shape-shield',
-  'card-shape-leaf-rev',
-  'card-shape-flag',
-];
-const assignedShape = shapeVariants[index % shapeVariants.length];
-
+// Single uniform radius comes from .card in global.css (grid rhythm);
+// asymmetry lives on kickers/badges only.
 const isFailure = status === 'closed' || tags.includes('failure');
 const isUnicorn = tags.includes('unicorn');
 const statusClass = isFailure
@@ -62,7 +54,7 @@ const copyText = `${title}\n\nSummary: ${summary}\n\nعربي: ${summaryAr || ''
 ---
 
 <div
-  class={`card ${assignedShape} ${statusClass} ${featured ? 'card-featured' : ''}`}
+  class={`card ${statusClass} ${featured ? 'card-featured' : ''}`}
   data-sector={sector ? sector.toLowerCase() : ''}
   data-status={isFailure ? 'failure' : isUnicorn ? 'unicorn' : 'operating'}
 >
@@ -102,12 +94,12 @@ const copyText = `${title}\n\nSummary: ${summary}\n\nعربي: ${summaryAr || ''
     </div>
   )}
 
-  <!-- Tags Ribbon -->
+  <!-- Tags Ribbon: sector + one tag max (density; full list on detail) -->
   <ul class="chips" aria-label="Tags">
     {sector && (
       <li><span class="chip chip-sector">{sector}</span></li>
     )}
-    {tags.slice(0, 2).map((tag) => (
+    {tags.slice(0, 1).map((tag) => (
       <li><span class="chip">#{tag}</span></li>
     ))}
   </ul>

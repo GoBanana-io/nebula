@@ -70,8 +70,8 @@ const flashcards = ideas.map((idea) => ({
       </span>
     </div>
 
-    <!-- View + Order Islands -->
-    <div class="view-islands">
+    <!-- View + Order toolbar: one joined button group (view | order) -->
+    <div class="view-toolbar" role="toolbar" aria-label="Sparks view and order">
       <div class="view-mode-toggle" role="group" aria-label="View Mode">
         <button class="view-btn is-active" id="view-mode-grid" type="button">
           🗂 Grid
@@ -80,6 +80,8 @@ const flashcards = ideas.map((idea) => ({
           ⚡️ Flashcard
         </button>
       </div>
+
+      <span class="view-separator" aria-hidden="true"></span>
 
       <div class="view-mode-toggle view-mode-toggle--order" role="group" aria-label="Order">
         <button class="view-btn is-active" id="order-date" type="button" title="Newest first">

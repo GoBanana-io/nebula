@@ -137,6 +137,20 @@
   --elevation-4: 14px 14px 0 var(--shadow-color);
   --elevation-pressed: 1px 1px 0 var(--shadow-color);
 
+  /* Soft / tonal elevation — the DEFAULT for cards, pills, kickers, chips.
+     Hard-offset --elevation-* above is now an accent reserved for heroes,
+     featured surfaces, and primary CTAs (M3 tonal-elevation direction). */
+  --elevation-soft-1: 0 1px 2px oklch(22% 0.025 55 / 0.07);
+  --elevation-soft-2: 0 1px 2px oklch(22% 0.025 55 / 0.06), 0 4px 12px oklch(22% 0.025 55 / 0.08);
+
+  /* Primary seed roles (coral). Secondary accents keep their tonal
+     containers; saturated 500s are reserved for primary actions. */
+  --color-primary: var(--color-coral-500);
+  --color-primary-hover: var(--color-coral-600);
+  --color-primary-ink: var(--surface-3);
+  --color-primary-container: var(--color-coral-100);
+  --color-primary-container-ink: var(--color-coral-900);
+
   /* Colored Hard Shadow Presets */
   --shadow-coral: 6px 6px 0 var(--color-coral-500);
   --shadow-coral-lg: 10px 10px 0 var(--color-coral-500);
@@ -178,7 +192,8 @@
     1.012, 1.008, 1.002, 1.0
   );
 
-  --press-scale: 0.92;
+  /* Press settles without travel: one gentle scale everywhere. */
+  --press-scale: 0.97;
 
   /* --------------------------------------------------------------------------
      TYPOGRAPHY TOKENS
