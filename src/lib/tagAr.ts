@@ -68,6 +68,7 @@ export const tagArMap: Record<string, string> = {
   indonesia: 'إندونيسيا',
   kuwait: 'الكويت',
   india: 'الهند',
+  nigeria: 'نيجيريا',
 };
 
 // Tags that denote a country, not a sector/theme. The /tags index renders
@@ -91,6 +92,7 @@ export const countryTags = new Set([
   'indonesia',
   'kuwait',
   'india',
+  'nigeria',
 ]);
 
 export const countryFlagMap: Record<string, string> = {
@@ -111,6 +113,7 @@ export const countryFlagMap: Record<string, string> = {
   indonesia: '🇮🇩',
   kuwait: '🇰🇼',
   india: '🇮🇳',
+  nigeria: '🇳🇬',
 };
 
 // Display English name per country tag (tags use short codes like ksa/uae).
@@ -132,6 +135,7 @@ export const countryEnMap: Record<string, string> = {
   singapore: 'Singapore',
   indonesia: 'Indonesia',
   india: 'India',
+  nigeria: 'Nigeria',
 };
 
 // Per-country accent pair for the /tags country cards: soft wash behind the
@@ -156,4 +160,5 @@ export const countryAccentMap: Record<string, { wash: string; bar: string }> = {
   indonesia: { wash: 'var(--color-coral-50)', bar: 'var(--color-coral-600)' },
   kuwait: { wash: 'var(--color-teal-200)', bar: 'var(--color-teal-600)' },
   india: { wash: 'var(--color-amber-50)', bar: 'var(--color-amber-600)' },
+  nigeria: { wash: 'var(--color-lime-200)', bar: 'var(--color-lime-600)' },
 };
