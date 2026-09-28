@@ -1334,7 +1334,7 @@ main {
   background-color: var(--color-coral-500);
   color: var(--surface-3);
   border-color: var(--border-dark);
-  border-radius: 14px;
+  border-radius: var(--shape-pill);
   box-shadow: 2px 2px 0 var(--border-dark);
 }
 
@@ -1956,15 +1956,16 @@ body.is-pal-open {
     display: none;
   }
 
-  /* Big thumb-friendly bar docked under the pill, part of the sticky
-     header so it is always one tap away. */
+  /* Big thumb-friendly bar under the pill. It sits outside the sticky
+     header so it scrolls away with the page; side margins replace the
+     header padding it used to inherit. */
   .nav-searchbar {
     display: flex;
     align-items: center;
     gap: 10px;
-    width: 100%;
+    width: auto;
     min-height: 48px;
-    margin-top: 8px;
+    margin: 8px 16px 0;
     padding: 8px 16px;
     font-family: var(--font-display);
     font-weight: 700;
@@ -1987,6 +1988,35 @@ body.is-pal-open {
   .nav-searchbar:focus-visible {
     outline: 3px solid var(--color-coral-500);
     outline-offset: 2px;
+  }
+
+  /* Compact view toolbar on mobile: smaller type + padding so the
+     Grid/Flashcard/Newest/Random group fits one slim pill row. */
+  .view-toolbar {
+    gap: 2px;
+    padding: 3px;
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .view-toolbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .view-toolbar .view-btn {
+    font-size: 0.8125rem;
+    padding: 6px 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .view-separator {
+    margin: 4px 1px;
+  }
+
+  .filter-bar {
+    gap: var(--space-3);
   }
 
   /* Menu open replaces the bar — no crowding, card keeps its slot. */
