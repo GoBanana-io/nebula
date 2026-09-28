@@ -2031,6 +2031,25 @@ main {
   margin: 0;
 }
 
+.footer-credit-item {
+  white-space: nowrap;
+}
+
+.footer-credit-sep {
+  margin: 0 0.15em;
+}
+
+.footer-credit-link {
+  color: var(--color-amber-300);
+  font-weight: 700;
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+.footer-credit-link:hover {
+  text-decoration: underline;
+}
+
 /* --------------------------------------------------------------------------
    ACCESSIBILITY & PREFERENCES
    -------------------------------------------------------------------------- */
