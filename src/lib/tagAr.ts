@@ -70,6 +70,9 @@ export const tagArMap: Record<string, string> = {
   nigeria: 'نيجيريا',
   iran: 'إيران',
   lebanon: 'لبنان',
+  canada: 'كندا',
+  agrifood: 'أغذية وزراعة',
+  manufacturing: 'تصنيع',
 };
 
 // Tags that denote a country, not a sector/theme. The /tags index renders
@@ -96,6 +99,7 @@ export const countryTags = new Set([
   'nigeria',
   'iran',
   'lebanon',
+  'canada',
 ]);
 
 export const countryFlagMap: Record<string, string> = {
@@ -119,6 +123,7 @@ export const countryFlagMap: Record<string, string> = {
   nigeria: '🇳🇬',
   iran: '🇮🇷',
   lebanon: '🇱🇧',
+  canada: '🇨🇦',
 };
 
 // Display English name per country tag (tags use short codes like ksa/uae).
@@ -143,6 +148,7 @@ export const countryEnMap: Record<string, string> = {
   nigeria: 'Nigeria',
   iran: 'Iran',
   lebanon: 'Lebanon',
+  canada: 'Canada',
 };
 
 // Per-country accent pair for the /tags country cards: soft wash behind the
@@ -170,4 +176,5 @@ export const countryAccentMap: Record<string, { wash: string; bar: string }> = {
   nigeria: { wash: 'var(--color-lime-200)', bar: 'var(--color-lime-600)' },
   iran: { wash: 'var(--color-teal-50)', bar: 'var(--color-teal-600)' },
   lebanon: { wash: 'var(--color-coral-200)', bar: 'var(--color-coral-700)' },
+  canada: { wash: 'var(--color-slate-200)', bar: 'var(--color-slate-700)' },
 };

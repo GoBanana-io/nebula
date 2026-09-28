@@ -1,22 +1,34 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import { countryTags, countryFlagMap } from '../lib/tagAr';
 
 const ideas = await getCollection('ideas');
-const sparksData = ideas.map((idea) => ({
-  slug: idea.id.replace(/\.md$/, ''),
-  title: idea.data.title,
-  summary: idea.data.summary,
-  summaryAr: idea.data.summaryAr || '',
-  sector: idea.data.sector || '',
-  stage: idea.data.stage || '',
-  valuation: idea.data.valuation || '',
-  amountRaised: idea.data.amountRaised || '',
-  status: idea.data.status || 'operating',
-  whyItWorked: idea.data.whyItWorked || idea.data.coreProblem || '',
-  isFailure: idea.data.status === 'closed' || idea.data.tags.includes('failure'),
-  isUnicorn: idea.data.tags.includes('unicorn'),
-}));
+const allTags = new Set(ideas.flatMap((i) => i.data.tags || []));
+const sparksData = ideas.map((idea) => {
+  const tags = idea.data.tags || [];
+  const sector = idea.data.sector || '';
+  const countryTag =
+    tags.find((t) => countryTags.has(t)) || (idea.data.country || '').toLowerCase();
+  return {
+    slug: idea.id.replace(/\.md$/, ''),
+    title: idea.data.title,
+    summary: idea.data.summary,
+    summaryAr: idea.data.summaryAr || '',
+    sector,
+    stage: idea.data.stage || '',
+    valuation: idea.data.valuation || '',
+    amountRaised: idea.data.amountRaised || '',
+    status: idea.data.status || 'operating',
+    country: idea.data.country || '',
+    countryFlag: countryFlagMap[countryTag] || '',
+    countryHref: allTags.has(countryTag) ? `/tags/${countryTag}` : '',
+    tags: tags.filter((t) => !countryTags.has(t) && t !== sector).slice(0, 3),
+    whyItWorked: idea.data.whyItWorked || idea.data.coreProblem || '',
+    isFailure: idea.data.status === 'closed' || idea.data.tags.includes('failure'),
+    isUnicorn: idea.data.tags.includes('unicorn'),
+  };
+});
 
 const initialIndex = Math.floor(Math.random() * sparksData.length);
 const initialSpark = sparksData[initialIndex];
@@ -73,6 +85,18 @@ const initialSpark = sparksData[initialIndex];
           transition: transform 150ms var(--ease-spring-bouncy), opacity 150ms ease;
         "
       >
+        <!-- Origin + Tags -->
+        <div id="spark-meta" style="display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; border-bottom: 1.5px dashed var(--border-dark); padding-bottom: var(--space-3); margin-bottom: var(--space-4);">
+          <a class="chip chip-stage" id="spark-country" href={initialSpark.countryHref || undefined} rel="prefetch">
+            {(initialSpark.countryFlag ? `${initialSpark.countryFlag} ` : '') + (initialSpark.country || 'Somewhere')}
+          </a>
+          <span id="spark-tags" style="display: contents;">
+            {initialSpark.tags.map((tag) => (
+              <a class="chip" href={`/tags/${tag}`} rel="prefetch">#{tag}</a>
+            ))}
+          </span>
+        </div>
+
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3); flex-wrap: wrap; gap: var(--space-2);">
           <span class="chip chip-sector" id="spark-sector">
             {initialSpark.sector || 'Startup'}
@@ -216,6 +240,27 @@ const initialSpark = sparksData[initialIndex];
     const summaryArEl = document.getElementById('spark-summary-ar');
     const sectorEl = document.getElementById('spark-sector');
     const kpiEl = document.getElementById('spark-kpi');
+    const countryEl = document.getElementById('spark-country');
+    const tagsEl = document.getElementById('spark-tags');
+
+    function renderMeta(item) {
+      if (countryEl) {
+        countryEl.textContent = `${item.countryFlag ? `${item.countryFlag} ` : ''}${item.country || 'Somewhere'}`;
+        if (item.countryHref) countryEl.setAttribute('href', item.countryHref);
+        else countryEl.removeAttribute('href');
+      }
+      if (tagsEl) {
+        tagsEl.innerHTML = '';
+        for (const t of item.tags || []) {
+          const a = document.createElement('a');
+          a.className = 'chip';
+          a.textContent = `#${t}`;
+          a.setAttribute('href', `/tags/${t}`);
+          a.setAttribute('rel', 'prefetch');
+          tagsEl.appendChild(a);
+        }
+      }
+    }
 
     let isSpinning = false;
 
@@ -245,6 +290,7 @@ const initialSpark = sparksData[initialIndex];
         summaryEl.textContent = item.summary;
         summaryArEl.textContent = item.summaryAr || item.summary;
         sectorEl.textContent = item.sector || 'Startup';
+        renderMeta(item);
         kpiEl.textContent =
           item.valuation && item.valuation !== 'MISSING'
             ? `Val: ${item.valuation}`
