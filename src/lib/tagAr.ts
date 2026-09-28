@@ -151,30 +151,7 @@ export const countryEnMap: Record<string, string> = {
   canada: 'Canada',
 };
 
-// Per-country accent pair for the /tags country cards: soft wash behind the
-// flag blob + saturated top ribbon. Small accents only, so near-family
-// repeats (the two red-flag countries, the two green-flag countries) read
-// as intentional.
-export const countryAccentMap: Record<string, { wash: string; bar: string }> = {
-  egypt: { wash: 'var(--color-amber-100)', bar: 'var(--color-amber-500)' },
-  japan: { wash: 'var(--color-coral-100)', bar: 'var(--color-coral-500)' },
-  turkey: { wash: 'var(--color-coral-200)', bar: 'var(--color-coral-600)' },
-  ksa: { wash: 'var(--color-teal-100)', bar: 'var(--color-teal-500)' },
-  'saudi arabia': { wash: 'var(--color-teal-100)', bar: 'var(--color-teal-500)' },
-  qatar: { wash: 'var(--color-fuchsia-100)', bar: 'var(--color-fuchsia-500)' },
-  syria: { wash: 'var(--color-violet-100)', bar: 'var(--color-violet-500)' },
-  uae: { wash: 'var(--color-lime-100)', bar: 'var(--color-lime-500)' },
-  jordan: { wash: 'var(--color-slate-100)', bar: 'var(--color-slate-500)' },
-  china: { wash: 'var(--color-coral-50)', bar: 'var(--color-coral-700)' },
-  'south-korea': { wash: 'var(--color-coral-100)', bar: 'var(--color-coral-600)' },
-  singapore: { wash: 'var(--color-coral-50)', bar: 'var(--color-coral-600)' },
-  palestine: { wash: 'var(--color-teal-50)', bar: 'var(--color-teal-500)' },
-  'occupied-palestine': { wash: 'var(--color-violet-200)', bar: 'var(--color-violet-600)' },
-  indonesia: { wash: 'var(--color-coral-50)', bar: 'var(--color-coral-600)' },
-  kuwait: { wash: 'var(--color-teal-200)', bar: 'var(--color-teal-600)' },
-  india: { wash: 'var(--color-amber-50)', bar: 'var(--color-amber-600)' },
-  nigeria: { wash: 'var(--color-lime-200)', bar: 'var(--color-lime-600)' },
-  iran: { wash: 'var(--color-teal-50)', bar: 'var(--color-teal-600)' },
-  lebanon: { wash: 'var(--color-coral-200)', bar: 'var(--color-coral-700)' },
-  canada: { wash: 'var(--color-slate-200)', bar: 'var(--color-slate-700)' },
-};
+// Country cards on /tags share ONE uniform accent (set in
+// src/pages/tags/index.astro). No per-country color map: a hue must encode
+// something real (status does on idea cards), and country hues encoded
+// nothing while colliding with the status meanings.

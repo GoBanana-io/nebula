@@ -4,7 +4,7 @@ import Base from '../../layouts/Base.astro';
 
 const ideas = await getCollection('ideas');
 
-import { tagArMap, countryTags, countryFlagMap, countryEnMap, countryAccentMap } from '../../lib/tagAr';
+import { tagArMap, countryTags, countryFlagMap, countryEnMap } from '../../lib/tagAr';
 
 // Map tag counts
 const tagCountMap: Record<string, number> = {};
@@ -71,7 +71,9 @@ const countrySparkTotal = countryEntries.reduce((n, e) => n + e.count, 0);
     <div class="country-panel">
       <ul class="country-grid" aria-label="Countries with idea counts">
         {countryEntries.map(({ tag, count, ar }, idx) => {
-          const accent = countryAccentMap[tag] ?? {
+          // One uniform accent for all country cards: the ribbon/wash carry no
+          // per-country meaning, so they share a single highlight (amber).
+          const accent = {
             wash: 'var(--surface-1)',
             bar: 'var(--color-amber-500)',
           };
@@ -139,14 +141,14 @@ const countrySparkTotal = countryEntries.reduce((n, e) => n + e.count, 0);
                   font-size: ${isHeavy ? '1rem' : '0.875rem'};
                   padding: ${isHeavy ? '8px 16px' : '6px 14px'};
                   background-color: ${
+                    // Only evidence-backed hues: unicorn/failure match the
+                    // idea-card status colors; everything else is lime
+                    // (the tags role). Density is encoded by size (isHeavy),
+                    // not by extra hues.
                     tag === 'unicorn'
                       ? 'var(--color-violet-100)'
                       : tag === 'failure'
                       ? 'var(--color-fuchsia-100)'
-                      : tag === 'fintech'
-                      ? 'var(--color-coral-100)'
-                      : isHeavy
-                      ? 'var(--color-amber-100)'
                       : 'var(--color-lime-100)'
                   };
                 `}

@@ -2428,10 +2428,12 @@ body.is-pal-open {
   overflow: hidden;
 }
 
-/* Status-tinted top edge: instant scan for operating / unicorn / failure */
-.card--operating { border-top: 6px solid var(--color-teal-500); }
+/* Status top edge: only evidence-backed states carry a hue (unicorn /
+   failure / idea). The operating default is a neutral structural edge. */
+.card--operating { border-top: 6px solid var(--border-dark); }
 .card--unicorn { border-top: 6px solid var(--color-violet-500); }
 .card--failure { border-top: 6px solid var(--color-fuchsia-500); }
+.card--idea { border-top: 6px solid var(--color-lime-500); }
 
 /* Hover is a tonal state layer only — title underline carries the accent. */
 .card:hover {
@@ -2467,8 +2469,13 @@ body.is-pal-open {
 }
 
 .card-badge-status--operating {
-  background-color: var(--color-teal-100);
-  color: var(--color-teal-900);
+  background-color: var(--surface-1);
+  color: var(--text-secondary);
+}
+
+.card-badge-status--idea {
+  background-color: var(--color-lime-100);
+  color: var(--color-lime-900);
 }
 
 .card-badge-status--unicorn {

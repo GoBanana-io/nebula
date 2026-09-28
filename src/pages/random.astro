@@ -25,8 +25,9 @@ const sparksData = ideas.map((idea) => {
     countryHref: allTags.has(countryTag) ? `/tags/${countryTag}` : '',
     tags: tags.filter((t) => !countryTags.has(t) && t !== sector).slice(0, 3),
     whyItWorked: idea.data.whyItWorked || idea.data.coreProblem || '',
-    isFailure: idea.data.status === 'closed' || idea.data.tags.includes('failure'),
+    isFailure: idea.data.status === 'closed' || idea.data.status === 'failed' || idea.data.tags.includes('failure'),
     isUnicorn: idea.data.tags.includes('unicorn'),
+    isIdea: idea.data.status === 'idea',
   };
 });
 

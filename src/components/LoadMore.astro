@@ -72,6 +72,7 @@ const firstPct = total > 0 ? Math.round((firstShown / total) * 100) : 0;
       var sector = card.getAttribute('data-sector') || '';
       if (filter === 'unicorn') return status === 'unicorn';
       if (filter === 'failure') return status === 'failure';
+      if (filter === 'idea') return status === 'idea';
       return sector.indexOf(filter) !== -1;
     }
 

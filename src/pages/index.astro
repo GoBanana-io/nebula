@@ -51,8 +51,9 @@ const flashcards = ideas.map((idea) => ({
   coreProblem: idea.data.coreProblem || '',
   whyItWorked: idea.data.whyItWorked || '',
   challenges: idea.data.challenges || '',
-  isFailure: idea.data.status === 'closed' || idea.data.tags.includes('failure'),
+  isFailure: idea.data.status === 'closed' || idea.data.status === 'failed' || idea.data.tags.includes('failure'),
   isUnicorn: idea.data.tags.includes('unicorn'),
+  isIdea: idea.data.status === 'idea',
 }));
 ---
 
@@ -108,6 +109,9 @@ const flashcards = ideas.map((idea) => ({
       </button>
       <button class="filter-btn" data-filter="failure" type="button">
         💥 Failed
+      </button>
+      <button class="filter-btn" data-filter="idea" type="button">
+        🌱 Ideas
       </button>
       <a class="filter-btn" href="/tags" rel="prefetch" style="text-decoration: none;" title="Browse all countries and sectors">
         🧭 All categories →
@@ -266,6 +270,9 @@ const flashcards = ideas.map((idea) => ({
         } else if (item.isUnicorn) {
           fcBadge.textContent = '🦄 UNICORN · يونيكورن';
           fcBadge.className = 'card-badge-status card-badge-status--unicorn';
+        } else if (item.isIdea) {
+          fcBadge.textContent = '🌱 IDEA · فكرة';
+          fcBadge.className = 'card-badge-status card-badge-status--idea';
         } else {
           fcBadge.textContent = `⚡️ ${item.stage.toUpperCase() || 'OPERATING'}`;
           fcBadge.className = 'card-badge-status card-badge-status--operating';
