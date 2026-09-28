@@ -1,7 +1,7 @@
 ---
 title: "WeMakePrice sold everything cheaper until the money ran out"
 summary: "A pioneering Korean social-commerce marketplace that rocketed to the top five on flash deals, then collapsed when its parent Qoo10 stopped paying sellers — ending in court-declared bankruptcy."
-tags: ["south-korea", "e-commerce", "failure"]
+tags: ["south-korea", "ecommerce", "failure"]
 featured: false
 publishedAt: 2025-11-11
 company: "WeMakePrice"

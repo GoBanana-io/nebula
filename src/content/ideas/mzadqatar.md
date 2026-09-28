@@ -1,7 +1,7 @@
 ---
 title: "MzadQatar is Qatar's free classifieds-and-auction marketplace"
 summary: "Buy, sell, and bid on anything — cars, property, phones, furniture — on Qatar's most-installed marketplace app, free with no commission plus timed online auctions."
-tags: ["marketplace", "qatar", "e-commerce"]
+tags: ["marketplace", "qatar", "ecommerce"]
 featured: false
 publishedAt: 2026-08-06
 company: "MzadQatar"

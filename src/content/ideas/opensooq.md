@@ -1,7 +1,7 @@
 ---
 title: "OpenSooq runs the Arab world's mobile-first classifieds marketplace"
 summary: "A Jordanian classifieds platform where consumers and SMEs buy, sell, and trade cars, real estate, electronics, and services across 19 MENA markets."
-tags: ["jordan", "e-commerce", "marketplace"]
+tags: ["jordan", "ecommerce", "marketplace"]
 featured: false
 publishedAt: 2021-06-07
 company: "OpenSooq"

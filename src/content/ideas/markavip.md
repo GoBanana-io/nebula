@@ -1,7 +1,7 @@
 ---
 title: "MarkaVIP: the flash-sales pioneer that sold to JollyChic and faded"
 summary: "A Jordanian members-only flash-sales club selling premium fashion and lifestyle brands at steep discounts across the GCC, Jordan, and Lebanon."
-tags: ["jordan", "e-commerce", "closed"]
+tags: ["jordan", "ecommerce", "closed"]
 featured: false
 publishedAt: 2022-01-23
 company: "MarkaVIP"

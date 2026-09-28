@@ -1,7 +1,7 @@
 ---
 title: "APR turns K-beauty into beauty devices people use at home"
 summary: "APR sells Medicube skincare plus Age-R at-home beauty devices — microcurrent boosters developed in its own Seoul R&D center and factory — direct to consumers worldwide."
-tags: ["south-korea", "e-commerce", "retail-tech"]
+tags: ["south-korea", "ecommerce", "retail-tech"]
 featured: false
 publishedAt: 2025-02-11
 company: "APR"

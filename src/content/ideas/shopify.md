@@ -1,7 +1,7 @@
 ---
 title: "Shopify powers millions of online stores from Ottawa"
 summary: "A Canadian cloud commerce platform that lets any merchant build an online store, take payments, and ship orders — with Shop Pay, POS, and a large third-party app ecosystem."
-tags: ["canada", "e-commerce"]
+tags: ["canada", "ecommerce"]
 featured: false
 publishedAt: 2026-09-28
 company: "Shopify"

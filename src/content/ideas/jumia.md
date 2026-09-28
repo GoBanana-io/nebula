@@ -1,7 +1,7 @@
 ---
 title: "Jumia is Africa's NYSE-listed e-commerce marketplace"
 summary: "A pan-African online marketplace with its own logistics and payments network, selling phones, fashion, and everyday goods where retail is still mostly informal."
-tags: ["e-commerce", "marketplace", "nigeria", "public"]
+tags: ["ecommerce", "marketplace", "nigeria", "public"]
 featured: false
 publishedAt: 2026-09-28
 company: "Jumia"

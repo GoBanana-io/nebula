@@ -1,7 +1,7 @@
 ---
 title: "Konga is Nigeria's homegrown everything-store — mall, couriers, and wallet under one roof"
 summary: "Shop electronics, fashion, and groceries online or in store, delivered by its own logistics arm and paid for with its own mobile-money wallet."
-tags: ["nigeria", "e-commerce"]
+tags: ["nigeria", "ecommerce"]
 featured: false
 publishedAt: 2026-09-28
 company: "Konga"

@@ -1,7 +1,7 @@
 ---
 title: "Sea runs Shopee, Southeast Asia's biggest online mall"
 summary: "A Singapore gaming company that grew into a three-armed consumer empire — Shopee e-commerce, Garena gaming and Monee digital finance — posting $7.8B in quarterly revenue as Shopee re-accelerated across Southeast Asia, Taiwan and Brazil."
-tags: ["singapore", "e-commerce", "marketplace"]
+tags: ["singapore", "ecommerce", "marketplace"]
 featured: false
 publishedAt: 2026-08-11
 company: "Sea Group"

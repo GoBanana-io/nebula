@@ -1,7 +1,7 @@
 ---
 title: "Hudhudshop brings premium Turkish goods to Gulf doorsteps"
 summary: "Shop 50,000+ premium Turkish products from a Qatar-headquartered e-commerce platform with local delivery, tailored sourcing, and Gulf-wide shipping."
-tags: ["e-commerce", "qatar", "marketplace"]
+tags: ["ecommerce", "qatar", "marketplace"]
 featured: false
 publishedAt: 2024-12-09
 company: "Hudhudshop"

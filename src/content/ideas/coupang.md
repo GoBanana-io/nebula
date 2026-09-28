@@ -1,7 +1,7 @@
 ---
 title: "Coupang delivers anything across Korea by dawn"
 summary: "Korea's largest online retailer runs its own warehouses and delivery fleet — Rocket Delivery lands millions of items overnight, funding expansion into Taiwan, food delivery, streaming and fintech."
-tags: ["south-korea", "e-commerce", "marketplace"]
+tags: ["south-korea", "ecommerce", "marketplace"]
 featured: false
 publishedAt: 2025-11-05
 company: "Coupang"

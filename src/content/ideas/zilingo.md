@@ -1,7 +1,7 @@
 ---
 title: "Zilingo: the $308M fashion-tech collapse"
 summary: "A Singapore fashion-tech marketplace that digitized small apparel merchants with storefronts, supply-chain software, financing and logistics across Southeast Asia."
-tags: ["singapore", "e-commerce", "closed"]
+tags: ["singapore", "ecommerce", "closed"]
 featured: false
 publishedAt: 2023-01-20
 company: "Zilingo"

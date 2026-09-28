@@ -1,7 +1,7 @@
 ---
 title: "Zid gives every Saudi retailer their own online store"
 summary: "An e-commerce enablement platform that lets offline retailers launch online stores and run shipping and payments through one toolbox."
-tags: ["e-commerce", "ksa", "retail-tech", "enablement"]
+tags: ["ecommerce", "ksa", "retail-tech", "enablement"]
 featured: false
 publishedAt: 2022-10-17
 company: "Zid"

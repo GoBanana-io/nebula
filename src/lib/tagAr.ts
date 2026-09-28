@@ -41,7 +41,6 @@ export const tagArMap: Record<string, string> = {
   closed: 'شركات مغلقة',
   bnpl: 'اشترِ الآن وادفع لاحقًا',
   communications: 'اتصالات ومراسلات',
-  'e-commerce': 'تجارة إلكترونية',
   'retail-tech': 'تكنولوجيا التجزئة',
   enablement: 'تمكين التجارة',
   qatar: 'قطر',
