@@ -1,4 +1,4 @@
-# AGENTS.md — Banana Nebula
+# AGENTS.md — Nebula
 
 Static Astro site (`npm run build`). Content collection: `src/content/ideas/*.md` validated by `src/content.config.ts`.
 

@@ -1,4 +1,4 @@
-# Indonesia Brief — Banana Nebula (16 slots)
+# Indonesia Brief — Nebula (16 slots)
 
 Locked 2026-09-26. See `AGENTS.md` for the reusable flow.
 User locked: country=Indonesia, slots=16 relaxed, outcome mix=standard + idea-stage allowed.

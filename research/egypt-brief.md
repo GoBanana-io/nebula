@@ -1,4 +1,4 @@
-# Egypt Expansion Brief — Banana Nebula (12 → 16 + backfill)
+# Egypt Expansion Brief — Nebula (12 → 16 + backfill)
 
 Locked 2026-09-26. Scope: FULL batch. Window: RELAXED. New slots: 3 operating + up to 1 idea-stage.
 

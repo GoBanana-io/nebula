@@ -1,4 +1,4 @@
-# Singapore Brief — Banana Nebula (16 slots)
+# Singapore Brief — Nebula (16 slots)
 
 Locked 2026-09-27. See `AGENTS.md` for the reusable flow.
 

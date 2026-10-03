@@ -1,4 +1,4 @@
-# Nigeria Brief — Banana Nebula (16 slots)
+# Nigeria Brief — Nebula (16 slots)
 
 Locked 2026-09-28. See `AGENTS.md` for the reusable flow.
 User locked: country=Nigeria, slots=16 relaxed, outcome mix=2 failures, idea-stage allowed (1-2).

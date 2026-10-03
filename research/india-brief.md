@@ -1,4 +1,4 @@
-# India Brief — Banana Nebula (16 slots)
+# India Brief — Nebula (16 slots)
 
 Locked 2026-09-28. See `AGENTS.md` for the reusable flow.
 User locked: country=India, slots=16 relaxed, outcome mix=14 operating/acquired + exactly 2 closed/failed.

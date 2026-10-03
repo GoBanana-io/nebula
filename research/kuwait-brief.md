@@ -1,4 +1,4 @@
-# Kuwait Brief — Banana Nebula (16 slots)
+# Kuwait Brief — Nebula (16 slots)
 
 Locked 2026-09-26. See `AGENTS.md` for the reusable flow.
 User locked: country=Kuwait, slots=16 relaxed, outcome mix=2 failures.

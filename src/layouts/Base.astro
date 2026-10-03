@@ -9,7 +9,7 @@ interface Props {
 }
 
 const {
-  title = 'Banana Nebula — Real Startup Sparks & Playbooks',
+  title = 'Nebula — Real Startup Sparks & Playbooks',
   description = 'Real startup sparks, numbers, and playbooks. Steal the ideas. Go build.',
   activePath = Astro.url.pathname,
 } = Astro.props;
@@ -240,7 +240,7 @@ const {
     <footer class="footer">
       <div class="container footer-inner">
         <div class="footer-brand-summary">
-          <h3 class="footer-brand-name">Banana Nebula</h3>
+          <h3 class="footer-brand-name">Nebula</h3>
           <p class="footer-brand-blurb">
             Real startup sparks to inspire founders and builders.
           </p>
@@ -267,7 +267,7 @@ const {
       </div>
 
       <div class="container footer-bottom">
-        <p class="footer-credit">© 2026 Banana Nebula <span class="footer-credit-sep" aria-hidden="true">·</span> <span class="footer-credit-item">a 🍌 <a class="footer-credit-link" href="https://gobanana.io" target="_blank" rel="noopener">gobanana</a> project</span> <span class="footer-credit-sep" aria-hidden="true">·</span> <span class="footer-credit-item">built with 💛 <a class="footer-credit-link" href="https://bynoor.io" target="_blank" rel="noopener">bynoor</a></span></p>
+        <p class="footer-credit">© 2026 Nebula <span class="footer-credit-sep" aria-hidden="true">·</span> <span class="footer-credit-item">built with 💛 <a class="footer-credit-link" href="https://bynoor.io" target="_blank" rel="noopener">bynoor</a></span></p>
         <a class="footer-top-link" href="#main">↑ Top</a>
       </div>
     </footer>
@@ -300,11 +300,11 @@ const {
 
           // Broadcast custom event for dynamic components
           try {
-            window.dispatchEvent(new CustomEvent('banana-lang-change', { detail: { mode: m } }));
+            window.dispatchEvent(new CustomEvent('nebula-lang-change', { detail: { mode: m } }));
           } catch (e) {}
         }
 
-        window.setBananaLang = applyLang;
+        window.setNebulaLang = applyLang;
 
         // Animated open/close: closing holds the open layout under
         // .is-menu-closing so the exit animation plays, then detaches.
@@ -349,7 +349,7 @@ const {
           }, 220);
         }
 
-        function initBananaChrome() {
+        function initNebulaChrome() {
           // Document-level handlers: bind exactly once per session.
           if (!window.__bnChromeDoc) {
             window.__bnChromeDoc = true;
@@ -415,11 +415,11 @@ const {
         }
 
         // First paint plus every client-side navigation (View Transitions).
-        document.addEventListener('astro:page-load', initBananaChrome);
+        document.addEventListener('astro:page-load', initNebulaChrome);
         if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', initBananaChrome);
+          document.addEventListener('DOMContentLoaded', initNebulaChrome);
         } else {
-          initBananaChrome();
+          initNebulaChrome();
         }
       })();
     </script>

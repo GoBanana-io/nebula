@@ -1,4 +1,4 @@
-# Iran Brief — Banana Nebula (16 slots)
+# Iran Brief — Nebula (16 slots)
 
 Locked 2026-09-28. See `AGENTS.md` for the reusable flow.
 

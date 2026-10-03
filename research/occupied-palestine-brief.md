@@ -1,4 +1,4 @@
-# Occupied Palestine (Occupier Companies) Brief — Banana Nebula (16 slots)
+# Occupied Palestine (Occupier Companies) Brief — Nebula (16 slots)
 
 Locked 2026-09-27. See `AGENTS.md` for the reusable flow. Companion to `research/palestine-brief.md` (which covers Palestinian companies under `country: "Palestine"`, tag `palestine`). This brief covers ONLY occupier/settler companies — ideas from Israel itself — filed under Occupied Palestine so they are never mixed with the Palestinian batch.
 

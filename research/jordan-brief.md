@@ -1,4 +1,4 @@
-# Jordan Brief — Banana Nebula (16 slots)
+# Jordan Brief — Nebula (16 slots)
 
 Locked 2026-09-26. See `AGENTS.md` for the reusable flow.
 

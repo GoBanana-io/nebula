@@ -1,6 +1,6 @@
 # Country Brief Template (reusable)
 
-Use this template to commission per-country startup research for Banana Nebula.
+Use this template to commission per-country startup research for Nebula.
 Copy to `research/<country>-brief.md` and fill every `[...]`.
 
 ## 1. Scope

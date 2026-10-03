@@ -1,4 +1,4 @@
-# Occupied Palestine Brief — Banana Nebula (16 slots)
+# Occupied Palestine Brief — Nebula (16 slots)
 
 Locked 2026-09-26, updated 2026-09-26 (user lock: display name "Occupied Palestine", site-wide Israel ban). DECISION 2026-09-27 (user): all Palestine-region files consolidate under `country: "Palestine"`, tag `palestine` — the `occupied-palestine` tag stays mapped in `tagAr.ts` but is currently unused by any file. See `AGENTS.md` for the reusable flow.
 
